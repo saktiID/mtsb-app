@@ -17,13 +17,22 @@
                     <h3>MTsB App</h3>
                     <span>MTs Bilingual Muslimat NU Pucang Sidoarjo</span>
 
-                    <form class="text-left" action="" method="">
+                    @if(session('response'))
+                    <div class="alert alert-light-danger mt-2" role="alert">
+                        <strong>{{ session('response') }}</strong>
+                    </div>
+                    @endif
+
+                    <form class="text-left" action="{{ route('attempt_login') }}" method="POST">
                         <div class="form">
                             @csrf
                             <div id="username-field" class="field-wrapper input">
-                                <label for="username">Username</label>
+                                <label for="username">USERNAME</label>
                                 <i data-feather="user"></i>
                                 <input id="username" name="username" type="text" class="form-control" placeholder="cth: username/nis" value="{{ old('username') }}">
+                                @error('username')
+                                <small class="text- font-weight-bold">* {{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div id="password-field" class="field-wrapper input mb-2">
@@ -34,6 +43,9 @@
                                 <i data-feather="lock"></i>
                                 <input id="password" name="password" type="password" class="form-control" placeholder="Kata sandi">
                                 <i data-feather="eye" class="eye-toggle"></i>
+                                @error('password')
+                                <small class="text- font-weight-bold">* {{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="d-sm-flex justify-content-between">
                                 <div class="field-wrapper">
@@ -55,6 +67,7 @@
 <link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/loaders/custom-loader.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/elements/alert.css') }}">
 @endsection
 
 @section('script')

@@ -26,10 +26,10 @@
                 <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
                     <div class="user-profile-section">
                         <div class="media mx-auto">
-                            <img src="{{ asset('user-male-90x90.png') }}" class="img-fluid mr-2" alt="avatar">
+                            <img src="{{ asset(Auth::user()->avatar) }}" class="img-fluid mr-2" alt="avatar">
                             <div class="media-body">
-                                <h5>Romo Maulana</h5>
-                                <p>Student</p>
+                                <h5>{{ Auth::user()->nama }}</h5>
+                                <p>{{ Auth::user()->role }}</p>
                             </div>
                         </div>
                     </div>

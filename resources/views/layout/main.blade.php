@@ -37,6 +37,8 @@
                 @yield('content')
 
                 @yield('modal')
+
+                @yield('modal_logout')
                 <!-- CONTENT AREA -->
 
             </div>
