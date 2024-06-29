@@ -4,6 +4,7 @@
 <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
 <script src="{{ asset('plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+<script src="{{ asset('plugins/bootstrap-toaster/bootsrap-toaster.min.js') }}"></script>
 <script src="{{ asset('assets/js/app.js') }}"></script>
 
 <script>

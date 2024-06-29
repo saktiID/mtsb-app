@@ -18,7 +18,7 @@
                     <span>MTs Bilingual Muslimat NU Pucang Sidoarjo</span>
 
                     @if(session('response'))
-                    <div class="alert alert-light-danger mt-2" role="alert">
+                    <div class="alert alert-danger mt-2" role="alert">
                         <strong>{{ session('response') }}</strong>
                     </div>
                     @endif
@@ -31,7 +31,7 @@
                                 <i data-feather="user"></i>
                                 <input id="username" name="username" type="text" class="form-control" placeholder="cth: username/nis" value="{{ old('username') }}">
                                 @error('username')
-                                <small class="text- font-weight-bold">* {{ $message }}</small>
+                                <small class="text-danger font-weight-bold">* {{ $message }}</small>
                                 @enderror
                             </div>
 
@@ -44,12 +44,12 @@
                                 <input id="password" name="password" type="password" class="form-control" placeholder="Kata sandi">
                                 <i data-feather="eye" class="eye-toggle"></i>
                                 @error('password')
-                                <small class="text- font-weight-bold">* {{ $message }}</small>
+                                <small class="text-danger font-weight-bold">* {{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="d-sm-flex justify-content-between">
                                 <div class="field-wrapper">
-                                    <button type="submit" class="btn btn-primary" value="">Masuk</button>
+                                    <button type="submit" class="btn btn-primary loadingTrigger" value="">Masuk</button>
                                 </div>
                             </div>
 
@@ -71,6 +71,37 @@
 @endsection
 
 @section('script')
+<script>
+    let eyeToggel = document.querySelector('.eye-toggle')
+    let loadingTrigger = document.querySelectorAll('.loadingTrigger')
+    loadingTrigger.forEach(function(loading) {
+        loading.addEventListener('click', function(e) {
+            if (loading.classList.contains('tambah')) {
+                if (checkForm()) {
+                    loadingSpin()
+                }
+            } else {
+                loadingSpin()
+            }
 
+            function loadingSpin() {
+                textLoadingtrigger = loading.innerHTML
+                const spinner = document.createElement('div')
+                spinner.classList = "spinner-border text-white align-self-center loader-sm"
+                loading.replaceChild(spinner, loading.childNodes[0])
+            }
+
+        })
+    })
+    eyeToggel.addEventListener('click', function(e) {
+        let password = document.getElementById('password')
+        if (password.type === 'password') {
+            password.type = 'text'
+        } else {
+            password.type = 'password'
+        }
+    })
+
+</script>
 
 @endsection

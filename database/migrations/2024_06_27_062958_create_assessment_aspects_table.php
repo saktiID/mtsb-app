@@ -14,8 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('assessment_aspects', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->string('aspect', 1028);
+            $table->string('aspect_for', 25);
+            $table->boolean('aspect_status')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
