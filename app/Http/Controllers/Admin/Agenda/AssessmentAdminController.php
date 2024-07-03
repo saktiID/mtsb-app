@@ -28,7 +28,6 @@ class AssessmentAdminController extends Controller
 
     public function tambah_assessment_aspect(Request $request)
     {
-
         $query = $this->aspect->tambahAspect($request);
         if ($query) {
             return response()->json(['success' => true, 'message' => 'Assessment Aspect for ' . $request->aspect_for . ' berhasil ditambahkan']);

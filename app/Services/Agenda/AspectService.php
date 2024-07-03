@@ -2,7 +2,6 @@
 
 namespace App\Services\Agenda;
 
-use Illuminate\Support\Str;
 use App\Models\Agenda\AssessmentAspect;
 
 class AspectService
@@ -14,7 +13,6 @@ class AspectService
     public function tambahAspect($request)
     {
         $aspect = new AssessmentAspect;
-        $aspect->id = Str::uuid();
         $aspect->aspect = $request->aspect;
         $aspect->aspect_for = $request->aspect_for;
         $query = $aspect->save();

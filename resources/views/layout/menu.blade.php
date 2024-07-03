@@ -67,7 +67,7 @@
 
 {{-- logout --}}
 <li class="menu ">
-    <a href="#" aria-expanded="false" class="dropdown-toggle" data-toggle="modal" data-target="#logoutModal">
+    <a href="#" aria-expanded="false" class="dropdown-toggle" data-toggle="modal" data-target="#logoutModal" id="logoutSidebarBtn">
         <div class="">
             <i data-feather="log-out"></i>
             <span> Keluar</span>

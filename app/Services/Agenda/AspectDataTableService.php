@@ -26,7 +26,7 @@ class AspectDataTableService
                 $data['id'] = $aspect->id;
                 $data['aspect'] = $aspect->aspect;
                 $data['aspect_for'] = $aspect->aspect_for;
-                return view('element.delete-action', $data);
+                return view('element.delete-aspect-action', $data);
             })
             ->rawColumns(['aspect_status'])
             ->make(true);

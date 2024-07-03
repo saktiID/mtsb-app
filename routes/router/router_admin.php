@@ -18,8 +18,13 @@ Route::prefix('admin')->group(function () {
         Route::get('/', function () {
             return redirect()->route('beranda-admin');
         });
-        Route::get('data-siswa', [DataSiswaController::class, 'index'])->name('data-siswa');
         Route::get('data-guru', [DataGuruController::class, 'index'])->name('data-guru');
+        Route::get('data-guru/detail/{id}', [DataGuruController::class, 'detail_guru'])->name('detail-data-guru');
+        Route::post('data-guru', [DataGuruController::class, 'tambah_guru'])->name('tambah-data-guru');
+        Route::post('data-guru/update', [DataGuruController::class, 'update_guru'])->name('update-data-guru');
+        Route::post('data-guru/hapus', [DataGuruController::class, 'hapus_guru'])->name('hapus-data-guru');
+
+        Route::get('data-siswa', [DataSiswaController::class, 'index'])->name('data-siswa');
         Route::get('data-kelas', [DataKelasController::class, 'index'])->name('data-kelas');
         Route::get('data-periode', [DataPeriodeController::class, 'index'])->name('data-periode');
     });

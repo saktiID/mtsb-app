@@ -97,9 +97,11 @@
                 <div class="alert alert-warning mb-4" role="alert">
                     <strong>Pastikan aspect tidak pernah dijawab oleh siapapun!</strong>
                 </div>
-
+                <p>Akan menghapus data:</p>
+                <hr>
                 <p id="aspect_for_box"></p>
                 <p id="aspect_box"></p>
+                <hr>
                 <strong>Konfirmasi hapus aspect?</strong>
 
             </div>
@@ -150,12 +152,9 @@
     })
 
     $(document).on('click', '.hapus-aspect', function() {
-        let id_aspect = $(this).attr('data-id')
-        let aspect = $(this).attr('data-aspect')
-        let aspect_for = $(this).attr('data-for')
-        aspect_box.innerHTML = aspect
-        aspect_for_box.innerHTML = `<i>${aspect_for} assessment</i>`
-        hapusAspectBtn.href = id_aspect
+        aspect_box.innerHTML = $(this).attr('data-aspect')
+        aspect_for_box.innerHTML = `<i>${$(this).attr('data-for')} assessment</i>`
+        hapusAspectBtn.href = $(this).attr('data-id')
         $('#hapusModal').modal('show')
     })
 
@@ -178,10 +177,8 @@
             success: function(res) {
                 onfinish()
                 if (res.success) {
-                    onfinish()
                     notif(res.message, true)
                 } else {
-                    onfinish()
                     notif(res.message, false)
                 }
             }, //

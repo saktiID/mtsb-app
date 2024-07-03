@@ -18,6 +18,19 @@
 <script src="{{ asset('feather/feather.min.js') }}"></script>
 <script>
     feather.replace()
+    const logoutSidebarBtn = document.getElementById("logoutSidebarBtn");
+    const container = document.getElementById("container");
+    const overlay = document.querySelector(".overlay");
+    const html = document.querySelector("html");
+    const body = document.querySelector("body");
+
+    logoutSidebarBtn.addEventListener("click", () => {
+        container.classList.remove("sbar-open");
+        container.classList.add("sidebar-closed");
+        overlay.classList.remove("show");
+        html.classList.remove("sidebar-noneoverflow");
+        body.classList.remove("sidebar-noneoverflow");
+    });
 
 </script>
 

@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Models\Agenda;
+namespace App\Models\Data;
 
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AssessmentAspect extends Model
+class Guru extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -27,9 +29,10 @@ class AssessmentAspect extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'aspect',
-        'aspect_for',
-        'aspect_status',
+        'user_id',
+        'email',
+        'telp',
+
     ];
 
     protected static function boot()
@@ -38,5 +41,10 @@ class AssessmentAspect extends Model
         static::creating(function ($model) {
             $model->{$model->getKeyName()} = (string) Str::uuid();
         });
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
