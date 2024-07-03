@@ -10,8 +10,7 @@ use App\Services\Data\GuruDataTableService as GuruData;
 
 class DataGuruController extends Controller
 {
-    private $guruData;
-    private $guru;
+    private $guru, $guruData;
 
     public function __construct(GuruData $guruData, Guru $guru)
     {

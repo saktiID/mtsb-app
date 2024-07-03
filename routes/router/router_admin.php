@@ -18,13 +18,23 @@ Route::prefix('admin')->group(function () {
         Route::get('/', function () {
             return redirect()->route('beranda-admin');
         });
-        Route::get('data-guru', [DataGuruController::class, 'index'])->name('data-guru');
-        Route::get('data-guru/detail/{id}', [DataGuruController::class, 'detail_guru'])->name('detail-data-guru');
-        Route::post('data-guru', [DataGuruController::class, 'tambah_guru'])->name('tambah-data-guru');
-        Route::post('data-guru/update', [DataGuruController::class, 'update_guru'])->name('update-data-guru');
-        Route::post('data-guru/hapus', [DataGuruController::class, 'hapus_guru'])->name('hapus-data-guru');
 
-        Route::get('data-siswa', [DataSiswaController::class, 'index'])->name('data-siswa');
+        Route::prefix('data-guru')->group(function () {
+            Route::get('/', [DataGuruController::class, 'index'])->name('data-guru');
+            Route::get('{id}', [DataGuruController::class, 'detail_guru'])->name('detail-data-guru');
+            Route::post('/', [DataGuruController::class, 'tambah_guru'])->name('tambah-data-guru');
+            Route::post('update', [DataGuruController::class, 'update_guru'])->name('update-data-guru');
+            Route::post('hapus', [DataGuruController::class, 'hapus_guru'])->name('hapus-data-guru');
+        });
+
+        Route::prefix('data-siswa')->group(function () {
+            Route::get('/', [DataSiswaController::class, 'index'])->name('data-siswa');
+            Route::get('{id}', [DataSiswaController::class, 'detail_siswa'])->name('detail-data-siswa');
+            Route::post('/', [DataSiswaController::class, 'tambah_siswa'])->name('tambah-data-siswa');
+            Route::post('update', [DataSiswaController::class, 'update_siswa'])->name('update-data-siswa');
+            Route::post('hapus', [DataSiswaController::class, 'hapus_siswa'])->name('hapus-data-siswa');
+        });
+
         Route::get('data-kelas', [DataKelasController::class, 'index'])->name('data-kelas');
         Route::get('data-periode', [DataPeriodeController::class, 'index'])->name('data-periode');
     });

@@ -1,20 +1,20 @@
 @extends('layout.main')
-@section('title', 'Data Guru')
+@section('title', 'Data Siswa')
 @section('content')
 <div class="row pt-4">
-    <x-card-box cardTitle="Detail Guru">
+    <x-card-box cardTitle="Detail Siswa">
         <div class="form-row">
             <div class="col-lg-4 col-sm-12 mb-4">
 
                 @if(Auth::user()->role == 'Admin')
-                <a href="{{ route('data-guru') }}">
+                <a href="{{ route('data-siswa') }}">
                     <div class="alert alert-outline-primary">
-                        <span>&larr; Kembali ke data guru</span>
+                        <span>&larr; Kembali ke data siswa</span>
                     </div>
                 </a>
                 @endif
 
-                <label>Profile guru</label>
+                <label>Profile siswa</label>
                 <input type="file" accept="image/*" id="avatar_upload" name="avatar_upload" hidden>
                 <div class="text-center">
                     <div class="avatar avatar-xl mb-4">
@@ -24,26 +24,41 @@
                 </div>
 
             </div>
-
             <div class="col-lg-8 col-sm-12">
-
                 <div class="alert alert-light-warning">
-                    <span>Detail guru</span>
+                    <span>Detail siswa</span>
                 </div>
-                <form method="POST" id="data_guru" class="mb-4" data-form="data_guru">
+                <form method="POST" id="data_siswa" class="mb-4" data-form="data_siswa">
                     @csrf
 
                     <input type="text" name="id" id="id" value="{{ $user->id }}" hidden>
 
                     <div class="mb-3">
-                        <label for="nama">Nama guru *</label>
+                        <label for="nama">Nama siswa *</label>
                         <input type="text" value="{{ $user->nama }}" id="nama" name="nama" class="form-control" required>
                     </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-sm12">
+                            <div class="mb-3">
+                                <label for="nis">NIS *</label>
+                                <input type="text" value="{{ $user->siswa->nis }}" id="nis" name="nis" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm12">
+                            <div class="mb-3">
+                                <label for="nisn">NISN</label>
+                                <input type="text" value="{{ $user->siswa->nisn }}" id="nisn" name="nisn" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="row">
                         <div class="col-lg-6 col-sm-12">
                             <div class="mb-3">
-                                <label for="email">Email guru</label>
-                                <input type="text" value="{{ $user->guru->email }}" id="email" name="email" class="form-control">
+                                <label for="email">Email siswa</label>
+                                <input type="text" value="{{ $user->siswa->email }}" id="email" name="email" class="form-control">
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-12">
@@ -63,7 +78,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-sm-12">
                             <div class="mb-3">
-                                <label for="gender_asatidz">Gender guru *</label>
+                                <label for="gender_asatidz">Gender siswa *</label>
                                 <select id="gender_asatidz" name="gender" class="form-control selectpicker" required>
                                     <option value="">-- Pilih Gender --</option>
                                     <option value="male" {{ ($user->gender == 'male' ? 'selected' : '') }}>Laki-laki</option>
@@ -75,7 +90,7 @@
                         <div class="col-lg-6 col-sm-12">
                             <div class="mb-3">
                                 <label for="telp">No. Telp *</label>
-                                <input type="text" value="{{ $user->guru->telp }}" name="telp" id="telp" class="form-control" required>
+                                <input type="text" value="{{ $user->siswa->telp }}" name="telp" id="telp" class="form-control" required>
                             </div>
                         </div>
 
@@ -85,59 +100,24 @@
                     <div class="row">
                         <div class="col-lg-6 col-sm-12">
                             <div class="mb-3">
-                                <label for="password_asatidz">Password guru</label>
+                                <label for="password_asatidz">Password siswa</label>
                                 <input type="password" value="" id="password_asatidz" name="password" class="form-control">
                                 <span><i class="text-small text-warning">(*Kosongkan jika tidak ingin merubah password)</i></span>
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-12">
                             <div class="mb-3">
-                                <label for="konfirmasi_password_asatidz">Konfirmasi password guru</label>
+                                <label for="konfirmasi_password_asatidz">Konfirmasi password siswa</label>
                                 <input type="password" value="" id="konfirmasi_password_asatidz" name="password_confirmation" class="form-control">
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="mb-3 btn btn-primary loadingTrigger simpan" data-form="data_guru">Simpan</button>
-                    </div>
-                </form>
-
-                <div class="alert alert-light-warning">
-                    <span>Tugas guru</span>
-                </div>
-
-                <form method="POST" id="data_walas" data-form="data_walas" class="mb-4">
-                    @csrf
-
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-12">
-                            <div class="mb-3">
-                                <label for="is_walas">Status walas</label>
-                                <select name="is_walas" id="is_walas" class="form-control selectpicker">
-                                    <option value="0">Tidak</option>
-                                    <option value="1">Iya</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-12">
-                            <div class="mb-3">
-                                <label for="kelas_id">Walas kelas</label>
-                                <select name="kelas_id" id="kelas_id" class="form-control selectpicker">
-                                    <option value="0">Tidak</option>
-                                    <option value="1">Iya</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="mb-3 btn btn-primary loadingTrigger simpan" data-form="data_walas">Simpan</button>
+                        <button type="submit" class="mb-3 btn btn-primary loadingTrigger simpan" data-form="data_siswa">Simpan</button>
                     </div>
                 </form>
             </div>
-
-        </div>
     </x-card-box>
 </div>
 @endsection
@@ -176,7 +156,7 @@
 <script>
     let loadingTrigger = document.querySelectorAll('.loadingTrigger')
 
-    $('form#data_guru').on('submit', function(e) {
+    $('form#data_siswa').on('submit', function(e) {
         e.preventDefault()
         let data = $(this).serializeArray()
         serrialAssoc(data)
@@ -187,7 +167,7 @@
         data.forEach(element => {
             formData.append(element.name, element.value)
         })
-        prosesAjax(formData, "{{ route('update-data-guru') }}")
+        prosesAjax(formData, "{{ route('update-data-siswa') }}")
     }
 
     function prosesAjax(data, route) {

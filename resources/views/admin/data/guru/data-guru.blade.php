@@ -140,7 +140,6 @@
 
 @section('style')
 <link rel="stylesheet" href="{{ asset('plugins/table/datatable/datatables.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/css/forms/theme-checkbox-radio.css') }}">
 @endsection
 
 @section('script')
@@ -168,10 +167,11 @@
     })
 
     $('#reloadData').on('click', function() {
-        $('#data-guru').DataTable().ajax.reload()
+        $('#data-siswa').DataTable().ajax.reload()
+        notif('Berhasil muat ulang data', true)
     })
 
-    $(document).on('click', '.hapus-guru', function() {
+    $(document).on('click', '.hapus-data', function() {
         nama_guru_akan_dihapus.innerHTML = $(this).attr('data-nama')
         hapusBtnModal.href = $(this).attr('data-id')
         $('#hapusModal').modal('show')

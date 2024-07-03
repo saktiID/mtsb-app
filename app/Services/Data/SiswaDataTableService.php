@@ -5,11 +5,11 @@ namespace App\Services\Data;
 use App\Models\User;
 use Yajra\DataTables\Facades\DataTables;
 
-class GuruDataTableService
+class SiswaDataTableService
 {
-    public function getGuruDataTable()
+    public function getSiswaDataTable()
     {
-        $user = User::has('guru')->with('guru')->get();
+        $user = User::has('siswa')->with('siswa')->get();
         $dataTable = DataTables::of($user)
             ->addColumn('check', function ($user) {
                 $data['id'] = $user->id;
@@ -18,27 +18,27 @@ class GuruDataTableService
             })
             ->addColumn('avatar', function ($user) {
                 $data['avatar'] = $user->avatar;
-                $data['route'] = 'detail-data-guru';
+                $data['route'] = 'detail-data-siswa';
                 $data['id'] = $user->id;
                 return view('element.avatar', $data);
             })
             ->addColumn('nama', function ($user) {
-                $data['route'] = 'detail-data-guru';
+                $data['route'] = 'detail-data-siswa';
                 $data['id'] = $user->id;
                 $data['nama'] = $user->nama;
-                $data['role'] = $user->role;
+                $data['role'] = '';
                 return view('element.anchor-nama', $data);
             })
-            ->addColumn('email', function ($user) {
-                return $user->guru->email;
+            ->addColumn('nis', function ($user) {
+                return $user->siswa->nis;
             })
-            ->addColumn('telp', function ($user) {
-                return $user->guru->telp;
+            ->addColumn('nisn', function ($user) {
+                return $user->siswa->nisn;
             })
             ->addColumn('more', function ($user) {
                 $data['nama'] = $user->nama;
                 $data['id'] = $user->id;
-                $data['route'] = 'detail-data-guru';
+                $data['route'] = 'detail-data-siswa';
                 return view('element.more-action', $data);
             })
             ->make(true);

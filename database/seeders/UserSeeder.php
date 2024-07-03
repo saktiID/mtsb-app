@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Data\Guru;
+use App\Models\Data\Siswa;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -51,16 +52,25 @@ class UserSeeder extends Seeder
                 'email' => 'guru@mtsb.app',
                 'telp' => '6281472583690',
             ]);
-        });
 
-        User::create([
-            'id' => 'de6c287f-e126-4eb4-b5a8-aeef4c652bc4',
-            'nama' => 'Alex Alexander',
-            'username' => '@siswa.mtsb',
-            'role' => 'Siswa',
-            'gender' => 'male',
-            'avatar' => 'user-male-90x90.png',
-            'password' => Hash::make('siswa5758')
-        ]);
+            // Membuat record baru di tabel users
+            $user3 = User::create([
+                'nama' => 'Prily Latuconsina',
+                'username' => '@siswa.mtsb',
+                'role' => 'Siswa',
+                'gender' => 'female',
+                'avatar' => 'user-female-90x90.png',
+                'password' => Hash::make('siswa5758')
+            ]);
+
+            // Membuat record baru di tabel siswa dengan user_id dari user yang baru dibuat
+            Siswa::create([
+                'user_id' => $user3->id,
+                'nis' => '232405035-5303501-0513',
+                'nisn' => '452345425',
+                'email' => 'siswa@mtsb.app',
+                'telp' => '622435242454',
+            ]);
+        });
     }
 }

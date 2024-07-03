@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Models\Data\Guru;
+use App\Models\Data\Siswa;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -69,5 +70,10 @@ class User extends Authenticatable
     public function guru(): HasOne
     {
         return $this->hasOne(Guru::class, 'user_id', 'id');
+    }
+
+    public function siswa(): HasOne
+    {
+        return $this->hasOne(Siswa::class, 'user_id', 'id');
     }
 }
