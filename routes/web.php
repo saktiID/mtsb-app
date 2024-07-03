@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/get-foto/{filename}', [FotoGetterController::class, 'foto'])->name('get-foto');
+    Route::post('/upload-foto', [FotoGetterController::class, 'upload_foto'])->name('foto-profile');
 
     Route::group(['middleware' => ['role']], function () {
         include('router/router_admin.php');
