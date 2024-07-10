@@ -25,11 +25,7 @@
     const body = document.querySelector("body");
 
     logoutSidebarBtn.addEventListener("click", () => {
-        container.classList.remove("sbar-open");
-        container.classList.add("sidebar-closed");
-        overlay.classList.remove("show");
-        html.classList.remove("sidebar-noneoverflow");
-        body.classList.remove("sidebar-noneoverflow");
+        $('.overlay').click()
     });
 
 </script>

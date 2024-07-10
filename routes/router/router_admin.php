@@ -35,8 +35,20 @@ Route::prefix('admin')->group(function () {
             Route::post('hapus', [DataSiswaController::class, 'hapus_siswa'])->name('hapus-data-siswa');
         });
 
-        Route::get('data-kelas', [DataKelasController::class, 'index'])->name('data-kelas');
-        Route::get('data-periode', [DataPeriodeController::class, 'index'])->name('data-periode');
+        Route::prefix('data-kelas')->group(function () {
+            Route::get('/', [DataKelasController::class, 'index'])->name('data-kelas');
+            Route::get('/{id}', [DataKelasController::class, 'detail_kelas'])->name('detail-kelas');
+            Route::post('/', [DataKelasController::class, 'tambah_kelas'])->name('tambah-data-kelas');
+            Route::post('hapus', [DataKelasController::class, 'hapus_kelas'])->name('hapus-data-kelas');
+            Route::post('set', [DataKelasController::class, 'set_walas'])->name('set-wali-kelas');
+        });
+
+        Route::prefix('data-periode')->group(function () {
+            Route::get('/', [DataPeriodeController::class, 'index'])->name('data-periode');
+            Route::post('/', [DataPeriodeController::class, 'tambah_periode'])->name('tambah-data-periode');
+            Route::get('/hapus/{id}', [DataPeriodeController::class, 'hapus_periode'])->name('hapus-periode');
+            Route::post('/activate', [DataPeriodeController::class, 'activate_periode'])->name('activate-periode');
+        });
     });
 
     Route::prefix('agenda')->group(function () {

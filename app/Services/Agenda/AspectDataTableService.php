@@ -19,6 +19,7 @@ class AspectDataTableService
             ->addColumn('aspect_status', function ($aspect) {
                 $data['status'] = $aspect->aspect_status;
                 $data['id'] = $aspect->id;
+                $data['class'] = 'aspect-status';
                 $element = view('element.switch', $data);
                 return $element;
             })
