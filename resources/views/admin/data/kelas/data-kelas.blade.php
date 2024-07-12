@@ -3,7 +3,7 @@
 @section('content')
 <div class="row pt-4">
 
-    <x-periode-banner semester="{{ $periode_aktif->semester }}" tahunAjaran="{{ $periode_aktif->tahun_ajaran }}" />
+    <x-periode-banner semester="{{ $periodeAktif->semester }}" tahunAjaran="{{ $periodeAktif->tahun_ajaran }}" />
 
     <x-card-box cardTitle="Data Kelas">
         <div class="btn-group mb-3" role="group" aria-label="Basic example">
@@ -57,11 +57,11 @@
             <form id="formTambah">
                 <div class="modal-body">
                     @csrf
-                    <input type="text" name="periode_id" value="{{ $periode_aktif->id }}" hidden>
+                    <input type="text" name="periode_id" value="{{ $periodeAktif->id }}" hidden>
                     <div class="form-row">
                         <div class="col-lg-12 col-sm-12">
                             <div class="alert alert-light-warning">
-                                <span>Detail Kelas | Periode: Semester {{ $periode_aktif->semester}} {{ $periode_aktif->tahun_ajaran }} </span>
+                                <span>Detail Kelas | Periode: Semester {{ $periodeAktif->semester}} {{ $periodeAktif->tahun_ajaran }} </span>
                             </div>
 
                             <div class="row">

@@ -9,7 +9,7 @@
             <div class="col-lg-6 col-sm-12">
                 <div class="mb-3">
                     <label for="aspect">Aspect for</label>
-                    <select class="form-control" name="aspect_for" id="aspect_for" required>
+                    <select class="form-control selectpicker" name="aspect_for" id="aspect_for" required>
                         <option disabled selected value="">-- Pilih aspect untuk --</option>
                         <option value="teacher">Teacher</option>
                         <option value="parent">Parent</option>

@@ -48,7 +48,7 @@
                     </tr>
                     <tr>
                         <th>Periode</th>
-                        <td>Semester: {{ $periode->semester }} {{ $periode->tahun_ajaran }}</td>
+                        <td>Semester: {{ $kelas->periode->semester }} {{ $kelas->periode->tahun_ajaran }}</td>
                     </tr>
                     <tr>
                         <th>Wali kelas</th>
@@ -70,12 +70,92 @@
     </x-card-box>
 
     <x-card-box cardTitle="Siswa Kelas">
+        <div class="btn-group mb-3" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-info btn-sm" id="reloadData">Reload data</button>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahModal">Masukkan siswa ke kelas</button>
+        </div>
+
+        <div class="table-responsive">
+            <table id="data-siswa-kelas" class="table table-striped table-hover" style="width:100%">
+                <thead>
+                    <tr class="text-center">
+                        <th>Foto</th>
+                        <th>Nama</th>
+                        <th>NIS</th>
+                        <th>NISN</th>
+                        <th><i data-feather="more-horizontal"></i></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </x-card-box>
 </div>
 @endsection
 
+@section('modal')
+<div class="modal fade" id="tambahModal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="tambahModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tambahModalLabel">Masukkan Santri ke Kelas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-row">
+                    <div class="col-lg-12 col-sm-12">
+
+                        <div class="alert alert-light-warning">
+                            <span>Pilih santri untuk masuk ke kelas</span>
+                        </div>
+                        <div class="btn-group mb-3" role="group" aria-label="Basic example">
+                            <span class="btn btn-info" id="reload_semua_siswa">Reload data</span>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table id="data-siswa" class="table table-striped table-hover" style="width:100%">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>Foto</th>
+                                        <th>Nama</th>
+                                        <th>NIS</th>
+                                        <th>NISN</th>
+                                        <th><i data-feather="more-horizontal"></i></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer d-block pt-0">
+                <div class="alert alert-outline-primary" style="height: 77px; overflow-x: hidden; overflow-y: auto;">
+                    <label>Santri berhasil dimasukkan:</label>
+                    <div class="wrapper-santri"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@section('style')
+<link rel="stylesheet" href="{{ asset('plugins/table/datatable/datatables.css') }}">
+@endsection
+
 @section('script')
+<script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
 <script>
+    const wrapperSantri = document.querySelector('.wrapper-santri')
+
     $('#walas_id').on('change', function(e) {
         let val = this.value
         let ex = val.split('/')
@@ -89,6 +169,88 @@
         replaceName(ex[2])
     })
 
+    $('#reloadData').on('click', function() {
+        $('#data-siswa-kelas').DataTable().ajax.reload()
+        notif('Berhasil muat ulang data', true)
+    })
+
+    $('#reload_semua_siswa').on('click', function() {
+        $('#data-siswa').DataTable().ajax.reload()
+        notif('Berhasil muat ulang data', true)
+    })
+
+    $('#tambahModal').on('hidden.bs.modal', function() {
+        wrapperSantri.innerHTML = ''
+    })
+
+    $(document).on('click', '.masukkan-siswa', function(e) {
+        let id = $(this).data('id')
+        let nama = $(this).data('nama')
+        staging(id, nama, "{{ route('masukkan-siswa') }}")
+    })
+
+    $(document).on('click', '.keluarkan-siswa', function(e) {
+        let id = $(this).data('id')
+        let nama = $(this).data('nama')
+        staging(id, nama, "{{ route('keluarkan-siswa') }}")
+    })
+
+    function staging(id, nama, route) {
+        let formData = new FormData()
+        formData.append('_token', "{{ csrf_token() }}")
+        formData.append('id', id)
+        formData.append('nama', nama)
+        formData.append('kelas_id', "{{ $kelas->id }}")
+        formData.append('periode_id', "{{ $kelas->periode->id }}")
+        prosesAjax(formData, route);
+    }
+
+    function berhasilMasukkan(nama) {
+        let span = document.createElement('span');
+        span.classList.add('badge')
+        span.classList.add('badge-success')
+        span.classList.add('mr-1')
+        span.classList.add('mt-1')
+        span.textContent = nama
+        wrapperSantri.appendChild(span)
+        $('#data-siswa-kelas').DataTable().ajax.reload()
+    }
+
+    function berhasilKeluarkan() {
+        $('#data-siswa-kelas').DataTable().ajax.reload()
+    }
+
+    function loadData(id, route) {
+        $(id).DataTable({
+            processing: true, //
+            serverSide: true, //
+            ajax: {
+                url: route, //
+            }, //
+            columns: [{
+                    data: 'avatar', //
+                    orderable: false, //
+                }, //
+                {
+                    data: 'nama', //
+                }, //
+                {
+                    data: 'nis', //
+                }, //
+                {
+                    data: 'nisn', //
+                }, //
+                {
+                    data: 'more', //
+                    className: 'text-center', //
+                    orderable: false, //
+                    searchbar: false, //
+                }, //
+            ]
+
+        })
+    }
+
     function prosesAjax(data, route) {
         $.ajax({
             url: route, //
@@ -100,6 +262,15 @@
             success: function(res) {
                 // onfinish()
                 if (res.success) {
+
+                    if (res.type && res.type == 'masukkan') {
+                        berhasilMasukkan(res.nama)
+                    }
+
+                    if (res.type && res.type == 'keluarkan') {
+                        berhasilKeluarkan()
+                    }
+
                     notif(res.message, true)
                 } else {
                     notif(res.message, false)
@@ -129,6 +300,10 @@
     function replaceName(newName) {
         $('#nama_walas').text(newName)
     }
+
+    loadData('#data-siswa-kelas', "{{ route('siswa-kelas', ['id' => 'params']) }}".replace('params', "{{ $kelas->id }}"))
+
+    loadData('#data-siswa', "{{ route('semua-siswa') }}")
 
 </script>
 @endsection

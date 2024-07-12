@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Models\Data;
+namespace App\Models\Agenda;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Kelas extends Model
+class AssessmentRecord extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     public function getIncrementing()
     {
@@ -29,10 +27,12 @@ class Kelas extends Model
      */
     protected $fillable = [
         'periode_id',
-        'jenjang_kelas',
-        'bagian_kelas',
-        'walas_id',
-
+        'siswa_user_id',
+        'aspect_id',
+        'answer',
+        'bulan',
+        'minggu_ke',
+        'evaluator',
     ];
 
     protected static function boot()
@@ -41,10 +41,5 @@ class Kelas extends Model
         static::creating(function ($model) {
             $model->{$model->getKeyName()} = (string) Str::uuid();
         });
-    }
-
-    public function periode(): BelongsTo
-    {
-        return $this->belongsTo(Periode::class, 'periode_id', 'id');
     }
 }

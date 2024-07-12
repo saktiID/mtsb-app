@@ -4,6 +4,7 @@ namespace App\Services\Data;
 
 use App\Models\User;
 use App\Models\Data\Kelas;
+use App\Models\Data\KelasSiswa;
 use Illuminate\Support\Facades\DB;
 
 class KelasService
@@ -25,7 +26,10 @@ class KelasService
 
     public function detailKelas($id)
     {
-        $kelas = Kelas::find($id);
+        $kelas = Kelas::where('id', $id)->with('periode')->first();
+        if (!$kelas) {
+            return false;
+        }
         $avatar = '-';
         $nama_walas = '-';
         $walas_id = '-';
@@ -40,7 +44,6 @@ class KelasService
         $kelas->avatar = $avatar;
         $kelas->nama_walas = $nama_walas;
         $kelas->walas_id = $walas_id;
-
 
         return $kelas;
     }
@@ -70,6 +73,37 @@ class KelasService
         $kelas = Kelas::find($request->kelas_id);
         $kelas->walas_id = $request->walas_id;
         if ($kelas->save()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function cekSiswa($periode_id, $user_id)
+    {
+        return KelasSiswa::where('periode_id', $periode_id)
+            ->where('user_id', $user_id)
+            ->exists();
+    }
+
+    public function masukkanSiswa($request)
+    {
+        $kelasSiswa = new KelasSiswa;
+        $kelasSiswa->periode_id = $request->periode_id;
+        $kelasSiswa->kelas_id = $request->kelas_id;
+        $kelasSiswa->user_id = $request->id;
+
+        if ($kelasSiswa->save()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function keluarkanSiswa($id)
+    {
+        $kelasSiswa = KelasSiswa::find($id);
+        if ($kelasSiswa->delete()) {
             return true;
         } else {
             return false;

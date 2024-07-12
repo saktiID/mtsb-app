@@ -37,10 +37,14 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('data-kelas')->group(function () {
             Route::get('/', [DataKelasController::class, 'index'])->name('data-kelas');
-            Route::get('/{id}', [DataKelasController::class, 'detail_kelas'])->name('detail-kelas');
+            Route::get('siswakelas', [DataKelasController::class, 'siswa_kelas'])->name('siswa-kelas');
+            Route::get('semuasiswa', [DataKelasController::class, 'semua_siswa'])->name('semua-siswa');
+            Route::get('{id}', [DataKelasController::class, 'detail_kelas'])->name('detail-kelas');
             Route::post('/', [DataKelasController::class, 'tambah_kelas'])->name('tambah-data-kelas');
             Route::post('hapus', [DataKelasController::class, 'hapus_kelas'])->name('hapus-data-kelas');
             Route::post('set', [DataKelasController::class, 'set_walas'])->name('set-wali-kelas');
+            Route::post('masukkan', [DataKelasController::class, 'masukkan_siswa'])->name('masukkan-siswa');
+            Route::post('keluarkan', [DataKelasController::class, 'keluarkan_siswa'])->name('keluarkan-siswa');
         });
 
         Route::prefix('data-periode')->group(function () {

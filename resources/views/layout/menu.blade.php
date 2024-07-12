@@ -1,9 +1,28 @@
+{{-- beranda --}}
+@if(Auth::user()->role == 'Admin')
+<x-menu-item menuTitle="Beranda" menuIcon="home" menuRoute="beranda-admin" menuActive="beranda-admin" />
+@elseif(Auth::user()->role == 'Guru')
+<x-menu-item menuTitle="Beranda" menuIcon="home" menuRoute="beranda-guru" menuActive="beranda-guru" />
+@elseif (Auth::user()->role == 'Siswa')
+<x-menu-item menuTitle="Beranda" menuIcon="home" menuRoute="beranda-siswa" menuActive="beranda-siswa" />
+@endif
+{{-- end beranda --}}
+{{-- logout --}}
+<li class="menu ">
+    <a href="#" aria-expanded="false" class="dropdown-toggle" data-toggle="modal" data-target="#logoutModal" id="logoutSidebarBtn">
+        <div class="">
+            <i data-feather="log-out"></i>
+            <span> Keluar</span>
+        </div>
+    </a>
+</li>
+{{-- end logout --}}
+
+
 {{-- admin menu --}}
 @if(Auth::user()->role == 'Admin')
 
-<x-menu-item menuTitle="Beranda" menuIcon="home" menuRoute="beranda-admin" menuActive="beranda-admin" />
-
-<x-menu-heading menuHeadingTitle="MENU" />
+<x-menu-heading menuHeadingTitle="ADMINISTRASI" />
 
 <x-menu-dropdown menuTitle="Database" menuIcon="database" menuParent="database" menuActive="admin/database/*">
 
@@ -14,14 +33,12 @@
 
 </x-menu-dropdown>
 
-<x-menu-dropdown menuTitle="Agenda" menuIcon="paperclip" menuParent="agenda" menuActive="admin/agenda/*">
+<x-menu-dropdown menuTitle="Agenda Admin" menuIcon="paperclip" menuParent="agenda-admin" menuActive="admin/agenda/*">
 
     <x-sub-menu-dropdown menuTitle="Assessment Aspect" menuRoute="assessment-aspect" menuActive="admin/agenda/assessment-aspect" />
     <x-sub-menu-dropdown menuTitle="Assessment History" menuRoute="assessment-history.admin" menuActive="admin/agenda/assessment-history" />
 
 </x-menu-dropdown>
-
-
 
 @endif
 {{-- end admin menu --}}
@@ -29,18 +46,19 @@
 
 
 {{-- guru menu --}}
-@if (Auth::user()->role == 'Guru')
+@if (Auth::user()->role == 'Guru' || Auth::user()->role == 'Admin')
 
-<x-menu-item menuTitle="Beranda" menuIcon="home" menuRoute="beranda-guru" menuActive="beranda-guru" />
+<x-menu-heading menuHeadingTitle="TUGAS" />
 
-<x-menu-heading menuHeadingTitle="MENU" />
+@if ($menuAgenda && $menuAgenda->walas_id == Auth::user()->id)
 
 <x-menu-dropdown menuTitle="Agenda" menuIcon="paperclip" menuParent="agenda" menuActive="guru/agenda/*">
-
     <x-sub-menu-dropdown menuTitle="Teacher Assessment" menuRoute="teacher-assessment" menuActive="guru/agenda/teacher-assessment" />
     <x-sub-menu-dropdown menuTitle="Assessment History" menuRoute="assessment-history.guru" menuActive="guru/agenda/assessment-history" />
-
 </x-menu-dropdown>
+
+@endif
+
 @endif
 {{-- end guru menu --}}
 
@@ -49,8 +67,6 @@
 
 {{-- siswa menu --}}
 @if (Auth::user()->role == 'Siswa')
-
-<x-menu-item menuTitle="Beranda" menuIcon="home" menuRoute="beranda-siswa" menuActive="beranda-siswa" />
 
 <x-menu-heading menuHeadingTitle="MENU" />
 
@@ -64,19 +80,6 @@
 
 @endif
 {{-- end siswa menu --}}
-
-{{-- logout --}}
-<li class="menu ">
-    <a href="#" aria-expanded="false" class="dropdown-toggle" data-toggle="modal" data-target="#logoutModal" id="logoutSidebarBtn">
-        <div class="">
-            <i data-feather="log-out"></i>
-            <span> Keluar</span>
-        </div>
-    </a>
-</li>
-{{-- end logout --}}
-
-
 
 
 @section('modal_logout')

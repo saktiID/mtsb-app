@@ -103,38 +103,6 @@
                     </div>
                 </form>
 
-                <div class="alert alert-light-warning">
-                    <span>Tugas guru</span>
-                </div>
-
-                <form method="POST" id="data_walas" data-form="data_walas" class="mb-4">
-                    @csrf
-
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-12">
-                            <div class="mb-3">
-                                <label for="is_walas">Status walas</label>
-                                <select name="is_walas" id="is_walas" class="form-control selectpicker">
-                                    <option value="0">Tidak</option>
-                                    <option value="1">Iya</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-12">
-                            <div class="mb-3">
-                                <label for="kelas_id">Walas kelas</label>
-                                <select name="kelas_id" id="kelas_id" class="form-control selectpicker">
-                                    <option value="0">Tidak</option>
-                                    <option value="1">Iya</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="mb-3 btn btn-primary loadingTrigger simpan" data-form="data_walas">Simpan</button>
-                    </div>
-                </form>
             </div>
 
         </div>

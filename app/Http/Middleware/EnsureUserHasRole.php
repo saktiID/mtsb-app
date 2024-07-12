@@ -23,7 +23,7 @@ class EnsureUserHasRole
         if (Auth::user()->role != 'Admin' && $path == 'admin') {
             return redirect()->route('home');
         }
-        if (Auth::user()->role != 'Guru' && $path == 'guru') {
+        if (Auth::user()->role == 'Siswa' && $path == 'guru') {
             return redirect()->route('home');
         }
         if (Auth::user()->role != 'Siswa' && $path == 'siswa') {

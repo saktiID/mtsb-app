@@ -2,15 +2,17 @@
 
 namespace App\Models\Data;
 
+use App\Models\User;
+use App\Models\Data\Kelas;
+use App\Models\Data\Siswa;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Kelas extends Model
+class KelasSiswa extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     public function getIncrementing()
     {
@@ -29,10 +31,8 @@ class Kelas extends Model
      */
     protected $fillable = [
         'periode_id',
-        'jenjang_kelas',
-        'bagian_kelas',
-        'walas_id',
-
+        'kelas_id',
+        'user_id',
     ];
 
     protected static function boot()
@@ -43,8 +43,18 @@ class Kelas extends Model
         });
     }
 
-    public function periode(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Periode::class, 'periode_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function siswa(): BelongsTo
+    {
+        return $this->belongsTo(Siswa::class, 'user_id', 'user_id');
+    }
+
+    public function kelas(): BelongsTo
+    {
+        return $this->belongsTo(Kelas::class, 'kelas_id', 'id');
     }
 }

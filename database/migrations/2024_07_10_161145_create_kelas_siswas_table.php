@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kelas', function (Blueprint $table) {
+        Schema::create('kelas_siswas', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('periode_id');
             $table->foreign('periode_id')->references('id')->on('periodes')->onDelete('cascade');
-            $table->string('jenjang_kelas', 2);
-            $table->string('bagian_kelas', 2);
-            $table->uuid('walas_id')->nullable();
-            $table->foreign('walas_id')->references('id')->on('users')->onDelete('cascade');
+            $table->uuid('kelas_id');
+            $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kelas');
+        Schema::dropIfExists('kelas_siswas');
     }
 };
