@@ -3,12 +3,10 @@
 namespace App\Models\Data;
 
 use App\Models\User;
-use App\Models\Data\Kelas;
-use App\Models\Data\Siswa;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class KelasSiswa extends Model
 {

@@ -26,6 +26,7 @@ class MenuService
 
                 if ($agenda) {
                     $menuAgenda = $agenda;
+
                     return $menuAgenda;
                 } else {
                     return $menuAgenda;

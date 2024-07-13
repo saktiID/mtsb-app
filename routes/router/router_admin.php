@@ -1,12 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\Agenda\AssessmentAdminController;
+use App\Http\Controllers\Admin\Beranda\BerandaAdminController;
 use App\Http\Controllers\Admin\Data\DataGuruController;
 use App\Http\Controllers\Admin\Data\DataKelasController;
-use App\Http\Controllers\Admin\Data\DataSiswaController;
 use App\Http\Controllers\Admin\Data\DataPeriodeController;
-use App\Http\Controllers\Admin\Beranda\BerandaAdminController;
-use App\Http\Controllers\Admin\Agenda\AssessmentAdminController;
+use App\Http\Controllers\Admin\Data\DataSiswaController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {

@@ -27,6 +27,7 @@ class PeriodeDataTableService
                 $data['status'] = $periode->periode_status;
                 $data['id'] = $periode->id;
                 $data['class'] = 'periode_status';
+
                 return view('element.radio', $data);
             })
             ->rawColumns(['status'])

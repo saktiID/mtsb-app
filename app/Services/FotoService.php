@@ -20,13 +20,13 @@ class FotoService
             $manager = new ImageManager(['driver' => 'gd']);
             $image = $manager->make($image);
             $image->resize(150, 150);
-            $image->encode('png', 90)->save(storage_path('app/profile/' . $imageName));
+            $image->encode('png', 90)->save(storage_path('app/profile/'.$imageName));
 
             $foto = User::where('id', $request->id)->update(['avatar' => $imageName]);
 
             if ($oldImage != 'user-male-90x90.png' && $oldImage != 'user-female-90x90.png') {
-                if (file_exists(storage_path('app/profile/' . $oldImage))) {
-                    unlink(storage_path('app/profile/' . $oldImage));
+                if (file_exists(storage_path('app/profile/'.$oldImage))) {
+                    unlink(storage_path('app/profile/'.$oldImage));
                 }
             }
 
@@ -37,6 +37,7 @@ class FotoService
             }
         } catch (\Exception $e) {
             Log::error($e);
+
             return false;
         }
     }

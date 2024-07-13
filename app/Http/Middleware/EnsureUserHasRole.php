@@ -29,6 +29,7 @@ class EnsureUserHasRole
         if (Auth::user()->role != 'Siswa' && $path == 'siswa') {
             return redirect()->route('home');
         }
+
         return $next($request);
     }
 }

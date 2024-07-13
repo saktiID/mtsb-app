@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Admin\Data;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Data\KelasService as Kelas;
 use App\Services\Data\KelasDataTableService as KelasData;
+use App\Services\Data\KelasService as Kelas;
+use Illuminate\Http\Request;
 
 class DataKelasController extends Controller
 {
-    private $kelasData, $kelas;
+    private $kelasData;
+
+    private $kelas;
 
     public function __construct(KelasData $kelasData, Kelas $kelas)
     {
@@ -24,6 +26,7 @@ class DataKelasController extends Controller
         if ($request->ajax()) {
             return $this->kelasData->getKelasDataTable($this->periodeAktif);
         }
+
         return view('admin.data.kelas.data-kelas', $data);
     }
 
@@ -31,7 +34,7 @@ class DataKelasController extends Controller
     {
         $data['kelas'] = $this->kelas->detailKelas($id);
         $data['guru'] = $this->kelas->getGuru();
-        if (!$data['kelas']) {
+        if (! $data['kelas']) {
             return redirect()->route('data-kelas');
         }
 
@@ -49,7 +52,7 @@ class DataKelasController extends Controller
     {
         $query = $this->kelas->tambahKelas($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Kelas baru ' . $request->jenjang_kelas . '-' . $request->bagian_kelas . ' berhasil ditambahkan']);
+            return response()->json(['success' => true, 'message' => 'Kelas baru '.$request->jenjang_kelas.'-'.$request->bagian_kelas.' berhasil ditambahkan']);
         } else {
             return response()->json(['success' => false, 'message' => 'Kelas baru gagal ditambahkan']);
         }
@@ -87,21 +90,21 @@ class DataKelasController extends Controller
     {
         $cekSiswa = $this->kelas->cekSiswa($request->periode_id, $request->id);
         if ($cekSiswa) {
-            return response()->json(['success' => false, 'message' => 'Siswa/i ' . $request->nama . ' sudah dimasukkan kelas']);
+            return response()->json(['success' => false, 'message' => 'Siswa/i '.$request->nama.' sudah dimasukkan kelas']);
         } else {
             $query = $this->kelas->masukkanSiswa($request);
             if ($query) {
                 return response()->json([
                     'success' => true,
                     'type' => 'masukkan',
-                    'message' => 'Siswa/i ' . $request->nama . ' berhasil dimasukkan',
+                    'message' => 'Siswa/i '.$request->nama.' berhasil dimasukkan',
                     'nama' => $request->nama,
                 ]);
             } else {
                 return response()->json([
                     'success' => false,
                     'type' => 'masukkan',
-                    'message' => 'Siswa/i ' . $request->nama . ' gagal dimasukkan',
+                    'message' => 'Siswa/i '.$request->nama.' gagal dimasukkan',
                     'nama' => $request->nama,
                 ]);
             }
@@ -115,14 +118,14 @@ class DataKelasController extends Controller
             return response()->json([
                 'success' => true,
                 'type' => 'keluarkan',
-                'message' => 'Siswa/i ' . $request->nama . ' berhasil dikeluarkan',
+                'message' => 'Siswa/i '.$request->nama.' berhasil dikeluarkan',
                 'nama' => $request->nama,
             ]);
         } else {
             return response()->json([
                 'success' => false,
                 'type' => 'keluarkan',
-                'message' => 'Siswa/i ' . $request->nama . ' gagal dikeluarkan',
+                'message' => 'Siswa/i '.$request->nama.' gagal dikeluarkan',
                 'nama' => $request->nama,
             ]);
         }

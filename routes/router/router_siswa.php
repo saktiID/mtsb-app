@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Siswa\Beranda\BerandaSiswaController;
 use App\Http\Controllers\Siswa\Agenda\AssessmentSiswaController;
-
+use App\Http\Controllers\Siswa\Beranda\BerandaSiswaController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('siswa')->group(function () {
     Route::get('/beranda', [BerandaSiswaController::class, 'index'])->name('beranda-siswa');

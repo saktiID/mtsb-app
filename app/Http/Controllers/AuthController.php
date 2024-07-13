@@ -15,7 +15,6 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-
     /**
      * method auth login
      */
@@ -23,7 +22,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'username' => 'required',
-            'password' => 'required|min:5'
+            'password' => 'required|min:5',
         ], [
             'username.required' => 'Kolom username tidak boleh kosong.',
             'password.required' => 'Kolom password tidak boleh kosong.',
@@ -32,14 +31,15 @@ class AuthController extends Controller
 
         $attempt = Auth::attempt([
             'username' => $request->username,
-            'password' => $request->password
+            'password' => $request->password,
         ]);
 
         if ($attempt) {
             return redirect()->route('home');
         } else {
             $msg = 'Username atau password salah.';
-            return redirect()->route('login',)->withInput()->with('response', $msg);
+
+            return redirect()->route('login')->withInput()->with('response', $msg);
         }
     }
 
@@ -49,6 +49,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
+
         return redirect()->route('login');
     }
 }

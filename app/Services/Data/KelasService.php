@@ -2,9 +2,9 @@
 
 namespace App\Services\Data;
 
-use App\Models\User;
 use App\Models\Data\Kelas;
 use App\Models\Data\KelasSiswa;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class KelasService
@@ -27,7 +27,7 @@ class KelasService
     public function detailKelas($id)
     {
         $kelas = Kelas::where('id', $id)->with('periode')->first();
-        if (!$kelas) {
+        if (! $kelas) {
             return false;
         }
         $avatar = '-';
@@ -56,15 +56,18 @@ class KelasService
                 return true;
             } else {
                 DB::rollBack();
+
                 return false;
             }
         });
+
         return $query;
     }
 
     public function getGuru()
     {
         $guru = User::has('guru')->with('guru')->get();
+
         return $guru;
     }
 

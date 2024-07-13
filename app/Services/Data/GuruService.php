@@ -2,8 +2,8 @@
 
 namespace App\Services\Data;
 
-use App\Models\User;
 use App\Models\Data\Guru;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -11,7 +11,7 @@ class GuruService
 {
     public function tambahGuru($request)
     {
-        $query = DB::transaction(function ()  use ($request) {
+        $query = DB::transaction(function () use ($request) {
             $avatar = '';
             if ($request->gender == 'male') {
                 $avatar = 'user-male-90x90.png';
@@ -21,8 +21,8 @@ class GuruService
 
             $user = User::create([
                 'nama' => $request->nama,
-                'username' => '@' . $request->username,
-                'password' =>  Hash::make($request->password),
+                'username' => '@'.$request->username,
+                'password' => Hash::make($request->password),
                 'role' => 'Guru',
                 'gender' => $request->gender,
                 'avatar' => $avatar,
@@ -39,13 +39,16 @@ class GuruService
                     return true;
                 } else {
                     DB::rollBack();
+
                     return false;
                 }
             } else {
                 DB::rollBack();
+
                 return false;
             }
         });
+
         return $query;
     }
 
@@ -55,6 +58,7 @@ class GuruService
             ->with('guru')
             ->where('id', $id)
             ->first();
+
         return $guru;
     }
 
@@ -66,7 +70,7 @@ class GuruService
 
             if ($user && $user->id) {
                 $user->nama = $request->nama;
-                $user->username = '@' . $request->username;
+                $user->username = '@'.$request->username;
                 $user->gender = $request->gender;
                 if ($request->password != '') {
                     $user->password = Hash::make($request->password);
@@ -79,10 +83,12 @@ class GuruService
                     $guru->save();
                 } else {
                     DB::rollBack();
+
                     return false;
                 }
             } else {
                 DB::rollBack();
+
                 return false;
             }
 
@@ -100,9 +106,11 @@ class GuruService
                 return true;
             } else {
                 DB::rollBack();
+
                 return false;
             }
         });
+
         return $query;
     }
 }

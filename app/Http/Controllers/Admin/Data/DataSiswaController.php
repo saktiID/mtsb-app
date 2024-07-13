@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Admin\Data;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use App\Services\Data\SiswaService as Siswa;
 use App\Services\Data\SiswaDataTableService as SiswaDataTable;
+use App\Services\Data\SiswaService as Siswa;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DataSiswaController extends Controller
 {
-    private $siswa, $siswaData;
+    private $siswa;
+
+    private $siswaData;
 
     public function __construct(SiswaDataTable $siswaData, Siswa $siswa)
     {
@@ -23,6 +25,7 @@ class DataSiswaController extends Controller
         if ($request->ajax()) {
             return $this->siswaData->getSiswaDataTable();
         }
+
         return view('admin.data.siswa.data-siswa');
     }
 
@@ -30,7 +33,7 @@ class DataSiswaController extends Controller
     {
         $query = $this->siswa->tambahSiswa($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Siswa baru ' . $request->nama . ' berhasil ditambahkan']);
+            return response()->json(['success' => true, 'message' => 'Siswa baru '.$request->nama.' berhasil ditambahkan']);
         } else {
             return response()->json(['success' => false, 'message' => 'Siswa baru gagal ditambahkan']);
         }
@@ -39,6 +42,7 @@ class DataSiswaController extends Controller
     public function detail_siswa($id)
     {
         $data['user'] = $this->siswa->detailSiswa($id);
+
         return view('admin.data.siswa.detail-siswa', $data);
     }
 
@@ -58,15 +62,16 @@ class DataSiswaController extends Controller
                 $msg = '';
                 $messages = $validate->errors()->messages()['password'];
                 foreach ($messages as $message) {
-                    $msg .= $message . '<br>';
+                    $msg .= $message.'<br>';
                 }
+
                 return response()->json(['success' => false, 'message' => $msg]);
             }
         }
 
         $query = $this->siswa->updateSiswa($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Data siswa ' . $request->nama . ' berhasil diubah']);
+            return response()->json(['success' => true, 'message' => 'Data siswa '.$request->nama.' berhasil diubah']);
         } else {
             return response()->json(['success' => false, 'message' => 'Data siswa gagal diubah']);
         }

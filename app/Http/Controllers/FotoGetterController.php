@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\FotoService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
 
 class FotoGetterController extends Controller
 {
@@ -18,9 +17,9 @@ class FotoGetterController extends Controller
 
     public function foto($filename)
     {
-        $imagePath = 'profile/' . $filename;
+        $imagePath = 'profile/'.$filename;
         $file = Storage::disk('local')->get($imagePath);
-        if (!isset($file)) {
+        if (! isset($file)) {
             $file = Storage::disk('public')->get('404.png');
         }
 
@@ -30,7 +29,7 @@ class FotoGetterController extends Controller
     public function upload_foto(Request $request)
     {
         $image = $request->file('avatar_upload');
-        $imageName = 'profile-' . uniqid() . '.' . $image->getClientOriginalExtension();
+        $imageName = 'profile-'.uniqid().'.'.$image->getClientOriginalExtension();
         $updateFoto = $this->fotoUploader->foto($request, $imageName);
         if ($updateFoto) {
             return response()->json(['success' => true, 'message' => 'Foto profil berhasil diupload', 'newImage' => $imageName]);

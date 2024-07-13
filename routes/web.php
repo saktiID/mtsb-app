@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FotoGetterController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,17 +21,15 @@ Route::group(['middleware' => ['guest']], function () {
     Route::post('/login', [AuthController::class, 'login'])->name('attempt_login');
 });
 
-
 Route::group(['middleware' => ['auth']], function () {
-
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/get-foto/{filename}', [FotoGetterController::class, 'foto'])->name('get-foto');
     Route::post('/upload-foto', [FotoGetterController::class, 'upload_foto'])->name('foto-profile');
 
     Route::group(['middleware' => ['role']], function () {
-        include('router/router_admin.php');
-        include('router/router_guru.php');
-        include('router/router_siswa.php');
+        include 'router/router_admin.php';
+        include 'router/router_guru.php';
+        include 'router/router_siswa.php';
     });
 });

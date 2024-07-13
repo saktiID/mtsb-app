@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Admin\Data;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Data\PeriodeService as Periode;
 use App\Services\Data\PeriodeDataTableService as PeriodeDataTable;
+use App\Services\Data\PeriodeService as Periode;
+use Illuminate\Http\Request;
 
 class DataPeriodeController extends Controller
 {
-    private $periodeData, $periode;
+    private $periodeData;
+
+    private $periode;
 
     public function __construct(PeriodeDataTable $periodeData, Periode $periode)
     {
@@ -22,6 +24,7 @@ class DataPeriodeController extends Controller
         if ($request->ajax()) {
             return $this->periodeData->getPeriodeDataTable();
         }
+
         return view('admin.data.periode.data-periode');
     }
 

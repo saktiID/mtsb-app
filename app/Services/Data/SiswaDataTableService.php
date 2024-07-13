@@ -14,12 +14,14 @@ class SiswaDataTableService
             ->addColumn('check', function ($user) {
                 $data['id'] = $user->id;
                 $data['nama'] = $user->nama;
+
                 return view('element.checkbox-table', $data);
             })
             ->addColumn('avatar', function ($user) {
                 $data['avatar'] = $user->avatar;
                 $data['route'] = 'detail-data-siswa';
                 $data['id'] = $user->id;
+
                 return view('element.avatar', $data);
             })
             ->addColumn('nama', function ($user) {
@@ -27,6 +29,7 @@ class SiswaDataTableService
                 $data['id'] = $user->id;
                 $data['nama'] = $user->nama;
                 $data['role'] = '';
+
                 return view('element.anchor-nama', $data);
             })
             ->addColumn('nis', function ($user) {
@@ -39,6 +42,7 @@ class SiswaDataTableService
                 $data['nama'] = $user->nama;
                 $data['id'] = $user->id;
                 $data['route'] = 'detail-data-siswa';
+
                 return view('element.more-action', $data);
             })
             ->make(true);

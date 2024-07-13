@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Admin\Data;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use App\Services\Data\GuruService as Guru;
 use App\Services\Data\GuruDataTableService as GuruData;
+use App\Services\Data\GuruService as Guru;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DataGuruController extends Controller
 {
-    private $guru, $guruData;
+    private $guru;
+
+    private $guruData;
 
     public function __construct(GuruData $guruData, Guru $guru)
     {
@@ -23,6 +25,7 @@ class DataGuruController extends Controller
         if ($request->ajax()) {
             return $this->guruData->getGuruDataTable();
         }
+
         return view('admin.data.guru.data-guru');
     }
 
@@ -30,7 +33,7 @@ class DataGuruController extends Controller
     {
         $query = $this->guru->tambahGuru($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Guru baru ' . $request->nama . ' berhasil ditambahkan']);
+            return response()->json(['success' => true, 'message' => 'Guru baru '.$request->nama.' berhasil ditambahkan']);
         } else {
             return response()->json(['success' => false, 'message' => 'Guru baru gagal ditambahkan']);
         }
@@ -39,6 +42,7 @@ class DataGuruController extends Controller
     public function detail_guru($id)
     {
         $data['user'] = $this->guru->detailGuru($id);
+
         return view('admin.data.guru.detail-guru', $data);
     }
 
@@ -58,15 +62,16 @@ class DataGuruController extends Controller
                 $msg = '';
                 $messages = $validate->errors()->messages()['password'];
                 foreach ($messages as $message) {
-                    $msg .= $message . '<br>';
+                    $msg .= $message.'<br>';
                 }
+
                 return response()->json(['success' => false, 'message' => $msg]);
             }
         }
 
         $query = $this->guru->updateGuru($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Data guru ' . $request->nama . ' berhasil diubah']);
+            return response()->json(['success' => true, 'message' => 'Data guru '.$request->nama.' berhasil diubah']);
         } else {
             return response()->json(['success' => false, 'message' => 'Data guru gagal diubah']);
         }

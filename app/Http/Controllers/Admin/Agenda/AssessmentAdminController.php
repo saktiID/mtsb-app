@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Agenda;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Agenda\AspectDataTableService as AspectData;
 use App\Services\Agenda\AspectService as Aspect;
+use Illuminate\Http\Request;
 
 class AssessmentAdminController extends Controller
 {
     protected $aspect;
+
     protected $aspectData;
 
     public function __construct(Aspect $aspect, AspectData $aspectData)
@@ -23,14 +24,15 @@ class AssessmentAdminController extends Controller
         if ($request->ajax()) {
             return $this->aspectData->getAspectDataTable($request);
         }
-        return view('admin.agenda.assessment-aspect.aspect',);
+
+        return view('admin.agenda.assessment-aspect.aspect');
     }
 
     public function tambah_assessment_aspect(Request $request)
     {
         $query = $this->aspect->tambahAspect($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Assessment Aspect for ' . $request->aspect_for . ' berhasil ditambahkan']);
+            return response()->json(['success' => true, 'message' => 'Assessment Aspect for '.$request->aspect_for.' berhasil ditambahkan']);
         } else {
             return response()->json(['success' => false, 'message' => 'Assessment Aspect gagal ditambahkan']);
         }

@@ -19,8 +19,9 @@ return new class extends Migration
             $table->foreign('periode_id')->references('id')->on('periodes')->onDelete('cascade');
             $table->uuid('siswa_user_id');
             $table->foreign('siswa_user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->uuid('aspect_id');
+            $table->uuid('aspect_id')->nullable();
             $table->foreign('aspect_id')->references('id')->on('assessment_aspects')->onDelete('cascade');
+            $table->boolean('is_note')->default(false);
             $table->string('answer');
             $table->string('bulan');
             $table->string('minggu_ke');

@@ -9,7 +9,6 @@ class AspectDataTableService
 {
     public function getAspectDataTable($request)
     {
-
         $aspect = AssessmentAspect::where('aspect_for', $request->a)->latest();
         $dataTable = DataTables::of($aspect)
             ->addIndexColumn()
@@ -21,12 +20,14 @@ class AspectDataTableService
                 $data['id'] = $aspect->id;
                 $data['class'] = 'aspect-status';
                 $element = view('element.switch', $data);
+
                 return $element;
             })
             ->addColumn('more', function ($aspect) {
                 $data['id'] = $aspect->id;
                 $data['aspect'] = $aspect->aspect;
                 $data['aspect_for'] = $aspect->aspect_for;
+
                 return view('element.delete-aspect-action', $data);
             })
             ->rawColumns(['aspect_status'])

@@ -26,7 +26,7 @@
                                 <select id="siswa_kelas" name="siswa_kelas" class="form-control">
                                     <option value="" selected disabled>-- Pilih siswa --</option>
                                     @foreach ($siswaDalamKelas as $siswa)
-                                    <option value="{{ $siswa->user->id }}/{{ $siswa->user->avatar }}/{{ $siswa->siswa->nis }}">{{ $siswa->user->nama }}</option>
+                                    <option value="{{ $siswa->user->id }}/{{ $siswa->user->avatar }}/{{ $siswa->siswa->nis }}/{{ $siswa->user->nama }}">{{ $siswa->user->nama }}</option>
                                     @endforeach
                                 </select>
                             </td>
@@ -48,7 +48,7 @@
                         <tr>
                             <th>Bulan</th>
                             <td>
-                                <select id="bulan" name="bulan" class="form-control">
+                                <select id="bulan" name="bulan" class="form-control" required>
                                     <option value="" selected disabled>-- Pilih bulan --</option>
                                     <option>Januari</option>
                                     <option>Februari</option>
@@ -68,7 +68,7 @@
                         <tr>
                             <th>Minggu ke</th>
                             <td>
-                                <select id="minggu" name="minggu" class="form-control">
+                                <select id="minggu_ke" name="minggu_ke" class="form-control" required>
                                     <option value="" selected disabled>-- Pilih minggu --</option>
                                     <option>1</option>
                                     <option>2</option>
@@ -82,7 +82,7 @@
             </div>
         </div>
 
-        <div class="form-row">
+        <form class="form-row" id="aspects_form">
             <div class="col">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
@@ -115,7 +115,6 @@
                             </tr>
                             @endforeach
                         </tbody>
-
                     </table>
                 </div>
 
@@ -128,11 +127,36 @@
                     <button type="submit" class="mb-3 btn btn-primary">Kirim</button>
                 </div>
             </div>
-        </div>
+        </form>
     </x-card-box>
+</div>
+@endsection
 
+@section('modal')
+<div class="modal fade" id="storeAssessmentModal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="storeAssessmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="storeAssessmentModalLabel">Kirimkan assessment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Akan mengirimkan data:</p>
+                <hr>
+                <p id="assessment"></p>
+                <hr>
+                <strong>Konfirmasi kirim assessment?</strong>
 
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Batalkan</button>
+                <button type="submit" id="kirim" class="btn btn-primary loadingTrigger">Kirim</button>
+            </div>
 
+        </div>
+    </div>
 </div>
 @endsection
 
@@ -143,15 +167,91 @@
 
 @section('script')
 <script>
-    $('#siswa_kelas').on('change', function(e) {
-        let ex = $('#siswa_kelas').val().split('/')
-        let id = ex[0]
-        let img = ex[1]
-        let nis = ex[2]
+    let siswa = []
+    let kirimBtn = document.getElementById('kirim')
+    let loadingTrigger = document.querySelectorAll('.loadingTrigger')
+    const DATA = {}
+
+    $('#siswa_kelas').on('change', function() {
+        siswa = $('#siswa_kelas').val().split('/')
+        let img = siswa[1]
+        let nis = siswa[2]
         replaceImg(img)
         replaceNis(nis)
     })
 
+    $('#aspects_form').on('submit', function(e) {
+        e.preventDefault()
+
+        // cek form
+        let bulan = document.getElementById('bulan')
+        let mingguKe = document.getElementById('minggu_ke')
+
+        if (!siswa[0] || bulan.value == '' || mingguKe.value == '') {
+            notif('Lengkapi data form', false)
+        } else {
+            let data = $(this).serializeArray()
+            let formData = new FormData()
+            formData.append('_token', "{{ csrf_token() }}")
+            formData.append('periode_id', "{{ $periodeAktif->id }}")
+            formData.append('siswa_user_id', siswa[0])
+            formData.append('aspects', JSON.stringify(data))
+            formData.append('bulan', $('#bulan').val())
+            formData.append('minggu_ke', $('#minggu_ke').val())
+
+            $('#assessment').html(`Teacher assessment: ${siswa[3]}`)
+            $('#storeAssessmentModal').modal('show')
+            DATA.data = formData
+            DATA.route = "{{ route('teacher-assessment-store') }}"
+        }
+    })
+
+    function prosesAjax(data, route) {
+        $.ajax({
+            url: route, //
+            method: 'POST', //
+            data: data, //
+            dataType: 'json', //
+            processData: false, //
+            contentType: false, //
+            success: function(res) {
+                onfinish()
+                if (res.success) {
+                    notif(res.message, true)
+                } else {
+                    notif(res.message, false)
+                }
+            }, //
+            error: function(err) {
+                onfinish()
+                console.log(err.responseText)
+                notif(err.responseText, false)
+            }
+        });
+    }
+
+    function onfinish() {
+        let span = document.createElement('span')
+        span.innerHTML = textLoadingtrigger
+        loadingTrigger.forEach(function(loading) {
+            if (loading.querySelector('.spinner-border')) {
+                loading.replaceChild(span, loading.childNodes[0])
+            }
+        })
+        $('#storeAssessmentModal').modal('hide')
+        $('#aspects_form').get(0).reset()
+        $('#siswa_kelas').val('')
+        replaceImg('-')
+        siswa = []
+    }
+
+    function notif(msg, status) {
+        if (status) {
+            Toast.create("Berhasil", msg, TOAST_STATUS.SUCCESS, 10000);
+        } else {
+            Toast.create("Gagal", msg, TOAST_STATUS.DANGER, 10000);
+        }
+    }
 
     function replaceImg(newImageName) {
         let src = "{{ route('get-foto', ['filename' => 'src_js']) }}".replace('src_js', newImageName)
@@ -161,6 +261,30 @@
     function replaceNis(newNis) {
         $('#nis').text(newNis)
     }
+
+    loadingTrigger.forEach(function(loading) {
+        loading.addEventListener('click', function(e) {
+            if (loading.classList.contains('tambah')) {
+                if (checkForm()) {
+                    loadingSpin()
+                }
+            } else {
+                loadingSpin()
+            }
+
+            function loadingSpin() {
+                textLoadingtrigger = loading.innerHTML
+                const spinner = document.createElement('div')
+                spinner.classList = "spinner-border text-white align-self-center loader-sm"
+                loading.replaceChild(spinner, loading.childNodes[0])
+            }
+
+        })
+    })
+
+    kirimBtn.addEventListener('click', function() {
+        prosesAjax(DATA.data, DATA.route)
+    })
 
 </script>
 @endsection

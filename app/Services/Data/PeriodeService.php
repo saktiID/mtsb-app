@@ -9,15 +9,16 @@ class PeriodeService
 {
     public function tambahPeriode($request)
     {
-        $query = DB::transaction(function ()  use ($request) {
+        $query = DB::transaction(function () use ($request) {
             $periode = new Periode;
             $periode->semester = $request->semester;
-            $periode->tahun_ajaran = $request->tahun_pertama . '-' . $request->tahun_kedua;
+            $periode->tahun_ajaran = $request->tahun_pertama.'-'.$request->tahun_kedua;
 
             if ($periode->save()) {
                 return true;
             } else {
                 DB::rollBack();
+
                 return false;
             }
         });
@@ -37,6 +38,7 @@ class PeriodeService
         if ($periode) {
             $periode->periode_status = true;
             $periode->save();
+
             return true;
         } else {
             return false;
@@ -48,6 +50,7 @@ class PeriodeService
         $periode = Periode::find($id);
         if ($periode) {
             $query = $periode->delete();
+
             return $query;
         } else {
             return false;

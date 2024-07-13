@@ -21,8 +21,8 @@ class SiswaService
 
             $user = User::create([
                 'nama' => $request->nama,
-                'username' => '@' . $request->username,
-                'password' =>  Hash::make($request->password),
+                'username' => '@'.$request->username,
+                'password' => Hash::make($request->password),
                 'role' => 'Siswa',
                 'gender' => $request->gender,
                 'avatar' => $avatar,
@@ -41,10 +41,12 @@ class SiswaService
                     return true;
                 } else {
                     DB::rollBack();
+
                     return false;
                 }
             } else {
                 DB::rollBack();
+
                 return false;
             }
         });
@@ -58,6 +60,7 @@ class SiswaService
             ->with('siswa')
             ->where('id', $id)
             ->first();
+
         return $siswa;
     }
 
@@ -69,7 +72,7 @@ class SiswaService
 
             if ($user && $user->id) {
                 $user->nama = $request->nama;
-                $user->username = '@' . $request->username;
+                $user->username = '@'.$request->username;
                 $user->gender = $request->gender;
                 if ($request->password != '') {
                     $user->password = Hash::make($request->password);
@@ -84,10 +87,12 @@ class SiswaService
                     $siswa->save();
                 } else {
                     DB::rollBack();
+
                     return false;
                 }
             } else {
                 DB::rollBack();
+
                 return false;
             }
 
@@ -105,9 +110,11 @@ class SiswaService
                 return true;
             } else {
                 DB::rollBack();
+
                 return false;
             }
         });
+
         return $query;
     }
 }

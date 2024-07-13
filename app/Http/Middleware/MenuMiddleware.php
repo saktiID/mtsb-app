@@ -2,13 +2,15 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\MenuService;
 use Closure;
 use Illuminate\Http\Request;
-use App\Services\MenuService;
 
 class MenuMiddleware
 {
-    protected $menuService, $periodeAktifService;
+    protected $menuService;
+
+    protected $periodeAktifService;
 
     public function __construct(MenuService $menuService)
     {
@@ -18,7 +20,6 @@ class MenuMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
@@ -26,6 +27,7 @@ class MenuMiddleware
     {
         $menuAgenda = $this->menuService->getMenuAgenda();
         view()->share('menuAgenda', $menuAgenda);
+
         return $next($request);
     }
 }

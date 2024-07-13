@@ -204,7 +204,6 @@
             ordering: false, //
             paging: false, //
             searching: false, //
-
             processing: true, //
             serverSide: true, //
             ajax: {

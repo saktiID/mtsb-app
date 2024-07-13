@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use App\Models\Data\Guru;
 use App\Models\Data\Siswa;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'role' => 'Admin',
                 'gender' => 'male',
                 'avatar' => 'user-male-90x90.png',
-                'password' => Hash::make('admin5758')
+                'password' => Hash::make('admin5758'),
             ]);
 
             // Membuat record baru di tabel guru dengan user_id dari user yang baru dibuat
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
                 'role' => 'Guru',
                 'gender' => 'male',
                 'avatar' => 'user-male-90x90.png',
-                'password' => Hash::make('guru5758')
+                'password' => Hash::make('guru5758'),
             ]);
 
             // Membuat record baru di tabel guru dengan user_id dari user yang baru dibuat
@@ -60,7 +60,7 @@ class UserSeeder extends Seeder
                 'role' => 'Siswa',
                 'gender' => 'female',
                 'avatar' => 'user-female-90x90.png',
-                'password' => Hash::make('siswa5758')
+                'password' => Hash::make('siswa5758'),
             ]);
 
             // Membuat record baru di tabel siswa dengan user_id dari user yang baru dibuat
