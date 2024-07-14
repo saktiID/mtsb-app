@@ -147,7 +147,7 @@
                 <hr>
                 <p id="assessment"></p>
                 <hr>
-                <strong>Konfirmasi kirim assessment?</strong>
+                <strong>Assessment yang terkirim tidak dapat dihapus atau diubah. <br />Konfirmasi kirim assessment?</strong>
 
             </div>
             <div class="modal-footer">

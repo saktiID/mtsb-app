@@ -8,6 +8,8 @@ class BerandaAdminController extends Controller
 {
     public function index()
     {
-        return view('admin.beranda.beranda-admin');
+        $data['periodeAktif'] = $this->periodeAktif;
+
+        return view('admin.beranda.beranda-admin', $data);
     }
 }

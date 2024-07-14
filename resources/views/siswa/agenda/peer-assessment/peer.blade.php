@@ -8,7 +8,7 @@
             <div class="col-lg-4 col-sm-12 mb-4">
                 <div class="text-center">
                     <div class="avatar avatar-xl mb-4">
-                        <img alt="foto" id="foto" src="{{ asset('user-male-90x90.png') }}" width="250px" height="250px" class="rounded bg-success" />
+                        <img alt="foto" id="foto" src="{{ route('get-foto', '-') }}" width="250px" height="250px" class="rounded bg-success" />
                     </div>
                 </div>
             </div>
@@ -18,39 +18,39 @@
                     <table class="table table-bordered">
                         <tr>
                             <th>Kelas</th>
-                            <td>VII-1</td>
+                            <td>{{ $kelas }}</td>
                         </tr>
                         <tr>
                             <th width="20%">Nama</th>
                             <td>
                                 <select id="siswa_kelas" name="siswa_kelas" class="form-control">
-                                    <option value="">-- Pilih teman --</option>
-                                    <option>Abdul Rojak</option>
-                                    <option>Ahsan Syai</option>
-                                    <option>Gupron Sultoni</option>
-
+                                    <option value="" selected disabled>-- Pilih teman --</option>
+                                    @foreach ($siswaDalamKelas as $teman)
+                                    <option value="{{ $teman->user->id }}/{{ $teman->user->avatar }}/{{ $teman->siswa->nis }}/{{ $teman->user->nama }}" @if($teman->user->id == Auth::user()->id) disabled @endif
+                                        >{{ $teman->user->nama }} @if($teman->user->id == Auth::user()->id) (Akun kamu) @endif</option>
+                                    @endforeach
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <th>NIS</th>
-                            <td></td>
+                            <td>
+                                <p id="nis">-</p>
+                            </td>
                         </tr>
                         <tr>
                             <th>Periode</th>
-                            <td>
-                                <select id="periode" name="periode" class="form-control">
-                                    <option value="">-- Pilih periode --</option>
-                                    <option>2024-2025 | Ganjil</option>
-                                    <option>2024-2025 | Genap</option>
-                                </select>
-                            </td>
+                            <td>Semester: {{ $periodeAktif->semester }} {{ $periodeAktif->tahun_ajaran }}</td>
+                        </tr>
+                        <tr>
+                            <th>Assessment type</th>
+                            <td>Peer Assessment</td>
                         </tr>
                         <tr>
                             <th>Bulan</th>
                             <td>
-                                <select id="bulan" name="bulan" class="form-control">
-                                    <option value="">-- Pilih bulan --</option>
+                                <select id="bulan" name="bulan" class="form-control" required>
+                                    <option value="" selected disabled>-- Pilih bulan --</option>
                                     <option>Januari</option>
                                     <option>Februari</option>
                                     <option>Maret</option>
@@ -69,23 +69,12 @@
                         <tr>
                             <th>Minggu ke</th>
                             <td>
-                                <select id="minggu" name="minggu" class="form-control">
-                                    <option value="">-- Pilih minggu --</option>
+                                <select id="minggu_ke" name="minggu_ke" class="form-control" required>
+                                    <option value="" selected disabled>-- Pilih minggu --</option>
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
                                     <option>4</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Assessment type</th>
-                            <td>
-                                <select id="assessment" name="assessment" class="form-control">
-                                    <option value="">-- Pilih assessment --</option>
-                                    <option>Parrent Assessment</option>
-                                    <option>Peer Assessment</option>
-                                    <option>Teacher Assessment</option>
                                 </select>
                             </td>
                         </tr>
@@ -94,7 +83,7 @@
             </div>
         </div>
 
-        <div class="form-row">
+        <form class="form-row" id="aspects_form">
             <div class="col">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
@@ -105,360 +94,199 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($aspects as $item)
                             <tr>
-                                <th>Take ablution orderly</th>
+                                <th>{{ $item->aspect }}</th>
                                 <td>
                                     <div class="n-chk">
                                         <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-1">
+                                            <input type="radio" class="new-control-input" name="{{ $item->id }}" value="Always" required>
                                             <span class="new-control-indicator"></span>Always
                                         </label>
                                         <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-1">
+                                            <input type="radio" class="new-control-input" name="{{ $item->id }}" value="Sometimes" required>
                                             <span class="new-control-indicator"></span>Sometimes
                                         </label>
                                         <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-1">
+                                            <input type="radio" class="new-control-input" name="{{ $item->id }}" value="Never" required>
                                             <span class="new-control-indicator"></span>Never
                                         </label>
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>Pray orderly</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-2">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-2">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-2">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Dzikir, istighosah orderly</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-3">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-3">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-3">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Discipline in habitual morning, Dhuhur, and Ashar Prayer</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-4">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-4">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-4">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Polite in speaking with teacher/friends</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-5">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-5">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-5">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Like to help others</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-6">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-6">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-6">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Keep harmony with other</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-7">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-7">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-7">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Doing verbal bullying to others</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-8">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-8">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-8">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Doing physical bullying to others</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-9">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-9">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-9">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Speak English in madrasah area</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-10">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-10">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-10">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Use social media wisely</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-11">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-11">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-11">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Wear clothes that cover aurat</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-12">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-12">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-12">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Save cleanliness</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-13">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-13">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-13">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Ethic when eating and drinking</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-14">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-14">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-14">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Wear atribut completely</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-15">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-15">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-15">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Smoking in madrasah area or outside</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-16">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-16">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-16">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Having boyfriend/girlfriend</th>
-                                <td>
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio radio-success">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-17">
-                                            <span class="new-control-indicator"></span>Always
-                                        </label>
-                                        <label class="new-control new-radio radio-warning">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-17">
-                                            <span class="new-control-indicator"></span>Sometimes
-                                        </label>
-                                        <label class="new-control new-radio radio-danger">
-                                            <input type="radio" class="new-control-input" name="aspect-peer-17">
-                                            <span class="new-control-indicator"></span>Never
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
-
                     </table>
                 </div>
 
 
                 <div class="mb-3">
-                    <label for="note">Note:</label><br>
+                    <label for="note">Note:</label>
                     <textarea class="form-control" id="note" name="note" rows="3"></textarea>
-                    <span class="text-info">(Write if your friend has violation of the order of madrasah)</span>
                 </div>
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="mb-3 btn btn-primary">Kirim</button>
                 </div>
             </div>
-        </div>
+        </form>
     </x-card-box>
-
-
 
 </div>
 @endsection
 
+@section('modal')
+<div class="modal fade" id="storeAssessmentModal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="storeAssessmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="storeAssessmentModalLabel">Kirimkan assessment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Akan mengirimkan data:</p>
+                <hr>
+                <p id="assessment"></p>
+                <hr>
+                <strong>Assessment yang terkirim tidak dapat dihapus atau diubah. <br />Konfirmasi kirim assessment?</strong>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Batalkan</button>
+                <button type="submit" id="kirim" class="btn btn-primary loadingTrigger">Kirim</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+@endsection
 
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/theme-checkbox-radio.css') }}">
-<link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert.css') }}">
 @endsection
 
 @section('script')
-<script src="{{ asset('plugins/sweetalerts/sweetalert2.min.js') }}"></script>
+<script>
+    let siswa = []
+    let kirimBtn = document.getElementById('kirim')
+    let loadingTrigger = document.querySelectorAll('.loadingTrigger')
+    const DATA = {}
+
+    $('#siswa_kelas').on('change', function() {
+        siswa = $('#siswa_kelas').val().split('/')
+        let img = siswa[1]
+        let nis = siswa[2]
+        replaceImg(img)
+        replaceNis(nis)
+    })
+
+    $('#aspects_form').on('submit', function(e) {
+        e.preventDefault()
+
+        // cek form
+        let bulan = document.getElementById('bulan')
+        let mingguKe = document.getElementById('minggu_ke')
+
+        if (!siswa[0] || bulan.value == '' || mingguKe.value == '') {
+            notif('Lengkapi data form', false)
+        } else {
+            let data = $(this).serializeArray()
+            let formData = new FormData()
+            formData.append('_token', "{{ csrf_token() }}")
+            formData.append('periode_id', "{{ $periodeAktif->id }}")
+            formData.append('siswa_user_id', siswa[0])
+            formData.append('aspects', JSON.stringify(data))
+            formData.append('bulan', $('#bulan').val())
+            formData.append('minggu_ke', $('#minggu_ke').val())
+
+            $('#assessment').html(`Peer assessment: ${siswa[3]}`)
+            $('#storeAssessmentModal').modal('show')
+            DATA.data = formData
+            DATA.route = "{{ route('peer-assessment-store') }}"
+        }
+    })
+
+    function prosesAjax(data, route) {
+        $.ajax({
+            url: route, //
+            method: 'POST', //
+            data: data, //
+            dataType: 'json', //
+            processData: false, //
+            contentType: false, //
+            success: function(res) {
+                onfinish()
+                if (res.success) {
+                    notif(res.message, true)
+                } else {
+                    notif(res.message, false)
+                }
+            }, //
+            error: function(err) {
+                onfinish()
+                console.log(err.responseText)
+                notif(err.responseText, false)
+            }
+        });
+    }
+
+    function onfinish() {
+        let span = document.createElement('span')
+        span.innerHTML = textLoadingtrigger
+        loadingTrigger.forEach(function(loading) {
+            if (loading.querySelector('.spinner-border')) {
+                loading.replaceChild(span, loading.childNodes[0])
+            }
+        })
+        $('#storeAssessmentModal').modal('hide')
+        $('#aspects_form').get(0).reset()
+        $('#siswa_kelas').val('')
+        replaceImg('-')
+        siswa = []
+    }
+
+    function notif(msg, status) {
+        if (status) {
+            Toast.create("Berhasil", msg, TOAST_STATUS.SUCCESS, 10000);
+        } else {
+            Toast.create("Gagal", msg, TOAST_STATUS.DANGER, 10000);
+        }
+    }
+
+    function replaceImg(newImageName) {
+        let src = "{{ route('get-foto', ['filename' => 'src_js']) }}".replace('src_js', newImageName)
+        $('#foto').attr('src', src)
+    }
+
+    function replaceNis(newNis) {
+        $('#nis').text(newNis)
+    }
+
+    loadingTrigger.forEach(function(loading) {
+        loading.addEventListener('click', function(e) {
+            if (loading.classList.contains('tambah')) {
+                if (checkForm()) {
+                    loadingSpin()
+                }
+            } else {
+                loadingSpin()
+            }
+
+            function loadingSpin() {
+                textLoadingtrigger = loading.innerHTML
+                const spinner = document.createElement('div')
+                spinner.classList = "spinner-border text-white align-self-center loader-sm"
+                loading.replaceChild(spinner, loading.childNodes[0])
+            }
+
+        })
+    })
+
+    kirimBtn.addEventListener('click', function() {
+        prosesAjax(DATA.data, DATA.route)
+    })
+
+</script>
 
 @endsection

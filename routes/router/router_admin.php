@@ -60,13 +60,11 @@ Route::prefix('admin')->group(function () {
             return redirect()->route('beranda-admin');
         });
         Route::get('assessment-aspect', [AssessmentAdminController::class, 'assessment_aspect'])->name('assessment-aspect');
-
         Route::post('tambah-assessment-aspect', [AssessmentAdminController::class, 'tambah_assessment_aspect'])->name('tambah-assessment-aspect');
-
         Route::post('switch-aspect-status', [AssessmentAdminController::class, 'switch_aspect_status'])->name('switch-aspect-status');
-
         Route::post('hapus-assessment-aspect', [AssessmentAdminController::class, 'hapus_assessment_aspect'])->name('hapus-assessment-aspect');
-
         Route::get('assessment-history', [AssessmentAdminController::class, 'assessment_history'])->name('assessment-history.admin');
+        Route::get('get-admin-assessment-history', [AssessmentAdminController::class, 'get_history'])->name('get-assessment-history.admin');
+        Route::get('get-admin-note-history', [AssessmentAdminController::class, 'get_note'])->name('get-note-history.admin');
     });
 });

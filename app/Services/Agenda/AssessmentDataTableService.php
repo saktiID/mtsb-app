@@ -14,8 +14,9 @@ class AssessmentDataTableService
             ->where('periode_id', $request[0]['periode_id'])
             ->where('bulan', $request[0]['bulan'])
             ->where('minggu_ke', $request[0]['minggu_ke'])
-            ->where('evaluator', $request[0]['evaluator'])
+            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
             ->where('is_note', false)
+            ->orderBy('aspect_id', 'asc')
             ->get();
 
         $dataTable = DataTables::of($assessmentData)

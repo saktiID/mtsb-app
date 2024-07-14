@@ -2,6 +2,7 @@
 
 namespace App\Services\Agenda;
 
+use App\Jobs\InsertAssessmentRecordJob;
 use App\Models\Agenda\AssessmentRecord;
 use Illuminate\Support\Str;
 
@@ -37,22 +38,16 @@ class AssessmentService
                     'answer' => $item['value'],
                     'bulan' => $request->bulan,
                     'minggu_ke' => $request->minggu_ke,
-                    'evaluator' => 'Teacher',
+                    'evaluator' => $evaluator,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
             }
         }
 
-        foreach (array_chunk($data, 10) as $dt) {
-            $query = AssessmentRecord::insert($dt);
-        }
+        InsertAssessmentRecordJob::dispatch($data);
 
-        if ($query) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
     public function checkExist($request, $evaluator)
@@ -61,7 +56,7 @@ class AssessmentService
             ->where('siswa_user_id', $request->siswa_user_id)
             ->where('bulan', $request->bulan)
             ->where('minggu_ke', $request->minggu_ke)
-            ->where('evaluator', $evaluator)
+            ->where('evaluator', 'like', $evaluator.'%')
             ->exists();
     }
 
@@ -72,7 +67,7 @@ class AssessmentService
             ->where('periode_id', $request[0]['periode_id'])
             ->where('bulan', $request[0]['bulan'])
             ->where('minggu_ke', $request[0]['minggu_ke'])
-            ->where('evaluator', $request[0]['evaluator'])
+            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
             ->where('is_note', true)
             ->first();
 

@@ -8,6 +8,8 @@ class BerandaGuruController extends Controller
 {
     public function index()
     {
-        return view('guru.beranda.beranda-guru');
+        $data['periodeAktif'] = $this->periodeAktif;
+
+        return view('guru.beranda.beranda-guru', $data);
     }
 }

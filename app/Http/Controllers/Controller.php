@@ -16,6 +16,8 @@ class Controller extends BaseController
 
     public function __construct()
     {
-        $this->periodeAktif = Periode::where('periode_status', true)->first();
+        $this->periodeAktif = Periode::where('periode_status', true)
+            ->select(['id', 'tahun_ajaran', 'semester'])
+            ->first();
     }
 }

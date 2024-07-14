@@ -4,11 +4,11 @@
 <div class="row pt-4">
 
     <x-card-box cardTitle="Assessment History">
-        <div class="form-row">
+        <form class="form-row">
             <div class="col-lg-4 col-sm-12 mb-4">
                 <div class="text-center">
                     <div class="avatar avatar-xl mb-4">
-                        <img alt="foto" id="foto" src="{{ asset('user-male-90x90.png') }}" width="250px" height="250px" class="rounded bg-success" />
+                        <img alt="foto" id="foto" src="{{ route('get-foto', '-') }}" width="250px" height="250px" class="rounded bg-success" />
                     </div>
                 </div>
             </div>
@@ -17,33 +17,30 @@
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <tr>
-                            <th>Kelas</th>
-                            <td>
-                                <select id="kelas_id" name="kelas_id" class="form-control">
-                                    <option value="">-- Pilih kelas --</option>
-                                    <option>VII - 1</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
                             <th width="20%">Nama</th>
                             <td>
                                 <select id="siswa_kelas" name="siswa_kelas" class="form-control">
-                                    <option value="">-- Pilih siswa --</option>
+                                    <option value="" selected disabled>-- Pilih siswa --</option>
+                                    @foreach ($siswas as $siswa)
+                                    <option value="{{ $siswa->user->id }}/{{ $siswa->user->avatar }}/{{ $siswa->nis }}">{{ $siswa->user->nama }}</option>
+                                    @endforeach
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <th>NIS</th>
-                            <td></td>
+                            <td>
+                                <p id="nis"></p>
+                            </td>
                         </tr>
                         <tr>
                             <th>Periode</th>
                             <td>
                                 <select id="periode" name="periode" class="form-control">
-                                    <option value="">-- Pilih periode --</option>
-                                    <option>2024-2025 | Ganjil</option>
-                                    <option>2024-2025 | Genap</option>
+                                    <option value="" selected disabled>-- Pilih periode --</option>
+                                    @foreach ($periodes as $periode)
+                                    <option value="{{ $periode->id }}">{{ $periode->tahun_ajaran }} | {{ $periode->semester }}</option>
+                                    @endforeach
                                 </select>
                             </td>
                         </tr>
@@ -51,7 +48,7 @@
                             <th>Bulan</th>
                             <td>
                                 <select id="bulan" name="bulan" class="form-control">
-                                    <option value="">-- Pilih bulan --</option>
+                                    <option value="" selected disabled>-- Pilih bulan --</option>
                                     <option>Januari</option>
                                     <option>Februari</option>
                                     <option>Maret</option>
@@ -70,8 +67,8 @@
                         <tr>
                             <th>Minggu ke</th>
                             <td>
-                                <select id="minggu" name="minggu" class="form-control">
-                                    <option value="">-- Pilih minggu --</option>
+                                <select id="minggu_ke" name="minggu_ke" class="form-control">
+                                    <option value="" selected disabled>-- Pilih minggu --</option>
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
@@ -82,11 +79,11 @@
                         <tr>
                             <th>Assessment type</th>
                             <td>
-                                <select id="assessment" name="assessment" class="form-control">
-                                    <option value="">-- Pilih assessment --</option>
-                                    <option>Parrent Assessment</option>
-                                    <option>Peer Assessment</option>
-                                    <option>Teacher Assessment</option>
+                                <select id="assessment_for" name="assessment_for" class="form-control">
+                                    <option value="" selected disabled>-- Pilih assessment --</option>
+                                    <option value="Teacher">Teacher Assessment</option>
+                                    <option value="Parent">Parrent Assessment</option>
+                                    <option value="Peer">Peer Assessment</option>
                                 </select>
                             </td>
                         </tr>
@@ -98,7 +95,7 @@
                     <button type="submit" class="mb-3 btn btn-secondary">Telusuri</button>
                 </div>
             </div>
-        </div>
+        </form>
 
         <div class="form-row">
             <div class="table-responsive">
@@ -109,37 +106,23 @@
                             <th>Answer</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th>Take ablution orderly</th>
-                            <td>
-                                <span class="badge outline-badge-dark">Always</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Pray orderly</th>
-                            <td>
-                                <span class="badge outline-badge-dark">Sometimes</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Dzikir, istighosah orderly</th>
-                            <td>
-                                <span class="badge outline-badge-dark">Never</span>
-                            </td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
             <div class="col-12">
                 <div class="mb-3">
-                    <label>Note:</label>
+
                     <table class="table table-bordered">
                         <tr>
-                            <td id="note">You must upgrade your attitude better!</td>
+                            <td>
+                                <label>Note:</label>
+                                <p id="note"></p>
+                            </td>
                         </tr>
                         <tr>
-                            <td id="evaluator">Evaluator: Rojak</td>
+                            <td>
+                                <label>Evaluator:</label>
+                                <p id="evaluator"></p>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -159,10 +142,109 @@
 
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
-<link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/table/datatable/datatables.css') }}">
 @endsection
 
 @section('script')
-<script src="{{ asset('plugins/sweetalerts/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
+<script>
+    let siswa = []
+    let PARAMS = []
+
+    $('#siswa_kelas').on('change', function() {
+        siswa = $('#siswa_kelas').val().split('/')
+        let img = siswa[1]
+        let nis = siswa[2]
+        replaceImg(img)
+        replaceNis(nis)
+    })
+
+    $('form').on('submit', function(e) {
+        e.preventDefault()
+        PARAMS.push({
+            'siswa_user_id': siswa[0], //
+            'periode_id': document.getElementById('periode').value, //
+            'bulan': document.getElementById('bulan').value, //
+            'minggu_ke': document.getElementById('minggu_ke').value, //
+            'evaluator': document.getElementById('assessment_for').value, //
+        })
+
+        $('#history').DataTable().destroy()
+        loadData()
+        prosesAjax()
+        replaceEvaluator('-')
+        replaceNote('-')
+        PARAMS = []
+    })
+
+    $('#history').DataTable({
+        info: false, // 
+        ordering: false, //
+        paging: false, //
+        searching: false, //
+    })
+
+    function prosesAjax() {
+        $.ajax({
+            url: "{{ route('get-note-history.admin', ['a' => 'params']) }}"
+                .replace('params', JSON.stringify(PARAMS)), //
+            method: 'GET', //
+            dataType: 'json', //
+            processData: false, //
+            contentType: false, //
+            success: function(res) {
+                replaceNote(res.note)
+                replaceEvaluator(res.evaluator)
+                $("html, body").animate({
+                    scrollTop: $(document).height()
+                }, 1000);
+            }, //
+            error: function(err) {
+                console.log(err.responseText)
+            }
+        });
+    }
+
+    function loadData() {
+        $('#history').DataTable({
+            info: false, // 
+            ordering: false, //
+            paging: false, //
+            searching: false, //
+            processing: true, //
+            serverSide: true, //
+            ajax: {
+                url: "{{ route('get-assessment-history.admin', ['a' => 'params']) }}"
+                    .replace('params', JSON.stringify(PARAMS)), //
+            }, //
+            columns: [{
+                    data: 'aspect', //
+                    className: 'font-weight-bold', //
+                }, //
+                {
+                    data: 'answer', //
+                    className: 'text-center'
+                }, //
+            ]
+        })
+    }
+
+    function replaceImg(newImageName) {
+        let src = "{{ route('get-foto', ['filename' => 'src_js']) }}".replace('src_js', newImageName)
+        $('#foto').attr('src', src)
+    }
+
+    function replaceNis(newNis) {
+        $('#nis').text(newNis)
+    }
+
+    function replaceNote(newNote) {
+        $('#note').text(newNote)
+    }
+
+    function replaceEvaluator(newEvaluator) {
+        $('#evaluator').text(newEvaluator)
+    }
+
+</script>
 @endsection

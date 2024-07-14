@@ -12,7 +12,7 @@ class MenuService
 
     public function __construct()
     {
-        $this->periodeAktif = Periode::where('periode_status', true)->first();
+        $this->periodeAktif = Periode::where('periode_status', true)->select('id')->first();
     }
 
     public function getMenuAgenda()

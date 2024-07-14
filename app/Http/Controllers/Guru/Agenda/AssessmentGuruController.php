@@ -35,11 +35,14 @@ class AssessmentGuruController extends Controller
         // data untuk dikirim ke view
         $data['siswaDalamKelas'] = KelasSiswa::with(['user', 'siswa'])
             ->where('kelas_id', $kelas->id)
+            ->join('users', 'kelas_siswas.user_id', '=', 'users.id')
+            ->orderBy('users.nama', 'asc')
             ->get();
         $data['kelas'] = $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
         $data['periodeAktif'] = $this->periodeAktif;
         $data['aspects'] = AssessmentAspect::where('aspect_for', 'teacher')
             ->where('aspect_status', true)
+            ->orderBy('id', 'asc')
             ->get();
 
         return view('guru.agenda.teacher-assessment.teacher', $data);
@@ -71,6 +74,8 @@ class AssessmentGuruController extends Controller
         // data untuk dikirim ke view
         $data['siswaDalamKelas'] = KelasSiswa::with(['user', 'siswa'])
             ->where('kelas_id', $kelas->id)
+            ->join('users', 'kelas_siswas.user_id', '=', 'users.id')
+            ->orderBy('users.nama', 'asc')
             ->get();
         $data['kelas'] = $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
         $data['periodeAktif'] = $this->periodeAktif;

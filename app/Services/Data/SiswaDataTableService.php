@@ -9,7 +9,10 @@ class SiswaDataTableService
 {
     public function getSiswaDataTable()
     {
-        $user = User::has('siswa')->with('siswa')->get();
+        $user = User::has('siswa')
+            ->with('siswa')
+            ->orderBy('nama', 'asc')
+            ->get();
         $dataTable = DataTables::of($user)
             ->addColumn('check', function ($user) {
                 $data['id'] = $user->id;

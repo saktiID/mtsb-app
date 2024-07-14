@@ -7,6 +7,11 @@
 <x-menu-item menuTitle="Beranda" menuIcon="home" menuRoute="beranda-siswa" menuActive="beranda-siswa" />
 @endif
 {{-- end beranda --}}
+
+{{-- profile --}}
+<x-menu-item menuTitle="Profile" menuIcon="user" menuRoute="profile" menuActive="profile" />
+{{-- endprofile --}}
+
 {{-- logout --}}
 <li class="menu ">
     <a href="#" aria-expanded="false" class="dropdown-toggle" data-toggle="modal" data-target="#logoutModal" id="logoutSidebarBtn">

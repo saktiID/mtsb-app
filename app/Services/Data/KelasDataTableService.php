@@ -59,7 +59,11 @@ class KelasDataTableService
         $siswa = KelasSiswa::where([
             ['periode_id', $periode_id],
             ['kelas_id', $kelas_id],
-        ])->with(['user', 'kelas', 'siswa'])->get();
+        ])->with(['user', 'kelas', 'siswa'])
+            ->join('users', 'kelas_siswas.user_id', '=', 'users.id')
+            ->orderBy('users.nama', 'asc')
+            ->select(['*', 'kelas_siswas.id as id'])
+            ->get();
 
         $dataTable = DataTables::of($siswa)
 
@@ -92,7 +96,9 @@ class KelasDataTableService
 
     public function getSemuaSiswa()
     {
-        $siswa = User::has('siswa')->with('siswa')->get();
+        $siswa = User::has('siswa')->with('siswa')
+            ->orderBy('nama')
+            ->get();
         $dataTable = DataTables::of($siswa)
             ->addColumn('avatar', function ($siswa) {
                 $data['avatar'] = $siswa->avatar;

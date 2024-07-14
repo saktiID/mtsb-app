@@ -251,7 +251,7 @@
             }
         })
 
-        $('#tambah_aspect')[0].reset()
+        $('textarea#aspect').val('')
         $('#aspect_teacher').DataTable().ajax.reload()
         $('#aspect_parent').DataTable().ajax.reload()
         $('#aspect_peer').DataTable().ajax.reload()

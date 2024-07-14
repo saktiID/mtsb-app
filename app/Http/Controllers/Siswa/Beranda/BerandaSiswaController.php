@@ -8,6 +8,8 @@ class BerandaSiswaController extends Controller
 {
     public function index()
     {
-        return view('siswa.beranda.beranda-siswa');
+        $data['periodeAktif'] = $this->periodeAktif;
+
+        return view('siswa.beranda.beranda-siswa', $data);
     }
 }

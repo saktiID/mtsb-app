@@ -34,6 +34,11 @@
                         </div>
                     </div>
                     <div class="dropdown-item">
+                        <a href="{{ route('profile') }}">
+                            <i data-feather="user"></i> <span>Profile</span>
+                        </a>
+                    </div>
+                    <div class="dropdown-item">
                         <a href="#" data-toggle="modal" data-target="#logoutModal">
                             <i data-feather="log-out"></i> <span>Keluar</span>
                         </a>

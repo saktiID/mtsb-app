@@ -142,13 +142,10 @@
 
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/theme-checkbox-radio.css') }}">
-<link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/table/datatable/datatables.css') }}">
 @endsection
 
 @section('script')
-<script src="{{ asset('plugins/sweetalerts/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
 
 <script>
@@ -176,6 +173,8 @@
         $('#history').DataTable().destroy()
         loadData()
         prosesAjax()
+        replaceEvaluator('-')
+        replaceNote('-')
         PARAMS = []
     })
 
@@ -197,6 +196,9 @@
             success: function(res) {
                 replaceNote(res.note)
                 replaceEvaluator(res.evaluator)
+                $("html, body").animate({
+                    scrollTop: $(document).height()
+                }, 1000);
             }, //
             error: function(err) {
                 console.log(err.responseText)

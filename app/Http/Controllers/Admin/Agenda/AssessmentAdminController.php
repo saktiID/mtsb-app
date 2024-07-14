@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin\Agenda;
 
 use App\Http\Controllers\Controller;
+use App\Models\Data\Periode;
+use App\Models\Data\Siswa;
 use App\Services\Agenda\AspectDataTableService as AspectData;
 use App\Services\Agenda\AspectService as Aspect;
+use App\Services\Agenda\AssessmentDataTableService as AssessmentData;
+use App\Services\Agenda\AssessmentService as Assessment;
 use Illuminate\Http\Request;
 
 class AssessmentAdminController extends Controller
@@ -13,10 +17,20 @@ class AssessmentAdminController extends Controller
 
     protected $aspectData;
 
-    public function __construct(Aspect $aspect, AspectData $aspectData)
-    {
+    protected $assessment;
+
+    protected $assessmentData;
+
+    public function __construct(
+        Aspect $aspect,
+        AspectData $aspectData,
+        Assessment $assessment,
+        AssessmentData $assessmentData
+    ) {
         $this->aspect = $aspect;
         $this->aspectData = $aspectData;
+        $this->assessment = $assessment;
+        $this->assessmentData = $assessmentData;
     }
 
     public function assessment_aspect(Request $request)
@@ -60,6 +74,31 @@ class AssessmentAdminController extends Controller
 
     public function assessment_history()
     {
-        return view('admin.agenda.assessment-history.history');
+        $data['siswas'] = Siswa::with('user')->get();
+        $data['periodes'] = Periode::select(['id', 'tahun_ajaran', 'semester'])->get();
+
+        return view('admin.agenda.assessment-history.history', $data);
+    }
+
+    public function get_history(Request $request)
+    {
+        if ($request->ajax()) {
+            $requestAjax = json_decode($request->a, true);
+
+            return $this->assessmentData->getDataTable($requestAjax);
+        }
+    }
+
+    public function get_note(Request $request)
+    {
+        $requestNote = json_decode($request->a, true);
+        $note = $this->assessment->getNoteAssessment($requestNote);
+        if ($note) {
+            return response()->json([
+                'success' => true,
+                'note' => $note->answer,
+                'evaluator' => $note->evaluator,
+            ]);
+        }
     }
 }
