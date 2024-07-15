@@ -1,5 +1,6 @@
 *
 !profile/
-!profile/*
+!profile/user-male-90x90.png
+!profile/user-female-90x90.png
 !public/
 !.gitignore
