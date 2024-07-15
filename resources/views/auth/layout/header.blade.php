@@ -13,7 +13,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
 
     {{-- BEGIN PLUGIN --}}
-
     @yield('style')
     {{-- END BEGIN PLUGIN --}}
+    {{-- pwa --}}
+    @laravelPWA
+    {{-- endpwa --}}
 </head>
