@@ -23,4 +23,7 @@
 
     @yield('style')
 
+    {{-- pwa --}}
+    @laravelPWA
+    {{-- endpwa --}}
 </head>
