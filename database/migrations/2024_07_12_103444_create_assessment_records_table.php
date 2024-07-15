@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('assessment_records', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('periode_id');
+            $table->uuid('periode_id')->index();
             $table->foreign('periode_id')->references('id')->on('periodes')->onDelete('cascade');
-            $table->uuid('siswa_user_id');
+            $table->uuid('siswa_user_id')->index();
             $table->foreign('siswa_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->uuid('aspect_id')->nullable();
             $table->foreign('aspect_id')->references('id')->on('assessment_aspects')->onDelete('cascade');

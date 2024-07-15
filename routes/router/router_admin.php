@@ -29,6 +29,8 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('data-siswa')->group(function () {
             Route::get('/', [DataSiswaController::class, 'index'])->name('data-siswa');
+            Route::get('download-template', [DataSiswaController::class, 'download_template'])->name('download-template');
+            Route::post('upload-template', [DataSiswaController::class, 'upload_template'])->name('upload-template');
             Route::get('{id}', [DataSiswaController::class, 'detail_siswa'])->name('detail-data-siswa');
             Route::post('/', [DataSiswaController::class, 'tambah_siswa'])->name('tambah-data-siswa');
             Route::post('update', [DataSiswaController::class, 'update_siswa'])->name('update-data-siswa');

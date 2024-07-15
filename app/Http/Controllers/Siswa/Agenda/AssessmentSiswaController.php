@@ -10,6 +10,7 @@ use App\Services\Agenda\AssessmentDataTableService as AssessmentData;
 use App\Services\Agenda\AssessmentService as Assessment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class AssessmentSiswaController extends Controller
 {
@@ -44,10 +45,12 @@ class AssessmentSiswaController extends Controller
 
         $data['periodeAktif'] = $this->periodeAktif;
         $data['kelas'] = $kelas->kelas->jenjang_kelas.'-'.$kelas->kelas->bagian_kelas;
-        $data['aspects'] = AssessmentAspect::where('aspect_for', 'parent')
-            ->where('aspect_status', true)
-            ->orderBy('id', 'asc')
-            ->get();
+        $data['aspects'] = Cache::remember('aspect-parent', 300, function () {
+            return AssessmentAspect::where('aspect_for', 'parent')
+                ->where('aspect_status', true)
+                ->orderBy('id', 'asc')
+                ->get();
+        });
 
         return view('siswa.agenda.parent-assessment.parent', $data);
     }
@@ -61,17 +64,21 @@ class AssessmentSiswaController extends Controller
             ->where('periode_id', $periode_id)
             ->where('user_id', Auth::user()->id)->first();
 
-        $data['siswaDalamKelas'] = KelasSiswa::with(['user', 'siswa'])
-            ->where('kelas_id', $kelas->kelas->id)
-            ->join('users', 'kelas_siswas.user_id', '=', 'users.id')
-            ->orderBy('users.nama', 'asc')
-            ->get();
+        $data['siswaDalamKelas'] = Cache::remember($kelas->kelas->id, 1200, function () use ($kelas) {
+            return KelasSiswa::with(['user', 'siswa'])
+                ->where('kelas_id', $kelas->kelas->id)
+                ->join('users', 'kelas_siswas.user_id', '=', 'users.id')
+                ->orderBy('users.nama', 'asc')
+                ->get();
+        });
         $data['periodeAktif'] = $this->periodeAktif;
         $data['kelas'] = $kelas->kelas->jenjang_kelas.'-'.$kelas->kelas->bagian_kelas;
-        $data['aspects'] = AssessmentAspect::where('aspect_for', 'parent')
-            ->where('aspect_status', true)
-            ->orderBy('id', 'asc')
-            ->get();
+        $data['aspects'] = Cache::remember('aspcet-peer', 300, function () {
+            return AssessmentAspect::where('aspect_for', 'peer')
+                ->where('aspect_status', true)
+                ->orderBy('id', 'asc')
+                ->get();
+        });
 
         return view('siswa.agenda.peer-assessment.peer', $data);
     }

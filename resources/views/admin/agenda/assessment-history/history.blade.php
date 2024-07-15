@@ -19,7 +19,7 @@
                         <tr>
                             <th width="20%">Nama</th>
                             <td>
-                                <select id="siswa_kelas" name="siswa_kelas" class="form-control">
+                                <select id="siswa_kelas" name="siswa_kelas" class="form-control basic">
                                     <option value="" selected disabled>-- Pilih siswa --</option>
                                     @foreach ($siswas as $siswa)
                                     <option value="{{ $siswa->user->id }}/{{ $siswa->user->avatar }}/{{ $siswa->nis }}">{{ $siswa->user->nama }}</option>
@@ -143,13 +143,19 @@
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/table/datatable/datatables.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('plugins/select2/select2.min.css') }}">
 @endsection
 
 @section('script')
 <script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
+<script src="{{ asset('plugins/select2/select2.min.js') }}"></script>
 <script>
     let siswa = []
     let PARAMS = []
+
+    $(".basic").select2({
+        tags: true, //
+    });
 
     $('#siswa_kelas').on('change', function() {
         siswa = $('#siswa_kelas').val().split('/')

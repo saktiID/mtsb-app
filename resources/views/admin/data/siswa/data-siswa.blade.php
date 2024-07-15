@@ -7,7 +7,7 @@
         <div class="btn-group mb-3" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-info btn-sm" id="reloadData">Reload data</button>
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahModal">Tambah siswa</button>
-            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#">Upload excel</button>
+            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#uploadModal">Upload excel</button>
             <button type="button" class="btn btn-danger btn-sm hapus-beberapa">Hapus beberapa</button>
         </div>
         <div class="table-responsive">
@@ -148,6 +148,38 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="uploadModal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadModalLabel">Upload siswa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col d-flex justify-content-end">
+                        <a href="{{ route('download-template') }}" class="btn btn-warning btn-sm">Download template</a>
+                    </div>
+                </div>
+                <form action="{{ route('upload-template') }}" method="POST" id="form-upload" enctype="multipart/form-data">
+                    <label for="excelFile">Pilih file excel:</label>
+                    <input type="file" class="form-control" name="excelFile" id="excelFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                </form>
+                <div class="progress br-30 progress-md mt-3">
+                    <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Batalkan</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 @endsection
 
 
@@ -188,6 +220,45 @@
         nama_siswa_akan_dihapus.innerHTML = $(this).attr('data-nama')
         hapusBtnModal.href = $(this).attr('data-id')
         $('#hapusModal').modal('show')
+    })
+
+    $('form#form-upload').on('change', function(e) {
+        const excelFile = $('input#excelFile').prop('files')[0]
+        let formData = new FormData();
+        formData.append('_token', "{{ csrf_token() }}")
+        formData.append('excelFile', excelFile)
+        $.ajax({
+            url: "{{ route('upload-template') }}", //
+            type: 'POST', //
+            data: formData, //
+            contentType: false, //
+            processData: false, //
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest()
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total
+                        percentComplete = parseInt(percentComplete * 100)
+                        $('.progress-bar').css('width', percentComplete + '%')
+                    }
+                }, false);
+                return xhr;
+            }, //
+            success: function(res) {
+                $('#form-upload')[0].reset()
+                $('#uploadModal').modal('hide')
+                $('.progress-bar').css('width', 0 + '%')
+                if (res.success) {
+                    notif(res.message, true)
+                } else {
+                    notif(res.message, false)
+                }
+            }, //
+            error: function(res) {
+                $('#form-upload')[0].reset()
+                console.log(res);
+            }
+        })
     })
 
     function serrialAssoc(data) {

@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('kelas_siswas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('periode_id');
+            $table->uuid('periode_id')->index();
             $table->foreign('periode_id')->references('id')->on('periodes')->onDelete('cascade');
-            $table->uuid('kelas_id');
+            $table->uuid('kelas_id')->index();
             $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
-            $table->uuid('user_id');
+            $table->uuid('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

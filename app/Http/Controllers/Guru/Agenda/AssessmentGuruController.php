@@ -10,6 +10,7 @@ use App\Services\Agenda\AssessmentDataTableService as AssessmentData;
 use App\Services\Agenda\AssessmentService as Assessment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class AssessmentGuruController extends Controller
 {
@@ -40,10 +41,12 @@ class AssessmentGuruController extends Controller
             ->get();
         $data['kelas'] = $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
         $data['periodeAktif'] = $this->periodeAktif;
-        $data['aspects'] = AssessmentAspect::where('aspect_for', 'teacher')
-            ->where('aspect_status', true)
-            ->orderBy('id', 'asc')
-            ->get();
+        $data['aspects'] = Cache::remember('aspect-teacher', 300, function () {
+            return AssessmentAspect::where('aspect_for', 'teacher')
+                ->where('aspect_status', true)
+                ->orderBy('id', 'asc')
+                ->get();
+        });
 
         return view('guru.agenda.teacher-assessment.teacher', $data);
     }

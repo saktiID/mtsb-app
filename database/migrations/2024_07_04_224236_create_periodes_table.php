@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('periodes', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->uuid('id')->primary()->index();
             $table->string('tahun_ajaran', 11);
             $table->string('semester', 6);
             $table->boolean('periode_status')->default(false);
