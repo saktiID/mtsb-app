@@ -28,6 +28,9 @@
         $('.overlay').click()
     });
 
+    let err = document.getElementById('aux_error')
+    let suc = document.getElementById('aux_success')
+
 </script>
 
 @yield('script')

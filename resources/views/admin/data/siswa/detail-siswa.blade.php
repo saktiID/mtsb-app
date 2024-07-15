@@ -196,8 +196,10 @@
 
     function notif(msg, status) {
         if (status) {
+            suc.play()
             Toast.create("Berhasil", msg, TOAST_STATUS.SUCCESS, 10000);
         } else {
+            err.play()
             Toast.create("Gagal", msg, TOAST_STATUS.DANGER, 10000);
         }
     }

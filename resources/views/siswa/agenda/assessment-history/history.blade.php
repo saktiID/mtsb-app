@@ -120,7 +120,7 @@
             </div>
             <div class="col-12">
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="mb-3 btn btn-warning">Print</button>
+                    <button id="print" class="mb-3 btn btn-warning">Print</button>
                 </div>
             </div>
 
@@ -162,7 +162,10 @@
         PARAMS = []
     })
 
-
+    $('#print').on('click', function(e) {
+        e.preventDefault()
+        window.print()
+    })
 
     $('#history').DataTable({
         info: false, // 

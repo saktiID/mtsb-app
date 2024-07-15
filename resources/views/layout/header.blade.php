@@ -23,6 +23,21 @@
 
     @yield('style')
 
+    <style>
+        @media print {
+            #content {
+                margin-top: -20px !important;
+            }
+
+            button,
+            #foto,
+            .footer-wrapper {
+                display: none !important;
+            }
+        }
+
+    </style>
+
     {{-- pwa --}}
     @laravelPWA
     {{-- endpwa --}}

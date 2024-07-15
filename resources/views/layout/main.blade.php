@@ -51,6 +51,15 @@
     </div>
     <!-- END MAIN CONTAINER -->
 
+    {{-- aux --}}
+    <audio id="aux_success">
+        <source src="{{ asset('audio/success.mp3') }}" type="audio/mpeg">
+    </audio>
+    <audio id="aux_error">
+        <source src="{{ asset('audio/error.mp3') }}" type="audio/mpeg">
+    </audio>
+    {{-- endaux --}}
+
     {{-- BEGIN SCRIPTS --}}
     @include('layout.scripts')
     {{-- END BEGIN SCRIPTS --}}

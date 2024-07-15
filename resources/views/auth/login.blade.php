@@ -52,10 +52,12 @@
                                     <button type="submit" class="btn btn-primary loadingTrigger" value="">Masuk</button>
                                 </div>
                             </div>
-
                         </div>
                     </form>
-
+                    <div class="mt-3" id="installButton">
+                        <span>Belum memasang aplikasi? </span>
+                        <a href="#"> Pasang aplikasi sekarang.</a>
+                    </div>
                 </div>
             </div>
         </div>

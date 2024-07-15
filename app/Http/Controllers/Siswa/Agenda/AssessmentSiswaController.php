@@ -116,7 +116,10 @@ class AssessmentSiswaController extends Controller
     public function assessment_history()
     {
         $this->_checkKelas();
-        $data['periodes'] = Periode::select(['id', 'tahun_ajaran', 'semester'])->get();
+        $data['periodes'] = Periode::select(['id', 'tahun_ajaran', 'semester'])
+            ->orderBy('tahun_ajaran', 'asc')
+            ->orderBy('semester', 'asc')
+            ->get();
 
         return view('siswa.agenda.assessment-history.history', $data);
     }

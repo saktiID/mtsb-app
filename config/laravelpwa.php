@@ -8,42 +8,42 @@ return [
         'start_url' => '/',
         'background_color' => '#ffffff',
         'theme_color' => '#000000',
-        "display_override" => ["fullscreen"],
+        'display_override' => ['fullscreen'],
         'display' => 'standalone',
         'orientation' => 'any',
         'status_bar' => 'black',
         'icons' => [
             '72x72' => [
                 'path' => '/images/icons/icon-72x72.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
             '96x96' => [
                 'path' => '/images/icons/icon-96x96.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
             '128x128' => [
                 'path' => '/images/icons/icon-128x128.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
             '144x144' => [
                 'path' => '/images/icons/icon-144x144.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
             '152x152' => [
                 'path' => '/images/icons/icon-152x152.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
             '192x192' => [
                 'path' => '/images/icons/icon-192x192.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
             '384x384' => [
                 'path' => '/images/icons/icon-384x384.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
             '512x512' => [
                 'path' => '/images/icons/icon-512x512.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
         ],
         'splash' => [
@@ -64,28 +64,28 @@ return [
                 'description' => 'Shortcut MTsB Application',
                 'url' => '/home',
                 'icons' => [
-                    "src" => "/images/icons/icon-96x96.png",
-                    "sizes" => "96x96",
-                    "purpose" => "any",
-                ]
+                    'src' => '/images/icons/icon-96x96.png',
+                    'sizes' => '96x96',
+                    'purpose' => 'any',
+                ],
             ],
         ],
         'custom' => [
             'screenshots' => [
                 [
-                    "src" => "/images/icons/icon-512x512.png",
-                    "sizes" => "512x512",
-                    "type" => "image/png",
-                    "form_factor" => "wide",
-                    "label" => "MTsB Application",
+                    'src' => '/images/icons/icon-512x512.png',
+                    'sizes' => '512x512',
+                    'type' => 'image/png',
+                    'form_factor' => 'wide',
+                    'label' => 'MTsB Application',
                 ],
                 [
-                    "src" => "/images/icons/icon-384x384.png",
-                    "sizes" => "384x384",
-                    "type" => "image/png",
-                    "form_factor" => "narrow",
-                    "label" => "MTsB Application",
-                ]
+                    'src' => '/images/icons/icon-384x384.png',
+                    'sizes' => '384x384',
+                    'type' => 'image/png',
+                    'form_factor' => 'narrow',
+                    'label' => 'MTsB Application',
+                ],
             ],
             'shortcuts' => [
                 [
@@ -94,15 +94,15 @@ return [
                     'url' => '/home',
                     'icons' => [
                         [
-                            "src" => "/images/icons/icon-96x96.png",
-                            "type" => "image/png",
-                            "sizes" => "96x96",
-                            "purpose" => "any",
-                        ]
-                    ]
+                            'src' => '/images/icons/icon-96x96.png',
+                            'type' => 'image/png',
+                            'sizes' => '96x96',
+                            'purpose' => 'any',
+                        ],
+                    ],
                 ],
             ],
             'description' => 'Aplikasi untuk sarana belajar di MTsB',
-        ]
-    ]
+        ],
+    ],
 ];
