@@ -21,7 +21,7 @@ class UploadTemplateService
                 'nama' => $activeWorksheet[$row][3],
                 'username' => $activeWorksheet[$row][1],
                 'gender' => $activeWorksheet[$row][4],
-                'password' => Hash::make('123456'),
+                'password' => '123456',
                 'nis' => $activeWorksheet[$row][1],
                 'nisn' => $activeWorksheet[$row][2] ? $activeWorksheet[$row][2] : null,
                 'email' => null,
