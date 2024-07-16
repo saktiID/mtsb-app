@@ -10,6 +10,7 @@ class SiswaDataTableService
     public function getSiswaDataTable()
     {
         $user = User::has('siswa')
+            ->where('is_active', true)
             ->with('siswa')
             ->orderBy('nama', 'asc')
             ->get();
