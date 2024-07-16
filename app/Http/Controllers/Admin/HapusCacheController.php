@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Artisan;
 use App\Http\Controllers\Controller;
+use Artisan;
 
 class HapusCacheController extends Controller
 {

@@ -4,7 +4,6 @@ namespace App\Services\Data;
 
 use App\Jobs\UploadDataSiswaJob;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class UploadTemplateService
