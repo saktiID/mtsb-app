@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('gender', 12)->default('male');
             $table->string('avatar', 125)->default('user-male-90x90.png');
             $table->string('password');
+            $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

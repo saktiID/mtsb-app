@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin\Data;
 
-use App\Http\Controllers\Controller;
-use App\Services\Data\DownloadTemplateService as DownloadTemplate;
-use App\Services\Data\SiswaDataTableService as SiswaDataTable;
-use App\Services\Data\SiswaService as Siswa;
-use App\Services\Data\UploadTemplateService as UploadTemplate;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Validator;
+use App\Services\Data\SiswaService as Siswa;
+use App\Services\Data\SiswaDataTableService as SiswaDataTable;
+use App\Services\Data\UploadTemplateService as UploadTemplate;
+use App\Services\Data\DownloadTemplateService as DownloadTemplate;
 
 class DataSiswaController extends Controller
 {
@@ -45,7 +46,7 @@ class DataSiswaController extends Controller
     {
         $query = $this->siswa->tambahSiswa($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Siswa baru '.$request->nama.' berhasil ditambahkan']);
+            return response()->json(['success' => true, 'message' => 'Siswa baru ' . $request->nama . ' berhasil ditambahkan']);
         } else {
             return response()->json(['success' => false, 'message' => 'Siswa baru gagal ditambahkan']);
         }
@@ -74,7 +75,7 @@ class DataSiswaController extends Controller
                 $msg = '';
                 $messages = $validate->errors()->messages()['password'];
                 foreach ($messages as $message) {
-                    $msg .= $message.'<br>';
+                    $msg .= $message . '<br>';
                 }
 
                 return response()->json(['success' => false, 'message' => $msg]);
@@ -83,7 +84,7 @@ class DataSiswaController extends Controller
 
         $query = $this->siswa->updateSiswa($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Data siswa '.$request->nama.' berhasil diubah']);
+            return response()->json(['success' => true, 'message' => 'Data siswa ' . $request->nama . ' berhasil diubah']);
         } else {
             return response()->json(['success' => false, 'message' => 'Data siswa gagal diubah']);
         }
@@ -116,7 +117,14 @@ class DataSiswaController extends Controller
             return response()->json(['success' => false, 'message' => 'File tidak ditemukan!']);
         }
 
-        if (! in_array($filetype, $extAllowed)) {
+        $reader = IOFactory::createReaderForFile($filetmp);
+        $spreadsheet = $reader->load($filetmp);
+        $sheetName = $spreadsheet->getSheetNames()[0];
+        if ($sheetName != 'template-upload-siswa') {
+            return response()->json(['success' => false, 'message' => 'Format file salah, unduh template lagi!']);
+        }
+
+        if (!in_array($filetype, $extAllowed)) {
             return response()->json(['success' => false, 'message' => 'Format file tidak diizinkan!']);
         }
 
