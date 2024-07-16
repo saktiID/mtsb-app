@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Data\DataGuruController;
 use App\Http\Controllers\Admin\Data\DataKelasController;
 use App\Http\Controllers\Admin\Data\DataPeriodeController;
 use App\Http\Controllers\Admin\Data\DataSiswaController;
+use App\Http\Controllers\Admin\HapusCacheController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
@@ -69,4 +70,7 @@ Route::prefix('admin')->group(function () {
         Route::get('get-admin-assessment-history', [AssessmentAdminController::class, 'get_history'])->name('get-assessment-history.admin');
         Route::get('get-admin-note-history', [AssessmentAdminController::class, 'get_note'])->name('get-note-history.admin');
     });
+
+    Route::get('hapus-cache', [HapusCacheController::class, 'index'])->name('hapus-cache');
+    Route::post('hapus-data-cache', [HapusCacheController::class, 'hapus_data_cache'])->name('hapus-data-cache');
 });

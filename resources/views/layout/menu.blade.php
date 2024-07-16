@@ -45,6 +45,8 @@
 
 </x-menu-dropdown>
 
+<x-menu-item menuTitle="Hapus Cache" menuIcon="file-minus" menuRoute="hapus-cache" menuActive="hapus-cache" />
+
 @endif
 {{-- end admin menu --}}
 
