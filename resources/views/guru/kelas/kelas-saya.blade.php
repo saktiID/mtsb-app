@@ -144,6 +144,10 @@
         wrapperSantri.innerHTML = ''
     })
 
+    $('#tambahModal').on('shown.bs.modal', function() {
+        $('#data-siswa').DataTable().ajax.reload()
+    })
+
     $(document).on('click', '.masukkan-siswa', function(e) {
         let id = $(this).data('id')
         let nama = $(this).data('nama')
