@@ -35,12 +35,12 @@
 
     <x-card-box cardTitle="Assessment Aspects (for teacher)" cardLayout="col-lg-6 col-sm-12">
         <div class="table-responsive">
-            <table id="aspect_teacher" class="table table-striped" style="width:100%">
+            <table id="aspect_teacher" class="table table-striped table-hover" style="width:100%">
                 <thead>
                     <tr class="text-center">
                         <th>No</th>
-                        <th>Aspect</th>
-                        <th>Status</th>
+                        <th data-priority="1">Aspect</th>
+                        <th data-priority="2">Status</th>
                         <th><i data-feather="more-horizontal"></i></th>
                     </tr>
                 </thead>
@@ -50,12 +50,12 @@
 
     <x-card-box cardTitle="Assessment Aspects (for parent)" cardLayout="col-lg-6 col-sm-12">
         <div class="table-responsive">
-            <table id="aspect_parent" class="table table-striped" style="width:100%">
+            <table id="aspect_parent" class="table table-striped table-hover" style="width:100%">
                 <thead>
                     <tr class="text-center">
                         <th>No</th>
-                        <th>Aspect</th>
-                        <th>Status</th>
+                        <th data-priority="1">Aspect</th>
+                        <th data-priority="2">Status</th>
                         <th><i data-feather="more-horizontal"></i></th>
                     </tr>
                 </thead>
@@ -65,12 +65,12 @@
 
     <x-card-box cardTitle="Assessment Aspects (for peer)" cardLayout="col-lg-6 col-sm-12">
         <div class="table-responsive">
-            <table id="aspect_peer" class="table table-striped" style="width:100%">
+            <table id="aspect_peer" class="table table-striped table-hover" style="width:100%">
                 <thead>
                     <tr class="text-center">
                         <th>No</th>
-                        <th>Aspect</th>
-                        <th>Status</th>
+                        <th data-priority="1">Aspect</th>
+                        <th data-priority="2">Status</th>
                         <th><i data-feather="more-horizontal"></i></th>
                     </tr>
                 </thead>
@@ -117,11 +117,11 @@
 
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
-<link rel="stylesheet" href="{{ asset('plugins/table/datatable/datatables.css') }}">
+<link href="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('script')
-<script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
+<script src="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.js') }}"></script>
 <script>
     let textLoadingtrigger
     let loadingTrigger = document.querySelectorAll('.loadingTrigger')
@@ -202,6 +202,7 @@
 
     function loadData(id, params) {
         $(id).DataTable({
+            responsive: true, //
             info: false, // 
             ordering: false, //
             paging: false, //

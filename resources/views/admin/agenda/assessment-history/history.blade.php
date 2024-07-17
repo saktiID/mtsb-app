@@ -142,12 +142,12 @@
 
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
-<link rel="stylesheet" href="{{ asset('plugins/table/datatable/datatables.css') }}">
+<link href="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.css') }}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/select2/select2.min.css') }}">
 @endsection
 
 @section('script')
-<script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
+<script src="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.js') }}"></script>
 <script src="{{ asset('plugins/select2/select2.min.js') }}"></script>
 <script>
     let siswa = []

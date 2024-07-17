@@ -1,41 +1,22 @@
 @extends('layout.main')
-@section('title', 'Detail Kelas')
+@section('title', 'Kelas Saya')
 @section('content')
 <div class="row pt-4">
-    <x-card-box cardTitle="Detail Kelas">
+    <x-card-box cardTitle="Kelas Saya">
         <div class="row">
             <div class="col-lg-4 col-sm-12 mb-4">
-                <a href="{{ route('data-kelas') }}">
-                    <div class="alert alert-outline-primary">
-                        <span>&larr; Kembali ke Data Kelas</span>
-                    </div>
-                </a>
-
-                <label for="walas_id">Wali Kelas</label>
+                <label for="walas_id">Wali kelas</label>
                 <div class="d-flex justify-content-center">
                     <div class="avatar avatar-xl ">
                         <div class="rounded alert alert-light-danger p-0 " style="height: 170px; width:170px">
-                            @if($kelas->avatar != '-')
-                            <img id="foto" src="{{ route('get-foto', ['filename' => $kelas->avatar]) }}" class="rounded" width="170px" height="170px">
-                            @else
-                            <img id="foto" src="{{ route('get-foto', ['filename' => '-']) }}" class="rounded" width="170px" height="170px">
-                            @endif
+                            <img id="foto" src="{{ route('get-foto', ['filename' => Auth::user()->avatar]) }}" class="rounded" width="170px" height="170px">
                         </div>
                     </div>
                 </div>
-                <select name="walas_id" id="walas_id" class="form-control selectpicker">
-                    <option value="" selected disabled>-- Pilih walas --</option>
-                    @foreach ($guru as $gr)
-                    <option value="{{ $gr->id.'/'.$gr->avatar.'/'.$gr->nama }}" {{ $gr->id == $kelas->walas_id ? 'selected' : '' }}>{{ $gr->nama }}</option>
-                    @endforeach
-
-                </select>
             </div>
 
             <div class="col-lg-8 col-sm-12">
-                <div class="alert alert-light-info">
-                    <span>Detail Kelas</span>
-                </div>
+                <label>Detail kelas</label>
 
                 <table class="table table-bordered">
                     <tr>
@@ -48,12 +29,12 @@
                     </tr>
                     <tr>
                         <th>Periode</th>
-                        <td>Semester: {{ $kelas->periode->semester }} {{ $kelas->periode->tahun_ajaran }}</td>
+                        <td>Semester: {{ $periodeAktif->semester }} {{ $periodeAktif->tahun_ajaran }}</td>
                     </tr>
                     <tr>
                         <th>Wali kelas</th>
                         <td>
-                            <p id="nama_walas">{{ $kelas->nama_walas }}</p>
+                            <p id="nama_walas">{{ Auth::user()->nama }}</p>
                         </td>
                     </tr>
 
@@ -149,19 +130,6 @@
 <script>
     const wrapperSantri = document.querySelector('.wrapper-santri')
 
-    $('#walas_id').on('change', function(e) {
-        let val = this.value
-        let ex = val.split('/')
-        let formData = new FormData()
-        formData.append('_token', "{{ csrf_token() }}")
-        formData.append('walas_id', ex[0])
-        formData.append('kelas_id', "{{ $kelas->id }}")
-
-        prosesAjax(formData, "{{ route('set-wali-kelas') }}")
-        replaceImg(ex[1])
-        replaceName(ex[2])
-    })
-
     $('#reloadData').on('click', function() {
         $('#data-siswa-kelas').DataTable().ajax.reload()
         notif('Berhasil muat ulang data', true)
@@ -179,13 +147,13 @@
     $(document).on('click', '.masukkan-siswa', function(e) {
         let id = $(this).data('id')
         let nama = $(this).data('nama')
-        staging(id, nama, "{{ route('masukkan-siswa') }}")
+        staging(id, nama, "{{ route('masukkan-siswa-saya') }}")
     })
 
     $(document).on('click', '.keluarkan-siswa', function(e) {
         let id = $(this).data('id')
         let nama = $(this).data('nama')
-        staging(id, nama, "{{ route('keluarkan-siswa') }}")
+        staging(id, nama, "{{ route('keluarkan-siswa-saya') }}")
     })
 
     function staging(id, nama, route) {
@@ -194,7 +162,7 @@
         formData.append('id', id)
         formData.append('nama', nama)
         formData.append('kelas_id', "{{ $kelas->id }}")
-        formData.append('periode_id', "{{ $kelas->periode->id }}")
+        formData.append('periode_id', "{{ $periodeAktif->id }}")
         prosesAjax(formData, route);
     }
 
@@ -297,9 +265,9 @@
         $('#nama_walas').text(newName)
     }
 
-    loadData('#data-siswa-kelas', "{{ route('siswa-kelas', ['id' => 'params']) }}".replace('params', "{{ $kelas->id }}"))
+    loadData('#data-siswa-kelas', "{{ route('siswa-kelas-saya', ['id' => 'params']) }}".replace('params', "{{ $kelas->id }}"))
 
-    loadData('#data-siswa', "{{ route('semua-siswa') }}")
+    loadData('#data-siswa', "{{ route('semua-siswa-umum') }}")
 
 </script>
 @endsection

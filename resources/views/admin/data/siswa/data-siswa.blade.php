@@ -11,7 +11,7 @@
             <button type="button" class="btn btn-danger btn-sm hapus-beberapa">Hapus beberapa</button>
         </div>
         <div class="table-responsive">
-            <table id="data-siswa" class="table table-striped table-hover" style="width:100%">
+            <table id="data-siswa" class="table table-striped table-hover nowrap" style="width:100%">
                 <thead>
                     <tr class="text-center">
                         <th>
@@ -25,10 +25,10 @@
                             </div>
                         </th>
                         <th>Foto</th>
-                        <th>Nama</th>
+                        <th data-priority="1">Nama</th>
                         <th>NIS</th>
                         <th>NISN</th>
-                        <th><i data-feather="more-horizontal"></i></th>
+                        <th data-priority="2"><i data-feather="more-horizontal"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -184,11 +184,11 @@
 
 
 @section('style')
-<link rel="stylesheet" href="{{ asset('plugins/table/datatable/datatables.css') }}">
+<link href="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('script')
-<script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
+<script src="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.js') }}"></script>
 <script>
     let check_all_item = document.querySelector('#check_all_item')
     let hapus_beberapa = document.querySelector('.hapus-beberapa')
@@ -295,6 +295,7 @@
 
     function loadData(id) {
         $(id).DataTable({
+            responsive: true, //
             processing: true, //
             serverSide: true, //
             ajax: {

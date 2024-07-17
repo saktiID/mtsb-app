@@ -26,9 +26,8 @@
                             </div>
                         </th>
                         <th>Walas</th>
-                        <th>Jenjang kelas</th>
-                        <th>Rombel kelas</th>
-                        <th><i data-feather="more-horizontal"></i></th>
+                        <th data-priority="1">Kelas</th>
+                        <th data-priority="2"><i data-feather="more-horizontal"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -123,11 +122,11 @@
 @endsection
 
 @section('style')
-<link rel="stylesheet" href="{{ asset('plugins/table/datatable/datatables.css') }}">
+<link href="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('script')
-<script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
+<script src="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.js') }}"></script>
 <script>
     let check_all_item = document.querySelector('#check_all_item')
     let hapus_beberapa = document.querySelector('.hapus-beberapa')
@@ -195,6 +194,7 @@
 
     function loadData(id) {
         $(id).DataTable({
+            responsive: true, //
             processing: true, //
             serverSide: true, //
             order: [
@@ -214,11 +214,7 @@
                     orderable: false, //
                 }, //
                 {
-                    data: 'jenjang', //
-                    className: 'text-center', //
-                }, //
-                {
-                    data: 'bagian', //
+                    data: 'kelas', //
                     className: 'text-center', //
                 }, //
                 {

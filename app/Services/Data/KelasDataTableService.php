@@ -35,11 +35,8 @@ class KelasDataTableService
 
                 return view('element.avatar', $data);
             })
-            ->addColumn('jenjang', function ($kelas) {
-                return $kelas->jenjang_kelas;
-            })
-            ->addColumn('bagian', function ($kelas) {
-                return $kelas->bagian_kelas;
+            ->addColumn('kelas', function ($kelas) {
+                return $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
             })
             ->addColumn('more', function ($kelas) {
                 $data['id'] = $kelas->id;

@@ -17,11 +17,8 @@ class PeriodeDataTableService
             ->addColumn('id', function ($periode) {
                 return $periode->id;
             })
-            ->addColumn('semester', function ($periode) {
-                return $periode->semester;
-            })
-            ->addColumn('tahun_ajaran', function ($periode) {
-                return $periode->tahun_ajaran;
+            ->addColumn('periode', function ($periode) {
+                return $periode->tahun_ajaran.' - '.$periode->semester;
             })
             ->addColumn('status', function ($periode) {
                 $data['status'] = $periode->periode_status;

@@ -64,6 +64,11 @@ class KelasService
         return $query;
     }
 
+    public function getKelasByWalasId($walas_id)
+    {
+        return Kelas::where('walas_id', $walas_id)->first();
+    }
+
     public function getGuru()
     {
         $guru = User::has('guru')->with('guru')->get();

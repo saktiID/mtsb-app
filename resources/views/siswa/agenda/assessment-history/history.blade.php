@@ -135,12 +135,11 @@
 
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/theme-checkbox-radio.css') }}">
-<link rel="stylesheet" href="{{ asset('plugins/table/datatable/datatables.css') }}">
+<link href="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('script')
-<script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
-
+<script src="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.js') }}"></script>
 <script>
     let PARAMS = []
 

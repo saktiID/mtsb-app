@@ -13,9 +13,8 @@
                 <thead>
                     <tr class="text-center">
                         <th>ID</th>
-                        <th>Semester</th>
-                        <th>Tahun ajaran</th>
-                        <th>Status</th>
+                        <th data-priority="1">Periode</th>
+                        <th data-priority="2">Status</th>
                     </tr>
                 </thead>
             </table>
@@ -47,7 +46,7 @@
                                 <div class="col-lg-6 col-sm-12">
                                     <div class="mb-3">
                                         <label for="semester">Semester</label>
-                                        <select name="semester" id="semester" class="form-control selectpicker" required>
+                                        <select name="semester" id="semester" class="form-control" required>
                                             <option value="">-- Semester --</option>
                                             <option value="Ganjil">Ganjil</option>
                                             <option value="Genap">Genap</option>
@@ -104,11 +103,11 @@
 
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
-<link rel="stylesheet" href="{{ asset('plugins/table/datatable/datatables.css') }}">
+<link href="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('script')
-<script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
+<script src="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.js') }}"></script>
 <script>
     let textLoadingtrigger = ''
     let loadingTrigger = document.querySelectorAll('.loadingTrigger')
@@ -175,6 +174,7 @@
 
     function loadData(id) {
         $(id).DataTable({
+            responsive: true, //
             processing: true, //
             serverSide: true, //
             order: [
@@ -188,11 +188,7 @@
                     className: 'text-center', //
                 }, //
                 {
-                    data: 'semester', //
-                    className: 'text-center', //
-                }, //
-                {
-                    data: 'tahun_ajaran', //
+                    data: 'periode', //
                     className: 'text-center', //
                 }, //
                 {
