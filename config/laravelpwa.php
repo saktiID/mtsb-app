@@ -103,6 +103,7 @@ return [
                 ],
             ],
             'description' => 'Aplikasi untuk sarana belajar di MTsB',
+            'orientation' => 'portrait',
         ],
     ],
 ];
