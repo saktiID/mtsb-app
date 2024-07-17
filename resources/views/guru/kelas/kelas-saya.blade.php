@@ -69,10 +69,10 @@
 
 @section('modal')
 <div class="modal fade" id="tambahModal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="tambahModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="tambahModalLabel">Masukkan Santri ke Kelas</h5>
+                <h5 class="modal-title" id="tambahModalLabel">Masukkan santri ke kelas</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i data-feather="x"></i>
                 </button>
@@ -83,7 +83,7 @@
                     <div class="col-lg-12 col-sm-12">
 
                         <div class="alert alert-light-warning">
-                            <span>Pilih santri untuk masuk ke kelas</span>
+                            <span>Pilih siswa untuk masuk ke kelas</span>
                         </div>
                         <div class="btn-group mb-3" role="group" aria-label="Basic example">
                             <span class="btn btn-info" id="reload_semua_siswa">Reload data</span>
