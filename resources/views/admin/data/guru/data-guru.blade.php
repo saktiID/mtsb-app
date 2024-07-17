@@ -89,8 +89,8 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="email">Email</label>
-                                <input type="text" value="" id="email" name="email" class="form-control">
+                                <label for="email">Email *</label>
+                                <input type="text" value="" id="email" name="email" class="form-control" required>
                             </div>
 
                             <div class="mb-3">

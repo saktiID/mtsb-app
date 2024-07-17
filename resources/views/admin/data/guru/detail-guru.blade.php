@@ -43,7 +43,7 @@
                         <div class="col-lg-6 col-sm-12">
                             <div class="mb-3">
                                 <label for="email">Email guru</label>
-                                <input type="text" value="{{ $user->guru->email }}" id="email" name="email" class="form-control">
+                                <input type="text" value="{{ $user->guru->email }}" id="email" name="email" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-12">
@@ -142,6 +142,7 @@
 <script src="{{ asset('cropperjs-main/dist/cropper.min.js') }}"></script>
 
 <script>
+    let textLoadingtrigger
     let loadingTrigger = document.querySelectorAll('.loadingTrigger')
 
     $('form#data_guru').on('submit', function(e) {

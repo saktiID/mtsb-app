@@ -154,6 +154,7 @@
 <script src="{{ asset('cropperjs-main/dist/cropper.min.js') }}"></script>
 
 <script>
+    let textLoadingtrigger
     let loadingTrigger = document.querySelectorAll('.loadingTrigger')
 
     $('form#data_siswa').on('submit', function(e) {

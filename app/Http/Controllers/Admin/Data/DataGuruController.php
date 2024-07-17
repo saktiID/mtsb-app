@@ -31,9 +31,12 @@ class DataGuruController extends Controller
 
     public function tambah_guru(Request $request)
     {
+        if (strlen($request->password) < 5) {
+            return response()->json(['success' => false, 'message' => 'Password minimal 5 karakter']);
+        }
         $query = $this->guru->tambahGuru($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Guru baru '.$request->nama.' berhasil ditambahkan']);
+            return response()->json(['success' => true, 'message' => 'Guru baru ' . $request->nama . ' berhasil ditambahkan']);
         } else {
             return response()->json(['success' => false, 'message' => 'Guru baru gagal ditambahkan']);
         }
@@ -62,7 +65,7 @@ class DataGuruController extends Controller
                 $msg = '';
                 $messages = $validate->errors()->messages()['password'];
                 foreach ($messages as $message) {
-                    $msg .= $message.'<br>';
+                    $msg .= $message . '<br>';
                 }
 
                 return response()->json(['success' => false, 'message' => $msg]);
@@ -71,7 +74,7 @@ class DataGuruController extends Controller
 
         $query = $this->guru->updateGuru($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Data guru '.$request->nama.' berhasil diubah']);
+            return response()->json(['success' => true, 'message' => 'Data guru ' . $request->nama . ' berhasil diubah']);
         } else {
             return response()->json(['success' => false, 'message' => 'Data guru gagal diubah']);
         }
