@@ -2,31 +2,34 @@
 
 namespace App\Jobs;
 
-use App\Models\Data\Siswa;
+use App\Events\ProgressEvent;
+use Pusher\Pusher;
 use App\Models\User;
+use App\Models\Data\Siswa;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class UploadDataSiswaJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $chunk;
+    private $chunk, $total;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($chunk)
+    public function __construct($chunk, $total)
     {
         $this->chunk = $chunk;
+        $this->total = $total;
     }
 
     /**
@@ -67,6 +70,23 @@ class UploadDataSiswaJob implements ShouldQueue
                     'telp' => null,
                 ]);
             }
+
+            // test pusher
+            $options = array(
+                'cluster' => 'ap1',
+                'useTLS' => true
+            );
+
+            $pusher = new Pusher(
+                'f55aa73926891d45b5c3',
+                '33fb9430497e8df51ca7',
+                '1835667',
+                $options
+            );
+
+            $data['message'] = ['upload' => true,];
+            $data['progress'] = $this->total;
+            $pusher->trigger('my-channel', 'my-event', $data);
 
             DB::commit();
         } catch (\Exception $e) {

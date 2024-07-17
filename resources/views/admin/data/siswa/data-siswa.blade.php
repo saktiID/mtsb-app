@@ -416,5 +416,21 @@
         $('#username').val(event.target.value)
     })
 
+    // test pusher
+    // Enable pusher logging - don't include this in production
+    // Pusher.logToConsole = true;
+
+    window.Echo = new Echo({
+        broadcaster: 'pusher', //
+        key: "{{ env('PUSHER_APP_KEY') }}", //
+        cluster: "{{ env('PUSHER_APP_CLUSTER') }}", //
+        forceTLS: true
+    });
+
+    var channel = Echo.channel('my-channel');
+    channel.listen('.my-event', function(data) {
+        console.log(JSON.stringify(data));
+    });
+
 </script>
 @endsection

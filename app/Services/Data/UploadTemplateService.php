@@ -27,13 +27,14 @@ class UploadTemplateService
             ];
         }
 
-        $chunks = array_chunk($data, 50);
+        $chunks = array_chunk($data, 200);
+        $total = count($data);
 
         DB::beginTransaction();
 
         try {
             foreach ($chunks as $chunk) {
-                UploadDataSiswaJob::dispatch($chunk);
+                UploadDataSiswaJob::dispatch($chunk, $total);
             }
 
             DB::commit();
