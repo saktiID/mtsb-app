@@ -11,21 +11,22 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UploadDataSiswaJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $data;
+    private $chunk;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($chunk)
     {
-        $this->data = $data;
+        $this->chunk = $chunk;
     }
 
     /**
@@ -35,46 +36,46 @@ class UploadDataSiswaJob implements ShouldQueue
      */
     public function handle()
     {
-        foreach ($this->data as $dt) {
-            DB::transaction(function () use ($dt) {
+        DB::beginTransaction();
+
+        try {
+            foreach ($this->chunk as $item) {
                 $avatar = '';
-                if ($dt['gender'] == 'male') {
+                if ($item['gender'] == 'male') {
                     $avatar = 'user-male-90x90.png';
-                } elseif ($dt['gender'] == 'female') {
+                } elseif ($item['gender'] == 'female') {
                     $avatar = 'user-female-90x90.png';
                 }
 
+                // buat akun user
                 $user = User::create([
-                    'nama' => $dt['nama'],
-                    'username' => '@'.$dt['username'],
-                    'password' => Hash::make($dt['password']),
+                    'nama' => $item['nama'],
+                    'username' => $item['username'],
                     'role' => 'Siswa',
-                    'gender' => $dt['gender'],
+                    'gender' => $item['gender'],
                     'avatar' => $avatar,
+                    'password' => Hash::make($item['password']),
+                    'is_active' => true,
                 ]);
 
-                if ($user && $user->id) {
-                    $siswa = Siswa::create([
-                        'user_id' => $user->id,
-                        'nis' => $dt['nis'],
-                        'nisn' => $dt['nisn'],
-                        'email' => $dt['email'],
-                        'telp' => $dt['telp'],
-                    ]);
+                // buat siswa
+                Siswa::create([
+                    'user_id' => $user->id,
+                    'nis' => $item['nis'],
+                    'nisn' => $item['nisn'],
+                    'email' => null,
+                    'telp' => null,
+                ]);
+            }
 
-                    if ($siswa && $siswa->id) {
-                        return true;
-                    } else {
-                        DB::rollBack();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
 
-                        return false;
-                    }
-                } else {
-                    DB::rollBack();
-
-                    return false;
-                }
-            });
+            Log::error('Job gagal.', [
+                'error' => $e->getMessage(),
+                'data' => $this->chunk,
+            ]);
         }
     }
 }

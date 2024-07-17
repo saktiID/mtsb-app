@@ -49,7 +49,7 @@ class DataSiswaController extends Controller
         }
         $query = $this->siswa->tambahSiswa($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Siswa baru '.$request->nama.' berhasil ditambahkan']);
+            return response()->json(['success' => true, 'message' => 'Siswa baru ' . $request->nama . ' berhasil ditambahkan']);
         } else {
             return response()->json(['success' => false, 'message' => 'Siswa baru gagal ditambahkan']);
         }
@@ -78,7 +78,7 @@ class DataSiswaController extends Controller
                 $msg = '';
                 $messages = $validate->errors()->messages()['password'];
                 foreach ($messages as $message) {
-                    $msg .= $message.'<br>';
+                    $msg .= $message . '<br>';
                 }
 
                 return response()->json(['success' => false, 'message' => $msg]);
@@ -87,7 +87,7 @@ class DataSiswaController extends Controller
 
         $query = $this->siswa->updateSiswa($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Data siswa '.$request->nama.' berhasil diubah']);
+            return response()->json(['success' => true, 'message' => 'Data siswa ' . $request->nama . ' berhasil diubah']);
         } else {
             return response()->json(['success' => false, 'message' => 'Data siswa gagal diubah']);
         }
@@ -127,16 +127,12 @@ class DataSiswaController extends Controller
             return response()->json(['success' => false, 'message' => 'Format file salah, unduh template lagi!']);
         }
 
-        if (! in_array($filetype, $extAllowed)) {
+        if (!in_array($filetype, $extAllowed)) {
             return response()->json(['success' => false, 'message' => 'Format file tidak diizinkan!']);
         }
 
-        $upload = $this->uploadTemplate->storeData($filetmp);
+        $this->uploadTemplate->storeData($filetmp);
 
-        if ($upload) {
-            return response()->json(['success' => true, 'message' => 'Data siswa segera diupload!']);
-        } else {
-            return response()->json(['success' => false, 'message' => 'Data siswa gagal diupload!']);
-        }
+        return response()->json(['success' => true, 'message' => 'Data siswa segera diupload!']);
     }
 }

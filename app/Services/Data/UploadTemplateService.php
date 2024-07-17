@@ -4,6 +4,7 @@ namespace App\Services\Data;
 
 use App\Jobs\UploadDataSiswaJob;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class UploadTemplateService
@@ -23,23 +24,25 @@ class UploadTemplateService
                 'password' => '123456',
                 'nis' => $activeWorksheet[$row][1],
                 'nisn' => $activeWorksheet[$row][2] ? $activeWorksheet[$row][2] : null,
-                'email' => null,
-                'telp' => null,
             ];
         }
 
-        $query = DB::transaction(function () use ($data) {
-            $uploader = UploadDataSiswaJob::dispatch($data);
+        $chunks = array_chunk($data, 50);
 
-            return $uploader;
-        });
+        DB::beginTransaction();
 
-        if ($query) {
-            return true;
-        } else {
+        try {
+            foreach ($chunks as $chunk) {
+                UploadDataSiswaJob::dispatch($chunk);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
             DB::rollBack();
 
-            return false;
+            Log::error('Semua proses gagal.', [
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 }
