@@ -18,23 +18,25 @@ class UploadTemplateService
         $data = [];
         for ($row = 8; $row < count($activeWorksheet); $row++) {
             $data[] = [
-                'nama' => $activeWorksheet[$row][3],
-                'username' => $activeWorksheet[$row][1],
-                'gender' => $activeWorksheet[$row][4],
+                'nama' => htmlspecialchars($activeWorksheet[$row][3]),
+                'username' => htmlspecialchars($activeWorksheet[$row][1]),
+                'gender' => htmlspecialchars($activeWorksheet[$row][4]),
                 'password' => '123456',
-                'nis' => $activeWorksheet[$row][1],
-                'nisn' => $activeWorksheet[$row][2] ? $activeWorksheet[$row][2] : null,
+                'nis' => htmlspecialchars($activeWorksheet[$row][1]),
+                'nisn' => htmlspecialchars($activeWorksheet[$row][2])
+                    ? htmlspecialchars($activeWorksheet[$row][2]) : null,
             ];
         }
 
-        $chunks = array_chunk($data, 200);
-        $total = count($data);
+        $chunks = array_chunk($data, 100);
+        $totalChunks = count($chunks);
 
         DB::beginTransaction();
 
         try {
-            foreach ($chunks as $chunk) {
-                UploadDataSiswaJob::dispatch($chunk, $total);
+            foreach ($chunks as $index => $chunk) {
+                $chunkIndex = $index + 1;
+                UploadDataSiswaJob::dispatch($chunk, $totalChunks, $chunkIndex);
             }
 
             DB::commit();

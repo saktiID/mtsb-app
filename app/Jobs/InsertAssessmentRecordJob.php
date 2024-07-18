@@ -32,7 +32,7 @@ class InsertAssessmentRecordJob implements ShouldQueue
      */
     public function handle()
     {
-        foreach (array_chunk($this->data, 10) as $dt) {
+        foreach (array_chunk($this->data, 20) as $dt) {
             AssessmentRecord::insert($dt);
         }
     }

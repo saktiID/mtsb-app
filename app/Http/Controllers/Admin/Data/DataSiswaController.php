@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Data;
 
-use Pusher\Pusher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -134,6 +133,6 @@ class DataSiswaController extends Controller
 
         $this->uploadTemplate->storeData($filetmp);
 
-        return response()->json(['success' => true, 'message' => 'Data siswa segera diupload!']);
+        return response()->json(['success' => true, 'message' => 'Harap tunggu sebentar, data sedang diproses!']);
     }
 }

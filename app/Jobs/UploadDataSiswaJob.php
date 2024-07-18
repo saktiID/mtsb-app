@@ -2,10 +2,10 @@
 
 namespace App\Jobs;
 
-use App\Events\ProgressEvent;
-use Pusher\Pusher;
 use App\Models\User;
 use App\Models\Data\Siswa;
+use App\Events\ProgressEvent;
+use App\Events\ProgressFailEvent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -19,17 +19,18 @@ class UploadDataSiswaJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $chunk, $total;
+    private $chunk, $totalChunks, $chunkIndex;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($chunk, $total)
+    public function __construct($chunk, $totalChunks, $chunkIndex)
     {
         $this->chunk = $chunk;
-        $this->total = $total;
+        $this->totalChunks = $totalChunks;
+        $this->chunkIndex = $chunkIndex;
     }
 
     /**
@@ -42,7 +43,7 @@ class UploadDataSiswaJob implements ShouldQueue
         DB::beginTransaction();
 
         try {
-            foreach ($this->chunk as $item) {
+            foreach ($this->chunk as $index => $item) {
                 $avatar = '';
                 if ($item['gender'] == 'male') {
                     $avatar = 'user-male-90x90.png';
@@ -71,24 +72,10 @@ class UploadDataSiswaJob implements ShouldQueue
                 ]);
             }
 
-            // test pusher
-            $options = array(
-                'cluster' => 'ap1',
-                'useTLS' => true
-            );
-
-            $pusher = new Pusher(
-                'f55aa73926891d45b5c3',
-                '33fb9430497e8df51ca7',
-                '1835667',
-                $options
-            );
-
-            $data['message'] = ['upload' => true,];
-            $data['progress'] = $this->total;
-            $pusher->trigger('my-channel', 'my-event', $data);
-
             DB::commit();
+
+            $progress = ($this->chunkIndex / $this->totalChunks) * 100;
+            event(new ProgressEvent(['progress' => $progress]));
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -96,6 +83,12 @@ class UploadDataSiswaJob implements ShouldQueue
                 'error' => $e->getMessage(),
                 'data' => $this->chunk,
             ]);
+
+            event(new ProgressFailEvent([
+                'message' => 'Gagal memasukkan data <br/>' . $e->getMessage()
+            ]));
+
+            throw $e;
         }
     }
 }

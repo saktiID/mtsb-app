@@ -26,77 +26,74 @@
 
 @section('modal')
 <div class="modal fade" id="tambahModal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="tambahModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-scrollable" role="document">
-        <div class="modal-content">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <form class="modal-content" id="formTambah">
             <div class="modal-header">
                 <h5 class="modal-title" id="tambahModalLabel">Tambah Periode</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i data-feather="x"></i>
                 </button>
             </div>
-            <form id="formTambah">
+            <div class="modal-body">
                 @csrf
-                <div class="modal-body">
-                    <div class="form-row">
-                        <div class="col-lg-12 col-sm-12">
-                            <div class="alert alert-light-warning">
-                                <span>Detail Periode</span>
+                <div class="form-row">
+                    <div class="col-lg-12 col-sm-12">
+                        <div class="alert alert-light-warning">
+                            <span>Detail Periode</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="semester">Semester</label>
+                                    <select name="semester" id="semester" class="form-control" required>
+                                        <option value="">-- Semester --</option>
+                                        <option value="Ganjil">Ganjil</option>
+                                        <option value="Genap">Genap</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-sm-12">
-                                    <div class="mb-3">
-                                        <label for="semester">Semester</label>
-                                        <select name="semester" id="semester" class="form-control" required>
-                                            <option value="">-- Semester --</option>
-                                            <option value="Ganjil">Ganjil</option>
-                                            <option value="Genap">Genap</option>
-                                        </select>
-                                    </div>
-                                </div>
 
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="mb-3">
-                                        <label for="tahun_pertama">Tahun Pertama</label>
-                                        <input type="text" value="" id="tahun_pertama" name="tahun_pertama" class="form-control" placeholder="Contoh: 2023" required>
-                                    </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="mb-3">
+                                    <label for="tahun_pertama">Tahun Pertama</label>
+                                    <input type="text" value="" id="tahun_pertama" name="tahun_pertama" class="form-control" placeholder="Contoh: 2023" required>
                                 </div>
+                            </div>
 
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="mb-3">
-                                        <label for="tahun_kedua">Tahun Kedua</label>
-                                        <input type="text" value="" id="tahun_kedua" name="tahun_kedua" class="form-control" placeholder="Contoh: 2024" required>
-                                    </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="mb-3">
+                                    <label for="tahun_kedua">Tahun Kedua</label>
+                                    <input type="text" value="" id="tahun_kedua" name="tahun_kedua" class="form-control" placeholder="Contoh: 2024" required>
                                 </div>
+                            </div>
 
-                                <div class="col-12">
-                                    <div class="alert alert-light-warning">
-                                        <span>Ketik ulang kode konfirmasi berikut: <span class="badge badge-dark" id="display_kode_konfirmasi" style="user-select: none;">code</span></span>
-                                        <input type="text" name="kunci_kode_konfirmasi" id="kunci_kode_konfirmasi" value="" hidden>
-                                    </div>
+                            <div class="col-12">
+                                <div class="alert alert-light-warning">
+                                    <span>Ketik ulang kode konfirmasi berikut: <span class="badge badge-dark" id="display_kode_konfirmasi" style="user-select: none;">code</span></span>
+                                    <input type="text" name="kunci_kode_konfirmasi" id="kunci_kode_konfirmasi" value="" hidden>
                                 </div>
+                            </div>
 
-                                <div class="col-lg-12 col-sm-12">
-                                    <div class="mb-3">
-                                        <label for="kode_konfirmasi">Kode Konfirmasi</label>
-                                        <input type="text" value="" id="kode_konfirmasi" name="kode_konfirmasi" class="form-control" required>
-                                        <small>Huruf kapital berpengaruh.</small>
-                                    </div>
-                                    <div class="mb-3">
-                                        <i class="d-block"><b>** Pastikan membuat periode sesuai kebutuhan.</b></i>
-                                        <i class="d-block"><b>** Periode yang sudah dibuat tidak bisa dihapus.</b></i>
-                                    </div>
+                            <div class="col-lg-12 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="kode_konfirmasi">Kode Konfirmasi</label>
+                                    <input type="text" value="" id="kode_konfirmasi" name="kode_konfirmasi" class="form-control" required>
+                                    <small>Huruf kapital berpengaruh.</small>
+                                </div>
+                                <div class="mb-3">
+                                    <i class="d-block"><b>** Pastikan membuat periode sesuai kebutuhan.</b></i>
+                                    <i class="d-block"><b>** Periode yang sudah dibuat tidak bisa dihapus.</b></i>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-danger" data-dismiss="modal">Batalkan</button>
-                        <button type="submit" class="btn btn-primary tambah loadingTrigger">Tambah</button>
-                    </div>
                 </div>
-            </form>
-
-        </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal">Batalkan</button>
+                <button type="submit" class="btn btn-primary tambah loadingTrigger">Tambah</button>
+            </div>
+        </form>
     </div>
 </div>
 @endsection

@@ -168,13 +168,14 @@
                     <label for="excelFile">Pilih file excel:</label>
                     <input type="file" class="form-control" name="excelFile" id="excelFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                 </form>
-                <div class="progress br-30 progress-md mt-3">
+                <div class="mt-3"><span id="jenis_proses"></span> <span id="persen"></span></div>
+                <div class="progress br-30 progress-md">
                     <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-danger" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Batalkan</button>
+                <button class="btn btn-danger" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Tutup</button>
             </div>
 
         </div>
@@ -240,14 +241,17 @@
                         var percentComplete = evt.loaded / evt.total
                         percentComplete = parseInt(percentComplete * 100)
                         $('.progress-bar').css('width', percentComplete + '%')
+                        $('#persen').html(percentComplete + '%')
+                        $('#jenis_proses').html('Uploading...')
                     }
                 }, false);
                 return xhr;
             }, //
             success: function(res) {
                 $('#form-upload')[0].reset()
-                $('#uploadModal').modal('hide')
-                $('.progress-bar').css('width', 0 + '%')
+                $('.progress-bar').css('width', 10 + '%')
+                $('#persen').html('10' + '%')
+                $('#jenis_proses').html('Entering data...')
                 if (res.success) {
                     notif(res.message, true)
                 } else {
@@ -416,21 +420,36 @@
         $('#username').val(event.target.value)
     })
 
-    // test pusher
-    // Enable pusher logging - don't include this in production
-    // Pusher.logToConsole = true;
-
-    window.Echo = new Echo({
-        broadcaster: 'pusher', //
-        key: "{{ env('PUSHER_APP_KEY') }}", //
-        cluster: "{{ env('PUSHER_APP_CLUSTER') }}", //
-        forceTLS: true
+    var pusher = new Pusher('1aee118c79d81ebec5df', {
+        cluster: 'ap1'
     });
 
-    var channel = Echo.channel('my-channel');
-    channel.listen('.my-event', function(data) {
-        console.log(JSON.stringify(data));
+    var channel = pusher.subscribe('mtsb-choice');
+    channel.bind('App\\Events\\ProgressEvent', function(data) {
+        $('.progress-bar').css('width', data.progress + '%')
+        $('#persen').html(data.progress + '%')
+
+        if (data.progress == 100) {
+            notif('Data siswa berhasil ditambahkan', true)
+            $('#formTambah')[0].reset()
+            $('#data-siswa').DataTable().ajax.reload()
+            $('.progress-bar').css('width', 0 + '%')
+            $('#uploadModal').modal('hide')
+            $('#persen').html('')
+            $('#jenis_proses').html('')
+        }
     });
+
+
+    channel.bind('App\\Events\\ProgressFailEvent', function(data) {
+        console.log(data)
+        notif(data.message, false)
+        $('#formTambah')[0].reset()
+        $('#uploadModal').modal('hide')
+        $('#persen').html('')
+        $('#jenis_proses').html('')
+        $('.progress-bar').css('width', 0 + '%')
+    })
 
 </script>
 @endsection
