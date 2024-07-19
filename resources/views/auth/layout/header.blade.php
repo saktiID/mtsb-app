@@ -13,13 +13,13 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="MTs Bilingual — Aplikasi sarana belajar" />
     <meta property="og:description" content="Dengan aplikasi ini siswa dapat melihat daftar nilai yang dicapai selama pembelajaran di MTs Bilingual Muslimat NU Pucang Sidoarjo." />
-    <meta property="og:image" content="https://metatags.io/images/meta-tags.png" />
+    <meta property="og:image" content="{{ asset('meta.jpeg') }}" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:title" content="MTs Bilingual — Aplikasi sarana belajar" />
     <meta property="twitter:description" content="Dengan aplikasi ini siswa dapat melihat daftar nilai yang dicapai selama pembelajaran di MTs Bilingual Muslimat NU Pucang Sidoarjo." />
-    <meta property="twitter:image" content="https://metatags.io/images/meta-tags.png" />
+    <meta property="twitter:image" content="{{ asset('meta.jpeg') }}" />
 
     {{-- <title>@yield('title', 'MTsB App') | MTsB App</title> --}}
     <link rel="icon" type="image/png" href="{{ asset('logo.png') }}" />
