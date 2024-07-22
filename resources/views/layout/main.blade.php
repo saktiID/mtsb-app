@@ -15,17 +15,6 @@
     </div>
     <!--  END LOADER -->
 
-    {{-- install pwa --}}
-    <div id="installWrap">
-        <div class="close text-light" id="clsInstallBtn">
-            <i data-feather="x-circle"></i>
-        </div>
-        <div class="content text-center mt-2">
-            <a href="javascript:void(0);" id="installButton" class="text-light">Klik untuk install MTsB APP</a>
-        </div>
-    </div>
-    {{-- end install pwa --}}
-
     <!--  BEGIN NAVBAR  -->
     @include('layout.navbar')
     <!--  END NAVBAR  -->
