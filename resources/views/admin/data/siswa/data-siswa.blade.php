@@ -11,7 +11,7 @@
             <button type="button" class="btn btn-danger btn-sm hapus-beberapa">Hapus beberapa</button>
         </div>
         <div class="table-responsive">
-            <table id="data-siswa" class="table table-striped table-hover nowrap" style="width:100%">
+            <table id="data-siswa" class="table table-striped table-hover" style="width:100%">
                 <thead>
                     <tr class="text-center">
                         <th>

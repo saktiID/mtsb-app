@@ -17,37 +17,81 @@
  {{-- END BEGIN PLUGIN --}}
 
  <script>
+     //  let deferredPrompt;
+
+     //  window.addEventListener('beforeinstallprompt', (e) => {
+     //      // Stash the event so it can be triggered later.
+     //      deferredPrompt = e;
+     //      // Update UI notify the user they can install the PWA
+     //      const installButton = document.getElementById('installButton');
+     //      installButton.style.display = 'block';
+
+     //      installButton.addEventListener('click', (e) => {
+     //          // Hide the install button
+     //          installButton.style.display = 'none';
+     //          // Show the install prompt
+     //          deferredPrompt.prompt();
+     //          // Wait for the user to respond to the prompt
+     //          deferredPrompt.userChoice.then((choiceResult) => {
+     //              if (choiceResult.outcome === 'accepted') {
+     //                  console.log('User accepted the install prompt');
+     //              } else {
+     //                  console.log('User dismissed the install prompt');
+     //              }
+     //              deferredPrompt = null;
+     //          });
+     //      });
+
+     //  });
+
+     //  window.addEventListener('appinstalled', (evt) => {
+     //      console.log('a2hs', 'installed');
+     //      // Hide the install button if the app is installed
+     //      document.getElementById('installButton').style.display = 'none';
+     //  });
+
+ </script>
+
+ <script>
      let deferredPrompt;
 
      window.addEventListener('beforeinstallprompt', (e) => {
-         // Stash the event so it can be triggered later.
+         e.preventDefault();
          deferredPrompt = e;
-         // Update UI notify the user they can install the PWA
-         const installButton = document.getElementById('installButton');
-         installButton.style.display = 'block';
+     });
 
-         installButton.addEventListener('click', (e) => {
-             // Hide the install button
-             installButton.style.display = 'none';
-             // Show the install prompt
-             deferredPrompt.prompt();
-             // Wait for the user to respond to the prompt
-             deferredPrompt.userChoice.then((choiceResult) => {
-                 if (choiceResult.outcome === 'accepted') {
-                     console.log('User accepted the install prompt');
+     const installButton = document.getElementById('installButton');
+
+     if (installButton) {
+         function updateInstallButton() {
+             if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+                 installButton.style.display = 'none';
+             } else {
+                 installButton.style.display = 'block';
+             }
+         }
+
+         installButton.addEventListener('click', async () => {
+             if (installButton.style.display === 'block') {
+                 return;
+             }
+
+             if (deferredPrompt) {
+                 deferredPrompt.prompt();
+                 const {
+                     outcome
+                 } = await deferredPrompt.userChoice;
+                 if (outcome === 'accepted') {
+                     installButton.style.display = 'none';
                  } else {
-                     console.log('User dismissed the install prompt');
+                     installButton.style.display = 'block';
                  }
                  deferredPrompt = null;
-             });
+             }
          });
 
-     });
-
-     window.addEventListener('appinstalled', (evt) => {
-         console.log('a2hs', 'installed');
-         // Hide the install button if the app is installed
-         document.getElementById('installButton').style.display = 'none';
-     });
+         updateInstallButton();
+         window.matchMedia('(display-mode: standalone)').addEventListener('change', updateInstallButton);
+     }
 
  </script>
