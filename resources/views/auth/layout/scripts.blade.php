@@ -17,49 +17,49 @@
  {{-- END BEGIN PLUGIN --}}
 
  <script>
-     let deferredPrompt;
+     let deferredPrompt
 
      window.addEventListener('beforeinstallprompt', (e) => {
-         e.preventDefault();
-         deferredPrompt = e;
-     });
+         //  e.preventDefault()
+         deferredPrompt = e
+     })
 
-     const installButton = document.getElementById('installButton');
-     const installWrap = document.getElementById('installWrap');
+     const installButton = document.getElementById('installButton')
+     const installWrap = document.getElementById('installWrap')
 
      if (installButton) {
          function updateInstallButton() {
              if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-                 installButton.textContent = 'Installed';
-                 installWrap.style.display = 'none';
+                 installButton.textContent = 'Installed'
+                 installWrap.style.display = 'none'
              } else {
-                 installButton.textContent = 'Install Now';
-                 installWrap.style.display = 'block';
+                 installButton.textContent = 'Install Now'
+                 installWrap.style.display = 'block'
              }
          }
 
          installButton.addEventListener('click', async () => {
              if (installButton.textContent === 'Installed') {
-                 return;
+                 return
              }
 
              if (deferredPrompt) {
-                 deferredPrompt.prompt();
+                 deferredPrompt.prompt()
                  const {
                      outcome
-                 } = await deferredPrompt.userChoice;
+                 } = await deferredPrompt.userChoice
                  if (outcome === 'accepted') {
-                     installButton.textContent = 'Installed';
-                     installWrap.style.display = 'none';
+                     installButton.textContent = 'Installed'
+                     installWrap.style.display = 'none'
                  } else {
-                     installButton.textContent = 'Install Now';
+                     installButton.textContent = 'Install Now'
                  }
-                 deferredPrompt = null;
+                 deferredPrompt = null
              }
-         });
+         })
 
-         updateInstallButton();
-         window.matchMedia('(display-mode: standalone)').addEventListener('change', updateInstallButton);
+         updateInstallButton()
+         window.matchMedia('(display-mode: standalone)').addEventListener('change', updateInstallButton)
      }
 
  </script>
