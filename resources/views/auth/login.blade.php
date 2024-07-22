@@ -56,7 +56,7 @@
                     </form>
                     <div class="mt-3" id="installWrap">
                         <span>Belum memasang aplikasi? </span>
-                        <a href="#" id="installButton"> Pasang aplikasi sekarang.</a>
+                        <a href="javascript:void(0);" id="installButton"> Pasang aplikasi sekarang.</a>
                     </div>
                 </div>
             </div>
