@@ -48,7 +48,7 @@
                             <div id="password-field" class="field-wrapper input mb-2">
                                 <div class="d-flex justify-content-between">
                                     <label for="password">KATA SANDI</label>
-                                    <a href="#" class="forgot-pass-link">Lupa kata sandi?</a>
+                                    {{-- <a href="#" class="forgot-pass-link">Lupa kata sandi?</a> --}}
                                 </div>
                                 <i data-feather="lock"></i>
                                 <input id="password" name="password" type="password" class="form-control" placeholder="Kata sandi">
