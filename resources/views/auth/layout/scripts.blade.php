@@ -33,7 +33,7 @@
                  installButton.textContent = 'Installed'
                  installWrap.style.display = 'none'
              } else {
-                 installButton.textContent = 'Install Now'
+                 installButton.textContent = 'Install'
                  installWrap.style.display = 'block'
              }
          }
@@ -52,7 +52,7 @@
                      installButton.textContent = 'Installed'
                      installWrap.style.display = 'none'
                  } else {
-                     installButton.textContent = 'Install Now'
+                     installButton.textContent = 'Install'
                  }
                  deferredPrompt = null
              }
