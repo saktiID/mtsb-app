@@ -33,6 +33,29 @@
     let err = document.getElementById('aux_error')
     let suc = document.getElementById('aux_success')
 
+    Toast.enableTimers(TOAST_TIMERS.COUNTDOWN)
+
+    function notif(msg, status) {
+        if (status) {
+            suc.play()
+            Toast.create({
+                title: "Berhasil", //
+                message: msg, //
+                status: TOAST_STATUS.SUCCESS, //
+                timeout: 10000, //
+            })
+
+        } else {
+            err.play()
+            Toast.create({
+                title: "Gagal", //
+                message: msg, //
+                status: TOAST_STATUS.DANGER, //
+                timeout: 10000, //
+            })
+        }
+    }
+
 </script>
 
 @yield('script')

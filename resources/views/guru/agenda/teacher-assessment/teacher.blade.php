@@ -245,16 +245,6 @@
         siswa = []
     }
 
-    function notif(msg, status) {
-        if (status) {
-            suc.play()
-            Toast.create("Berhasil", msg, TOAST_STATUS.SUCCESS, 10000);
-        } else {
-            err.play()
-            Toast.create("Gagal", msg, TOAST_STATUS.DANGER, 10000);
-        }
-    }
-
     function replaceImg(newImageName) {
         let src = "{{ route('get-foto', ['filename' => 'src_js']) }}".replace('src_js', newImageName)
         $('#foto').attr('src', src)
