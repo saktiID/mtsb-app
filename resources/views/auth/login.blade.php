@@ -23,6 +23,16 @@
                     </div>
                     @endif
 
+                    {{-- install app --}}
+                    <div id="installWrap" class="mt-3">
+                        <div class="alert alert-gradient mb-3" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i data-feather="x"></i></button>
+                            <strong>Install</strong> aplikasi di perangkat Kamu!
+                            <button id="installButton" class="btn btn-warning btn-sm"></button>
+                        </div>
+                    </div>
+                    {{-- end install app --}}
+
                     <form class="text-left" action="{{ route('attempt_login') }}" method="POST">
                         <div class="form">
                             @csrf
@@ -54,10 +64,6 @@
                             </div>
                         </div>
                     </form>
-                    <div class="mt-3" id="installWrap">
-                        <span>Belum memasang aplikasi? </span>
-                        <a href="javascript:void(0);" id="installButton"> Pasang aplikasi sekarang.</a>
-                    </div>
                 </div>
             </div>
         </div>

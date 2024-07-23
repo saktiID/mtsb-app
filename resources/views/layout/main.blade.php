@@ -41,6 +41,27 @@
                 @yield('modal_logout')
                 <!-- CONTENT AREA -->
 
+                {{-- install app --}}
+                <style>
+                    #installPWAWrapper {
+                        z-index: 99;
+                        position: fixed;
+                        bottom: 10px;
+                        right: 3%;
+                        width: 94%;
+                    }
+
+                </style>
+
+                <div id="installPWAWrapper">
+                    <div class="alert alert-arrow-left alert-icon-left alert-light-primary mb-4" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="bi-x" style="color: #000"></i></button>
+                        <i data-feather="alert-triangle"></i>
+                        <strong>Install</strong> <span class="mr-2"> aplikasi di perangkat Kamu!</span>
+                        <button id="installPWA" class="btn btn-primary btn-sm"></button>
+                    </div>
+                </div>
+                {{-- end install app --}}
             </div>
 
 
@@ -63,5 +84,55 @@
     {{-- BEGIN SCRIPTS --}}
     @include('layout.scripts')
     {{-- END BEGIN SCRIPTS --}}
+
+    {{-- pwa --}}
+    <script>
+        let deferredPrompt
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            //  e.preventDefault()
+            deferredPrompt = e
+        })
+
+        const installButton = document.getElementById('installPWA')
+        const installWrap = document.getElementById('installPWAWrapper')
+
+        if (installButton) {
+            function updateInstallButton() {
+                if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+                    installButton.textContent = 'Installed'
+                    installWrap.style.display = 'none'
+                } else {
+                    installButton.textContent = 'Install Now'
+                    installWrap.style.display = 'block'
+                }
+            }
+
+            installButton.addEventListener('click', async () => {
+                if (installButton.textContent === 'Installed') {
+                    return
+                }
+
+                if (deferredPrompt) {
+                    deferredPrompt.prompt()
+                    const {
+                        outcome
+                    } = await deferredPrompt.userChoice
+                    if (outcome === 'accepted') {
+                        installButton.textContent = 'Installed'
+                        installWrap.style.display = 'none'
+                    } else {
+                        installButton.textContent = 'Install Now'
+                    }
+                    deferredPrompt = null
+                }
+            })
+
+            updateInstallButton()
+            window.matchMedia('(display-mode: standalone)').addEventListener('change', updateInstallButton)
+        }
+
+    </script>
+    {{-- endpwa --}}
 </body>
 </html>
