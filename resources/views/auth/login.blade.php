@@ -27,7 +27,7 @@
                     <div id="installWrap" class="mt-3">
                         <div class="alert alert-gradient mb-3" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i data-feather="x"></i></button>
-                            <strong>Install</strong> aplikasi di perangkat Kamu!
+                            <strong>Install</strong> aplikasi yuk!
                             <button id="installButton" class="btn btn-warning btn-sm"></button>
                         </div>
                     </div>

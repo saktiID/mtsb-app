@@ -51,13 +51,19 @@
                         width: 94%;
                     }
 
+                    @media only screen and (min-width: 990px) {
+                        #installPWAWrapper {
+                            width: 70%;
+                        }
+                    }
+
                 </style>
 
                 <div id="installPWAWrapper">
                     <div class="alert alert-arrow-left alert-icon-left alert-light-primary mb-4" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="bi-x" style="color: #000"></i></button>
                         <i data-feather="alert-triangle"></i>
-                        <strong>Install</strong> <span class="mr-2"> aplikasi di perangkat Kamu!</span>
+                        <strong>Install</strong> <span class="mr-2"> aplikasi yuk!</span>
                         <button id="installPWA" class="btn btn-primary btn-sm"></button>
                     </div>
                 </div>
@@ -103,7 +109,7 @@
                     installButton.textContent = 'Installed'
                     installWrap.style.display = 'none'
                 } else {
-                    installButton.textContent = 'Install Now'
+                    installButton.textContent = 'Install'
                     installWrap.style.display = 'block'
                 }
             }
@@ -122,7 +128,7 @@
                         installButton.textContent = 'Installed'
                         installWrap.style.display = 'none'
                     } else {
-                        installButton.textContent = 'Install Now'
+                        installButton.textContent = 'Install'
                     }
                     deferredPrompt = null
                 }
