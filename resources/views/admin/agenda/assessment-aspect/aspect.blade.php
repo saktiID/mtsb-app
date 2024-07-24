@@ -3,7 +3,7 @@
 @section('content')
 <div class="row pt-4">
 
-    <x-card-box cardTitle="Tambah Aspect">
+    <x-card-box cardTitle="Assessment Aspects">
         <form class="form-row" id="tambah_aspect">
             @csrf
             <div class="col-lg-6 col-sm-12">
@@ -31,53 +31,64 @@
             </div>
 
         </form>
-    </x-card-box>
 
-    <x-card-box cardTitle="Assessment Aspects (for teacher)" cardLayout="col-lg-6 col-sm-12">
-        <div class="table-responsive">
-            <table id="aspect_teacher" class="table table-striped table-hover" style="width:100%">
-                <thead>
-                    <tr class="text-center">
-                        <th>No</th>
-                        <th data-priority="1">Aspect</th>
-                        <th data-priority="2">Status</th>
-                        <th><i data-feather="more-horizontal"></i></th>
-                    </tr>
-                </thead>
-            </table>
+        <ul class="nav nav-tabs  mb-3" id="lineTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="teacher-aspect-tab" data-toggle="tab" href="#teacher-link" role="tab" aria-selected="true">Aspect fot teacher </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="parent-aspect-tab" data-toggle="tab" href="#parent-link" role="tab" aria-selected="false">Aspect for parent </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="peer-aspect-tab" data-toggle="tab" href="#peer-link" role="tab" aria-selected="false">Aspect fot peer </a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="lineTabContent-3">
+            <div class="tab-pane fade show active" id="teacher-link" role="tabpanel" aria-labelledby="teacher-aspect-tab">
+                <div class="table-responsive">
+                    <table id="aspect_teacher" class="table table-striped table-hover" style="width:100%">
+                        <thead>
+                            <tr class="text-center">
+                                <th>No</th>
+                                <th data-priority="1">Aspect</th>
+                                <th data-priority="2">Status</th>
+                                <th><i data-feather="more-horizontal"></i></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="parent-link" role="tabpanel" aria-labelledby="parent-aspect-tab">
+                <div class="table-responsive">
+                    <table id="aspect_parent" class="table table-striped table-hover" style="width:100%">
+                        <thead>
+                            <tr class="text-center">
+                                <th>No</th>
+                                <th data-priority="1">Aspect</th>
+                                <th data-priority="2">Status</th>
+                                <th><i data-feather="more-horizontal"></i></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="peer-link" role="tabpanel" aria-labelledby="peer-aspect-tab">
+                <div class="table-responsive">
+                    <table id="aspect_peer" class="table table-striped table-hover" style="width:100%">
+                        <thead>
+                            <tr class="text-center">
+                                <th>No</th>
+                                <th data-priority="1">Aspect</th>
+                                <th data-priority="2">Status</th>
+                                <th><i data-feather="more-horizontal"></i></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
         </div>
     </x-card-box>
-
-    <x-card-box cardTitle="Assessment Aspects (for parent)" cardLayout="col-lg-6 col-sm-12">
-        <div class="table-responsive">
-            <table id="aspect_parent" class="table table-striped table-hover" style="width:100%">
-                <thead>
-                    <tr class="text-center">
-                        <th>No</th>
-                        <th data-priority="1">Aspect</th>
-                        <th data-priority="2">Status</th>
-                        <th><i data-feather="more-horizontal"></i></th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </x-card-box>
-
-    <x-card-box cardTitle="Assessment Aspects (for peer)" cardLayout="col-lg-6 col-sm-12">
-        <div class="table-responsive">
-            <table id="aspect_peer" class="table table-striped table-hover" style="width:100%">
-                <thead>
-                    <tr class="text-center">
-                        <th>No</th>
-                        <th data-priority="1">Aspect</th>
-                        <th data-priority="2">Status</th>
-                        <th><i data-feather="more-horizontal"></i></th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </x-card-box>
-
 </div>
 @endsection
 

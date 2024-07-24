@@ -28,7 +28,7 @@
                         <th data-priority="1">Nama</th>
                         <th>NIS</th>
                         <th>NISN</th>
-                        <th data-priority="2"><i data-feather="more-horizontal"></i></th>
+                        <th data-priority="2"></th>
                     </tr>
                 </thead>
                 <tbody>

@@ -4,9 +4,17 @@
 <div class="row pt-4">
 
     <x-card-box cardTitle="Hapus Cache">
-        <label>Bersihkan data cache:</label>
+        <label>Bersihkan data cache: <br>
+            <small>Menghapus cache untuk memuat ulang data sementara</small>
+        </label>
         <br />
-        <a href="" id="data-cache" class="btn btn-warning btn-sm loadingTrigger">Bersihkan</a>
+        <a href="" id="data-cache" class="btn btn-danger btn-sm loadingTrigger">Bersihkan</a>
+        <hr>
+        <label class="mb-3">Bersihkan data session: <br>
+            <small>Menghapus session akan menyebabkan semua user harus login kembali</small>
+        </label>
+        <br />
+        <a href="" id="data-session" class="btn btn-danger btn-sm loadingTrigger">Bersihkan</a>
     </x-card-box>
 
 </div>
@@ -22,6 +30,13 @@
         let formData = new FormData()
         formData.append('_token', "{{ csrf_token() }}")
         prosesAjax(formData, "hapus-data-cache")
+    })
+
+    $('#data-session').on('click', function(e) {
+        e.preventDefault()
+        let formData = new FormData()
+        formData.append('_token', "{{ csrf_token() }}")
+        prosesAjax(formData, "hapus-data-session")
     })
 
     function prosesAjax(data, route) {

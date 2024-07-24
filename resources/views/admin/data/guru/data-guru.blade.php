@@ -27,7 +27,7 @@
                         <th data-priority="1">Nama</th>
                         <th>Email</th>
                         <th>Telp</th>
-                        <th data-priority="2"><i data-feather="more-horizontal"></i></th>
+                        <th data-priority="2"></th>
                     </tr>
                 </thead>
             </table>

@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\Admin\Agenda\AssessmentAdminController;
-use App\Http\Controllers\Admin\Beranda\BerandaAdminController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\HapusCacheController;
 use App\Http\Controllers\Admin\Data\DataGuruController;
 use App\Http\Controllers\Admin\Data\DataKelasController;
-use App\Http\Controllers\Admin\Data\DataPeriodeController;
 use App\Http\Controllers\Admin\Data\DataSiswaController;
-use App\Http\Controllers\Admin\HapusCacheController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\Data\DataPeriodeController;
+use App\Http\Controllers\Admin\Data\DataTerhapusController;
+use App\Http\Controllers\Admin\Beranda\BerandaAdminController;
+use App\Http\Controllers\Admin\Agenda\AssessmentAdminController;
 
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
@@ -53,8 +54,14 @@ Route::prefix('admin')->group(function () {
         Route::prefix('data-periode')->group(function () {
             Route::get('/', [DataPeriodeController::class, 'index'])->name('data-periode');
             Route::post('/', [DataPeriodeController::class, 'tambah_periode'])->name('tambah-data-periode');
-            Route::get('/hapus/{id}', [DataPeriodeController::class, 'hapus_periode'])->name('hapus-periode');
-            Route::post('/activate', [DataPeriodeController::class, 'activate_periode'])->name('activate-periode');
+            Route::get('hapus/{id}', [DataPeriodeController::class, 'hapus_periode'])->name('hapus-periode');
+            Route::post('activate', [DataPeriodeController::class, 'activate_periode'])->name('activate-periode');
+        });
+
+        Route::prefix('data-terhapus')->group(function () {
+            Route::get('/', [DataTerhapusController::class, 'index'])->name('data-terhapus');
+            Route::post('hapus-permanen', [DataTerhapusController::class, 'hapus_permanent_data'])->name('hapus-permanen');
+            Route::post('pulihkan-data', [DataTerhapusController::class, 'pulihkan_data'])->name('pulihkan-data');
         });
     });
 
@@ -73,4 +80,5 @@ Route::prefix('admin')->group(function () {
 
     Route::get('hapus-cache', [HapusCacheController::class, 'index'])->name('hapus-cache');
     Route::post('hapus-data-cache', [HapusCacheController::class, 'hapus_data_cache'])->name('hapus-data-cache');
+    Route::post('hapus-data-session', [HapusCacheController::class, 'hapus_data_session'])->name('hapus-data-session');
 });

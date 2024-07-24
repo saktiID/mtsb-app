@@ -22,7 +22,6 @@ return new class extends Migration
             $table->uuid('walas_id')->nullable()->index();
             $table->foreign('walas_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

@@ -35,6 +35,7 @@
     <x-sub-menu-dropdown menuTitle="Data Guru" menuRoute="data-guru" menuActive="admin/database/data-guru" />
     <x-sub-menu-dropdown menuTitle="Data Kelas" menuRoute="data-kelas" menuActive="admin/database/data-kelas" />
     <x-sub-menu-dropdown menuTitle="Data Periode" menuRoute="data-periode" menuActive="admin/database/data-periode" />
+    <x-sub-menu-dropdown menuTitle="Data Terhapus" menuRoute="data-terhapus" menuActive="admin/database/data-terhapus" />
 
 </x-menu-dropdown>
 

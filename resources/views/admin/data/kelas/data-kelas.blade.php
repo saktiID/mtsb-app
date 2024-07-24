@@ -27,7 +27,7 @@
                         </th>
                         <th>Walas</th>
                         <th data-priority="1">Kelas</th>
-                        <th data-priority="2"><i data-feather="more-horizontal"></i></th>
+                        <th data-priority="2"></th>
                     </tr>
                 </thead>
                 <tbody>

@@ -99,7 +99,6 @@
 @endsection
 
 @section('style')
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
 <link href="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.css') }}" rel="stylesheet">
 @endsection
 

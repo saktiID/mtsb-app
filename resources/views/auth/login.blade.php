@@ -72,8 +72,6 @@
 @endsection
 
 @section('style')
-<link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/loaders/custom-loader.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/elements/alert.css') }}">
 @endsection

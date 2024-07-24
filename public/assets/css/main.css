@@ -3000,7 +3000,7 @@ table .badge-dark {
     --particleSize: 0px;
     --cEasing: ease;
     --cTiming: 0.5s;
-    --innerPaddingSize: 10px;
+    --innerPaddingSize: 7px;
 }
 
 .particles-checkbox {
@@ -3143,11 +3143,10 @@ table .badge-dark {
 .particles-checkbox-container span {
     border: 3px solid transparent;
     border-radius: calc(var(--innerPaddingSize) * 0.5);
-    padding: 10px;
     margin-left: 0px;
     padding: var(--innerPaddingSize);
     padding-left: calc(var(--cSize) + var(--innerPaddingSize) + 10px);
-    width: 150px;
+    width: 90px;
     color: #5d6898;
     transition: all var(--cTiming) var(--cEasing);
 }

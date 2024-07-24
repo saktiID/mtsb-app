@@ -1,10 +1,12 @@
-<div class="sidebar-wrapper sidebar-theme">
+a<div class="sidebar-wrapper sidebar-theme">
 
     <nav id="sidebar">
         <div class="profile-info">
             <figure class="user-cover-image"></figure>
             <div class="user-info">
-                <img src="{{ route('get-foto', ['filename' => Auth::user()->avatar]) }}" alt="avatar">
+                <a href="{{ route('profile') }}">
+                    <img src="{{ route('get-foto', ['filename' => Auth::user()->avatar]) }}" alt="avatar">
+                </a>
                 <h6 class="">{{ Auth::user()->nama }}</h6>
                 <p class="">{{ Auth::user()->role }}</p>
             </div>
