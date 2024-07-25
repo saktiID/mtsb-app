@@ -147,6 +147,8 @@
 
 @section('script')
 <script src="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.16/jspdf.plugin.autotable.min.js"></script>
 <script>
     let siswa = []
     let PARAMS = []
@@ -177,9 +179,104 @@
         PARAMS = []
     })
 
-    $('#print').on('click', function(e) {
-        e.preventDefault()
-        window.print()
+    $('#print').on('click', function() {
+        // window.print()
+
+        const {
+            jsPDF
+        } = window.jspdf;
+        const doc = new jsPDF();
+        let form_check = document.querySelector('form')
+
+        if (form_check.checkValidity()) {
+
+            PARAMS.push({
+                'siswa_user_id': siswa[0], //
+                'periode_id': "{{ $periodeAktif->id }}", //
+                'bulan': document.getElementById('bulan').value, //
+                'minggu_ke': document.getElementById('minggu_ke').value, //
+                'evaluator': document.getElementById('assessment_for').value, //
+            })
+
+            $.ajax({
+                url: "{{ route('print-assessment-history.guru', ['a' => 'params']) }}"
+                    .replace('params', JSON.stringify(PARAMS)), //
+                method: 'GET', //
+                dataType: 'json', //
+                success: function(res) {
+                    PARAMS = []
+                    // data
+                    let p_nama = siswa[3]
+                    let p_kelas = '{{ $kelas }}'
+                    let p_periode = 'Semester {{ $periodeAktif->semester }} {{ $periodeAktif->tahun_ajaran }}'
+                    let p_assessment_for = $('#assessment_for').val()
+                    let p_bulan = $('#bulan').val()
+                    let p_minggu_ke = $('#minggu_ke').val()
+                    let p_evaluator = $('#evaluator').text()
+                    let p_note = $('#note').text()
+
+                    // set x position
+                    let xPosition = 14
+                    let xAfterCol = 45
+
+                    // Menambahkan teks judul
+                    doc.setFontSize(18);
+                    doc.text('Assessment Records', xPosition, 15);
+
+                    // Menambahkan data
+                    doc.setFontSize(10);
+                    doc.text('Nama', xPosition, 25);
+                    doc.text(': ' + p_nama, xAfterCol, 25);
+                    doc.text('Kelas', xPosition, 30);
+                    doc.text(': ' + p_kelas, xAfterCol, 30);
+                    doc.text('Periode', xPosition, 35);
+                    doc.text(': ' + p_periode, xAfterCol, 35);
+                    doc.text('Assessment type', xPosition, 40);
+                    doc.text(': ' + p_assessment_for, xAfterCol, 40);
+                    doc.text('Bulan', xPosition, 45);
+                    doc.text(': ' + p_bulan, xAfterCol, 45);
+                    doc.text('Minggu ke', xPosition, 50);
+                    doc.text(': ' + p_minggu_ke, xAfterCol, 50);
+                    doc.text('Evaluator', xPosition, 55);
+                    doc.text(': ' + p_evaluator, xAfterCol, 55);
+
+                    // Data untuk tabel invoice
+                    const headers = [
+                        ['Aspek', 'Answer']
+                    ];
+                    const data = []
+
+                    res.map(function(content) {
+                        data.push([content.aspect, content.answer])
+                    })
+
+                    // Menambahkan tabel
+                    doc.autoTable({
+                        head: headers, //
+                        body: data, //
+                        startY: 60
+                    });
+
+                    // Menambahkan note
+                    doc.setFontSize(10)
+                    doc.text(`Note: ${p_note}`, xPosition, doc.autoTable.previous.finalY + 10);
+
+                    // Membuat URL blob untuk PDF
+                    const blob = doc.output('blob');
+                    const url = URL.createObjectURL(blob);
+
+                    // Membuka PDF di tab baru
+                    window.open(url, '_blank');
+                }, //
+                error: function(err) {
+                    console.log(err.responseText)
+                    PARAMS = []
+                }
+            })
+
+        } else {
+            notif('Isi form terlebih dahulu!', false)
+        }
     })
 
     $('#history').DataTable({

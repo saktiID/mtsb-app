@@ -23,5 +23,6 @@ Route::prefix('guru')->group(function () {
         Route::get('assessment-history', [AssessmentGuruController::class, 'assessment_history'])->name('assessment-history.guru');
         Route::get('get-teacher-assessment-history', [AssessmentGuruController::class, 'get_history'])->name('get-assessment-history.guru');
         Route::get('get-teacher-note-history', [AssessmentGuruController::class, 'get_note'])->name('get-note-history.guru');
+        Route::get('print-assessment-history', [AssessmentGuruController::class, 'print_data'])->name('print-assessment-history.guru');
     });
 });
