@@ -34,6 +34,7 @@ var filesToCache = [
     "/assets/js/app.js",
     "/assets/js/custom.js",
     "/assets/js/scrollspyNav.js",
+    "/assets/js/internet-status.js",
 ];
 
 // Cache on install
