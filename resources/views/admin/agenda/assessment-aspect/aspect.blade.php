@@ -34,13 +34,13 @@
 
         <ul class="nav nav-tabs  mb-3" id="lineTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="teacher-aspect-tab" data-toggle="tab" href="#teacher-link" role="tab" aria-selected="true">Aspect fot teacher </a>
+                <a class="nav-link active" id="teacher-aspect-tab" data-toggle="tab" href="#teacher-link" role="tab" aria-selected="true">Teacher </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="parent-aspect-tab" data-toggle="tab" href="#parent-link" role="tab" aria-selected="false">Aspect for parent </a>
+                <a class="nav-link" id="parent-aspect-tab" data-toggle="tab" href="#parent-link" role="tab" aria-selected="false">Parent </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="peer-aspect-tab" data-toggle="tab" href="#peer-link" role="tab" aria-selected="false">Aspect fot peer </a>
+                <a class="nav-link" id="peer-aspect-tab" data-toggle="tab" href="#peer-link" role="tab" aria-selected="false">Peer </a>
             </li>
         </ul>
 

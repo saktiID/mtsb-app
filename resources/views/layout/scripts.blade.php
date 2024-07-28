@@ -16,6 +16,7 @@
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 <script src="{{ asset('assets/js/scrollspyNav.js') }}"></script>
 <script src="{{ asset('feather/feather.min.js') }}"></script>
+<script src="{{ asset('assets/js/internet-status.js') }}"></script>
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.16.1/echo.iife.min.js"></script>
 <script>

@@ -47,4 +47,6 @@
             </li>
         </ul>
     </header>
+    <div id="internetStatus" style="height: 30px" class="text-center text-white pt-1">
+    </div>
 </div>

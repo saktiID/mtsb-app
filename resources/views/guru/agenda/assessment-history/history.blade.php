@@ -153,6 +153,8 @@
     let siswa = []
     let PARAMS = []
 
+    $('#print').hide()
+
     $('#siswa_kelas').on('change', function() {
         siswa = $('#siswa_kelas').val().split('/')
         let img = siswa[1]
@@ -180,7 +182,6 @@
     })
 
     $('#print').on('click', function() {
-        // window.print()
 
         const {
             jsPDF
@@ -327,7 +328,19 @@
                     data: 'answer', //
                     className: 'text-center'
                 }, //
-            ]
+            ], //
+            drawCallback: function(settings) {
+                var api = this.api()
+                var data = api.rows({
+                    page: 'current'
+                }).data();
+
+                if (data.length === 0) {
+                    $('#print').hide()
+                } else {
+                    $('#print').show()
+                }
+            }
         })
     }
 
