@@ -9,8 +9,9 @@ class SiswaDataTableService
 {
     public function getSiswaDataTable()
     {
-        $user = User::has('siswa')
-            ->where('is_active', true)
+        $user = User::where('is_active', true)
+            ->has('siswa')
+            ->select('id', 'nama', 'avatar')
             ->with('siswa')
             ->orderBy('nama', 'asc')
             ->get();

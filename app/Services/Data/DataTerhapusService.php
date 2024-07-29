@@ -7,7 +7,11 @@ use Yajra\DataTables\Facades\DataTables;
 
 class DataTerhapusService
 {
-    private $guru, $siswa, $kelas;
+    private $guru;
+
+    private $siswa;
+
+    private $kelas;
 
     public function __construct($reqData)
     {
@@ -17,7 +21,7 @@ class DataTerhapusService
         if ($reqData == 'siswa') {
             $this->siswa = User::onlyTrashed()->has('siswa')->with('siswa')->get();
         }
-        if (!$reqData || $reqData == '') {
+        if (! $reqData || $reqData == '') {
             throw new \Exception('Data type not provided');
         }
     }

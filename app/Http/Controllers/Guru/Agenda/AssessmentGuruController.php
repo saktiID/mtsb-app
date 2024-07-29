@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Guru\Agenda;
 
-use App\Models\Data\Kelas;
-use Illuminate\Http\Request;
-use App\Models\Data\KelasSiswa;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use App\Models\Agenda\AssessmentAspect;
 use App\Models\Agenda\AssessmentRecord;
-use App\Services\Agenda\AssessmentService as Assessment;
+use App\Models\Data\Kelas;
+use App\Models\Data\KelasSiswa;
 use App\Services\Agenda\AssessmentDataTableService as AssessmentData;
+use App\Services\Agenda\AssessmentService as Assessment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class AssessmentGuruController extends Controller
 {
@@ -40,7 +40,7 @@ class AssessmentGuruController extends Controller
             ->join('users', 'kelas_siswas.user_id', '=', 'users.id')
             ->orderBy('users.nama', 'asc')
             ->get();
-        $data['kelas'] = $kelas->jenjang_kelas . '-' . $kelas->bagian_kelas;
+        $data['kelas'] = $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
         $data['periodeAktif'] = $this->periodeAktif;
         $data['aspects'] = Cache::remember('aspect-teacher', 300, function () {
             return AssessmentAspect::where('aspect_for', 'teacher')
@@ -55,7 +55,7 @@ class AssessmentGuruController extends Controller
     public function assessment_store(Request $request)
     {
         $check = $this->assessment->checkExist($request, 'Teacher');
-        if (!$check) {
+        if (! $check) {
             $query = $this->assessment->storeAssessment($request, 'Teacher');
             if ($query) {
                 return response()->json(['success' => true, 'message' => 'Assessment berhasil disimpan']);
@@ -81,7 +81,7 @@ class AssessmentGuruController extends Controller
             ->join('users', 'kelas_siswas.user_id', '=', 'users.id')
             ->orderBy('users.nama', 'asc')
             ->get();
-        $data['kelas'] = $kelas->jenjang_kelas . '-' . $kelas->bagian_kelas;
+        $data['kelas'] = $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
         $data['periodeAktif'] = $this->periodeAktif;
 
         return view('guru.agenda.assessment-history.history', $data);
@@ -118,7 +118,7 @@ class AssessmentGuruController extends Controller
             ->where('periode_id', $request[0]['periode_id'])
             ->where('bulan', $request[0]['bulan'])
             ->where('minggu_ke', $request[0]['minggu_ke'])
-            ->where('evaluator', 'like', $request[0]['evaluator'] . '%')
+            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
             ->where('is_note', false)
             ->orderBy('aspect_id', 'asc')
             ->get();

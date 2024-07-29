@@ -2,24 +2,28 @@
 
 namespace App\Jobs;
 
-use App\Models\User;
-use App\Models\Data\Siswa;
 use App\Events\ProgressEvent;
 use App\Events\ProgressFailEvent;
+use App\Models\Data\Siswa;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UploadDataSiswaJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $chunk, $totalChunks, $chunkIndex;
+    private $chunk;
+
+    private $totalChunks;
+
+    private $chunkIndex;
 
     /**
      * Create a new job instance.
@@ -85,7 +89,7 @@ class UploadDataSiswaJob implements ShouldQueue
             ]);
 
             event(new ProgressFailEvent([
-                'message' => 'Gagal memasukkan data <br/>' . $e->getMessage()
+                'message' => 'Gagal memasukkan data <br/>'.$e->getMessage(),
             ]));
 
             throw $e;

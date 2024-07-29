@@ -69,14 +69,14 @@ function multiCheck(tb_var) {
 =========================================
 */
 
-function checkall(clickchk, relChkbox) {
-    var checker = $("#" + clickchk);
-    var multichk = $("." + relChkbox);
+// function checkall(clickchk, relChkbox) {
+//     var checker = $("#" + clickchk);
+//     var multichk = $("." + relChkbox);
 
-    checker.click(function () {
-        multichk.prop("checked", $(this).prop("checked"));
-    });
-}
+//     checker.click(function () {
+//         multichk.prop("checked", $(this).prop("checked"));
+//     });
+// }
 
 /*
 =========================================

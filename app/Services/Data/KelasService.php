@@ -34,7 +34,7 @@ class KelasService
         $nama_walas = '-';
         $walas_id = '-';
         if ($kelas->walas_id != '') {
-            $walas = User::find($kelas->walas_id);
+            $walas = User::select(['avatar', 'nama', 'id'])->find($kelas->walas_id);
             if ($walas) {
                 $avatar = $walas->avatar;
                 $nama_walas = $walas->nama;

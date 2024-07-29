@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Admin\Data;
 
-use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Services\Data\DataTerhapusService;
+use Illuminate\Http\Request;
 
 class DataTerhapusController extends Controller
 {
-
-
     public function index(Request $request)
     {
         if ($request->ajax()) {
             $data = new DataTerhapusService($request->a);
+
             return $data->getDataTerhapus();
         }
 

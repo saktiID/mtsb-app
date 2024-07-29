@@ -29,7 +29,7 @@ class AssessmentSiswaController extends Controller
     {
         $kelasSiswa = KelasSiswa::where('periode_id', $this->periodeAktif->id)
             ->where('user_id', Auth::user()->id)->exists();
-        if (!$kelasSiswa) {
+        if (! $kelasSiswa) {
             abort(404);
         }
     }
@@ -44,7 +44,7 @@ class AssessmentSiswaController extends Controller
             ->where('user_id', Auth::user()->id)->first();
 
         $data['periodeAktif'] = $this->periodeAktif;
-        $data['kelas'] = $kelas->kelas->jenjang_kelas . '-' . $kelas->kelas->bagian_kelas;
+        $data['kelas'] = $kelas->kelas->jenjang_kelas.'-'.$kelas->kelas->bagian_kelas;
         $data['aspects'] = Cache::remember('aspect-parent', 300, function () {
             return AssessmentAspect::where('aspect_for', 'parent')
                 ->where('aspect_status', true)
@@ -72,7 +72,7 @@ class AssessmentSiswaController extends Controller
                 ->get();
         });
         $data['periodeAktif'] = $this->periodeAktif;
-        $data['kelas'] = $kelas->kelas->jenjang_kelas . '-' . $kelas->kelas->bagian_kelas;
+        $data['kelas'] = $kelas->kelas->jenjang_kelas.'-'.$kelas->kelas->bagian_kelas;
         $data['aspects'] = Cache::remember('aspcet-peer', 300, function () {
             return AssessmentAspect::where('aspect_for', 'peer')
                 ->where('aspect_status', true)
@@ -86,7 +86,7 @@ class AssessmentSiswaController extends Controller
     public function parent_assessment_store(Request $request)
     {
         $check = $this->assessment->checkExist($request, 'Parent');
-        if (!$check) {
+        if (! $check) {
             $query = $this->assessment->storeAssessment($request, 'Parent');
             if ($query) {
                 return response()->json(['success' => true, 'message' => 'Assessment berhasil disimpan']);
@@ -101,8 +101,8 @@ class AssessmentSiswaController extends Controller
     public function peer_assessment_store(Request $request)
     {
         $check = $this->assessment->checkExist($request, 'Peer');
-        if (!$check) {
-            $query = $this->assessment->storeAssessment($request, 'Peer ' . Auth::user()->nama);
+        if (! $check) {
+            $query = $this->assessment->storeAssessment($request, 'Peer '.Auth::user()->nama);
             if ($query) {
                 return response()->json(['success' => true, 'message' => 'Assessment berhasil disimpan']);
             } else {
@@ -115,7 +115,6 @@ class AssessmentSiswaController extends Controller
 
     public function assessment_history()
     {
-
         $data['periodes'] = Periode::select(['id', 'tahun_ajaran', 'semester'])
             ->orderBy('tahun_ajaran', 'asc')
             ->orderBy('semester', 'asc')
