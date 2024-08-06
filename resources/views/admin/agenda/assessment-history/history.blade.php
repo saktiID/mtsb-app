@@ -19,10 +19,7 @@
                         <tr>
                             <th width="20%">Nama</th>
                             <td>
-                                @foreach ($siswas as $siswa)
-                                <p>{{ $siswa->user->id }}</p>
-                                @endforeach
-                                <?php die; ?>
+                                @dd($siswas[0]->user)
 
                                 <select id="siswa_kelas" name="siswa_kelas" class="form-control basic">
                                     <option value="" selected disabled>-- Pilih siswa --</option>
