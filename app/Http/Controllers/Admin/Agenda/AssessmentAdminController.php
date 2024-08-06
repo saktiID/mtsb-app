@@ -80,7 +80,7 @@ class AssessmentAdminController extends Controller
             ->orderBy('semester', 'asc')
             ->get();
 
-        dd($data['siswas'][0]->user);
+        // dd($data['siswas'][0]->user);
 
         return view('admin.agenda.assessment-history.history', $data);
     }
