@@ -74,7 +74,7 @@ class AssessmentAdminController extends Controller
 
     public function assessment_history()
     {
-        $data['siswas'] = Siswa::with('user')->get();
+        $data['siswas'] = Siswa::with('user')->has('user')->get();
         $data['periodes'] = Periode::select(['id', 'tahun_ajaran', 'semester'])
             ->orderBy('tahun_ajaran', 'asc')
             ->orderBy('semester', 'asc')
