@@ -46,7 +46,7 @@ class AssessmentAdminController extends Controller
     {
         $query = $this->aspect->tambahAspect($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Assessment Aspect for '.$request->aspect_for.' berhasil ditambahkan']);
+            return response()->json(['success' => true, 'message' => 'Assessment Aspect for ' . $request->aspect_for . ' berhasil ditambahkan']);
         } else {
             return response()->json(['success' => false, 'message' => 'Assessment Aspect gagal ditambahkan']);
         }
@@ -79,6 +79,8 @@ class AssessmentAdminController extends Controller
             ->orderBy('tahun_ajaran', 'asc')
             ->orderBy('semester', 'asc')
             ->get();
+
+        dd($data['siswas'][0]->user);
 
         return view('admin.agenda.assessment-history.history', $data);
     }
