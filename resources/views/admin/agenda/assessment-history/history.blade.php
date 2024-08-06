@@ -19,13 +19,10 @@
                         <tr>
                             <th width="20%">Nama</th>
                             <td>
-                                @dd($siswas[0]->user->id)
-
                                 <select id="siswa_kelas" name="siswa_kelas" class="form-control basic">
                                     <option value="" selected disabled>-- Pilih siswa --</option>
-                                    @foreach ($siswas as $siswa)
-                                    <option value="{{ $siswa->user->id }}/{{ $siswa->user->avatar }}/{{ $siswa->nis }}">{{ $siswa->user->nama }}</option>
-                                    @endforeach
+                                    @for ($i = 0; $i < count($siswas); $i++) <option value="{{ $siswas[$i]->user->id }}/{{ $siswas[$i]->user->avatar }}/{{ $siswas[$i]->nis }}">{{ $siswas[$i]->user->nama }}</option>
+                                        @endfor
                                 </select>
                             </td>
                         </tr>
