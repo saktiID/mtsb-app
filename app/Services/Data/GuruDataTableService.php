@@ -9,7 +9,10 @@ class GuruDataTableService
 {
     public function getGuruDataTable()
     {
-        $user = User::has('guru')->with('guru')->get();
+        $user = User::has('guru')
+            ->has('guru')
+            ->with('guru:user_id,email,telp')
+            ->get();
         $dataTable = DataTables::of($user)
             ->addColumn('check', function ($user) {
                 $data['id'] = $user->id;
