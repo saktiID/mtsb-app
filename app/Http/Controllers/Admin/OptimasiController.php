@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use Artisan;
 use Illuminate\Support\Facades\File;
 
-class HapusCacheController extends Controller
+class OptimasiController extends Controller
 {
     public function index()
     {
-        return view('admin.cache.hapus-cache');
+        return view('admin.optimasi.optimasi');
     }
 
     public function hapus_data_cache()

@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\Data\DataKelasController;
 use App\Http\Controllers\Admin\Data\DataPeriodeController;
 use App\Http\Controllers\Admin\Data\DataSiswaController;
 use App\Http\Controllers\Admin\Data\DataTerhapusController;
-use App\Http\Controllers\Admin\HapusCacheController;
+use App\Http\Controllers\Admin\OptimasiController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
@@ -78,9 +78,9 @@ Route::prefix('admin')->group(function () {
         Route::get('get-admin-note-history', [AssessmentAdminController::class, 'get_note'])->name('get-note-history.admin');
     });
 
-    Route::get('hapus-cache', [HapusCacheController::class, 'index'])->name('hapus-cache');
-    Route::post('view-cache', [HapusCacheController::class, 'view_cache'])->name('view-cache');
-    Route::post('hapus-view-cache', [HapusCacheController::class, 'hapus_view_cache'])->name('hapus-view-cache');
-    Route::post('hapus-data-cache', [HapusCacheController::class, 'hapus_data_cache'])->name('hapus-data-cache');
-    Route::post('hapus-data-session', [HapusCacheController::class, 'hapus_data_session'])->name('hapus-data-session');
+    Route::get('optimasi', [OptimasiController::class, 'index'])->name('optimasi');
+    Route::post('view-cache', [OptimasiController::class, 'view_cache'])->name('view-cache');
+    Route::post('hapus-view-cache', [OptimasiController::class, 'hapus_view_cache'])->name('hapus-view-cache');
+    Route::post('hapus-data-cache', [OptimasiController::class, 'hapus_data_cache'])->name('hapus-data-cache');
+    Route::post('hapus-data-session', [OptimasiController::class, 'hapus_data_session'])->name('hapus-data-session');
 });

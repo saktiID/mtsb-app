@@ -46,7 +46,7 @@
 
 </x-menu-dropdown>
 
-<x-menu-item menuTitle="Hapus Cache" menuIcon="file-minus" menuRoute="hapus-cache" menuActive="hapus-cache" />
+<x-menu-item menuTitle="Optimasi" menuIcon="sliders" menuRoute="optimasi" menuActive="optimasi" />
 
 @endif
 {{-- end admin menu --}}

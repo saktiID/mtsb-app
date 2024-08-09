@@ -1,9 +1,9 @@
 @extends('layout.main')
-@section('title', 'Hapus Cache')
+@section('title', 'Optimasi')
 @section('content')
 <div class="row pt-4">
 
-    <x-card-box cardTitle="Hapus Cache">
+    <x-card-box cardTitle="Optimasi">
         <label>Bersihkan data cache: <br>
             <small>Menghapus cache untuk memuat ulang data sementara</small>
         </label>
