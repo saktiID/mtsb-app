@@ -8,7 +8,7 @@ class AspectService
 {
     /**
      * @var array
-     * service tambah aspect
+     *            service tambah aspect
      */
     public function tambahAspect($request)
     {

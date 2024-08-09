@@ -79,6 +79,8 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::get('hapus-cache', [HapusCacheController::class, 'index'])->name('hapus-cache');
+    Route::post('view-cache', [HapusCacheController::class, 'view_cache'])->name('view-cache');
+    Route::post('hapus-view-cache', [HapusCacheController::class, 'hapus_view_cache'])->name('hapus-view-cache');
     Route::post('hapus-data-cache', [HapusCacheController::class, 'hapus_data_cache'])->name('hapus-data-cache');
     Route::post('hapus-data-session', [HapusCacheController::class, 'hapus_data_session'])->name('hapus-data-session');
 });

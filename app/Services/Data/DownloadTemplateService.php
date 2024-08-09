@@ -10,7 +10,7 @@ class DownloadTemplateService
     public function generateTemplateSiswa()
     {
         $judul = 'TEMPLATE UPLOAD SISWA';
-        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new Spreadsheet;
         $activeWorksheet = $spreadsheet->getActiveSheet();
         $activeWorksheet->setCellValue('A1', $judul);
         $activeWorksheet->mergeCells('A1:E1');

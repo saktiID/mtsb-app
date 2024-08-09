@@ -20,6 +20,20 @@ class HapusCacheController extends Controller
         return response()->json(['success' => true, 'message' => 'Data cache berhasil dibersihkan']);
     }
 
+    public function view_cache()
+    {
+        Artisan::call('view:cache');
+
+        return response()->json(['success' => true, 'message' => 'Source view berhasil ter-cache']);
+    }
+
+    public function hapus_view_cache()
+    {
+        Artisan::call('view:clear');
+
+        return response()->json(['success' => true, 'message' => 'View cache berhasil dibersihkan']);
+    }
+
     public function hapus_data_session()
     {
         // Mendapatkan path direktori sesi

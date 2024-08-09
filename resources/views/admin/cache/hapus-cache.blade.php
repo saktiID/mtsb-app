@@ -15,6 +15,18 @@
         </label>
         <br />
         <a href="" id="data-session" class="btn btn-danger btn-sm loadingTrigger">Bersihkan</a>
+        <hr>
+        <label class="mb-3">Bersihkan view cache: <br>
+            <small>Menghapus source cache view untuk melihat perubahan interface</small>
+        </label>
+        <br />
+        <a href="" id="hapus-view-cache" class="btn btn-danger btn-sm loadingTrigger">Bersihkan</a>
+        <hr>
+        <label class="mb-3">Membuat cache untuk view: <br>
+            <small>Men-generate source cache untuk view agar load view lebih cepat</small>
+        </label>
+        <br />
+        <a href="" id="view-cache" class="btn btn-warning btn-sm loadingTrigger">Buat cache</a>
     </x-card-box>
 
 </div>
@@ -37,6 +49,20 @@
         let formData = new FormData()
         formData.append('_token', "{{ csrf_token() }}")
         prosesAjax(formData, "hapus-data-session")
+    })
+
+    $('#hapus-view-cache').on('click', function(e) {
+        e.preventDefault()
+        let formData = new FormData()
+        formData.append('_token', "{{ csrf_token() }}")
+        prosesAjax(formData, "hapus-view-cache")
+    })
+
+    $('#view-cache').on('click', function(e) {
+        e.preventDefault()
+        let formData = new FormData()
+        formData.append('_token', "{{ csrf_token() }}")
+        prosesAjax(formData, "view-cache")
     })
 
     function prosesAjax(data, route) {
