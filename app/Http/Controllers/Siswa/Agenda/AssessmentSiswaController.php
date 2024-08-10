@@ -65,7 +65,7 @@ class AssessmentSiswaController extends Controller
             ->where('user_id', Auth::user()->id)->first();
 
         $data['siswaDalamKelas'] = Cache::remember($kelas->kelas->id, 1200, function () use ($kelas) {
-            return KelasSiswa::with(['user', 'siswa'])
+            return KelasSiswa::with(['user:id,avatar,nama', 'siswa:user_id,nis'])
                 ->where('kelas_id', $kelas->kelas->id)
                 ->join('users', 'kelas_siswas.user_id', '=', 'users.id')
                 ->orderBy('users.nama', 'asc')

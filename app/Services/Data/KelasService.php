@@ -71,7 +71,10 @@ class KelasService
 
     public function getGuru()
     {
-        $guru = User::has('guru')->with('guru')->get();
+        $guru = User::select(['id', 'avatar'])
+            ->has('guru')
+            ->with(['guru:user_id'])
+            ->get();
 
         return $guru;
     }

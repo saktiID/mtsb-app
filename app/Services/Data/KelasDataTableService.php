@@ -65,11 +65,22 @@ class KelasDataTableService
         $dataTable = DataTables::of($siswa)
 
             ->addColumn('avatar', function ($siswa) {
-                $data['avatar'] = $siswa->user->avatar;
-                $data['route'] = 'detail-data-siswa';
-                $data['id'] = $siswa->user->id;
+                // $data['avatar'] = $siswa->user->avatar;
+                // $data['route'] = 'detail-data-siswa';
+                // $data['id'] = $siswa->user->id;
 
-                return view('element.avatar', $data);
+                $el = '
+                
+                <a href="'.route('detail-data-siswa', $siswa->id).'">
+                <div class="avatar text-center">
+                    <img alt="avatar" src="'.route('get-foto', ['filename' => $siswa->avatar]).'" class="rounded bg-success" width="50px" height="50px" />
+                </div>
+                </a>
+
+                ';
+
+                // return view('element.avatar', $data);
+                return $el;
             })
             ->addColumn('nama', function ($siswa) {
                 return $siswa->user->nama;
@@ -81,11 +92,21 @@ class KelasDataTableService
                 return $siswa->siswa->nisn;
             })
             ->addColumn('more', function ($siswa) {
-                $data['id'] = $siswa->id;
-                $data['nama'] = $siswa->user->nama;
+                // $data['id'] = $siswa->id;
+                // $data['nama'] = $siswa->user->nama;
 
-                return view('element.keluarkan-siswa', $data);
+                $el = '
+                
+                <div class="text-center">
+                <button class="masukkan-siswa btn btn-dark btn-sm" data-id="'.$siswa->id.'" data-nama="'.$siswa->nama.'">Masukkan</button>
+                </div>
+                
+                ';
+
+                // return view('element.keluarkan-siswa', $data);
+                return $el;
             })
+            ->rawColumns(['avatar', 'more'])
             ->make(true);
 
         return $dataTable;
@@ -93,16 +114,30 @@ class KelasDataTableService
 
     public function getSemuaSiswa()
     {
-        $siswa = User::has('siswa')->with('siswa')
-            ->orderBy('nama')
+        $siswa = User::where('is_active', true)
+            ->select('id', 'nama', 'avatar')
+            ->has('siswa')
+            ->with('siswa:user_id,nis,nisn')
+            ->orderBy('nama', 'asc')
             ->get();
         $dataTable = DataTables::of($siswa)
             ->addColumn('avatar', function ($siswa) {
-                $data['avatar'] = $siswa->avatar;
-                $data['route'] = 'detail-data-siswa';
-                $data['id'] = $siswa->id;
+                // $data['avatar'] = $siswa->avatar;
+                // $data['route'] = 'detail-data-siswa';
+                // $data['id'] = $siswa->id;
 
-                return view('element.avatar', $data);
+                $el = '
+                
+                <a href="'.route('detail-data-siswa', $siswa->id).'">
+                <div class="avatar text-center">
+                    <img alt="avatar" src="'.route('get-foto', ['filename' => $siswa->avatar]).'" class="rounded bg-success" width="50px" height="50px" />
+                </div>
+                </a>
+
+                ';
+
+                // return view('element.avatar', $data);
+                return $el;
             })
             ->addColumn('nama', function ($siswa) {
                 return $siswa->nama;
@@ -114,11 +149,21 @@ class KelasDataTableService
                 return $siswa->siswa->nisn;
             })
             ->addColumn('more', function ($siswa) {
-                $data['id'] = $siswa->id;
-                $data['nama'] = $siswa->nama;
+                // $data['id'] = $siswa->id;
+                // $data['nama'] = $siswa->nama;
 
-                return view('element.masukkan-siswa', $data);
+                $el = '
+                
+                <div class="text-center">
+                <button class="masukkan-siswa btn btn-dark btn-sm" data-id="'.$siswa->id.'" data-nama="'.$siswa->nama.'">Masukkan</button>
+                </div>
+                
+                ';
+
+                // return view('element.masukkan-siswa', $data);
+                return $el;
             })
+            ->rawColumns(['avatar', 'more'])
             ->make(true);
 
         return $dataTable;
