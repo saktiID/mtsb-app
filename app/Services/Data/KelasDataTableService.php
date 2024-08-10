@@ -17,7 +17,7 @@ class KelasDataTableService
         $dataTable = DataTables::of($kelas)
             ->addColumn('check', function ($kelas) {
                 $data['id'] = $kelas->id;
-                $data['nama'] = $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
+                $data['nama'] = $kelas->jenjang_kelas . '-' . $kelas->bagian_kelas;
 
                 return view('element.checkbox-table', $data);
             })
@@ -36,11 +36,11 @@ class KelasDataTableService
                 return view('element.avatar', $data);
             })
             ->addColumn('kelas', function ($kelas) {
-                return $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
+                return $kelas->jenjang_kelas . '-' . $kelas->bagian_kelas;
             })
             ->addColumn('more', function ($kelas) {
                 $data['id'] = $kelas->id;
-                $data['nama'] = $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
+                $data['nama'] = $kelas->jenjang_kelas . '-' . $kelas->bagian_kelas;
                 $data['route'] = 'detail-kelas';
 
                 return view('element.more-action', $data);
@@ -71,9 +71,9 @@ class KelasDataTableService
 
                 $el = '
                 
-                <a href="'.route('detail-data-siswa', $siswa->id).'">
+                <a href="' . route('detail-data-siswa', $siswa->id) . '">
                 <div class="avatar text-center">
-                    <img alt="avatar" src="'.route('get-foto', ['filename' => $siswa->avatar]).'" class="rounded bg-success" width="50px" height="50px" />
+                    <img alt="avatar" src="' . route('get-foto', ['filename' => $siswa->avatar]) . '" class="rounded bg-success" width="50px" height="50px" />
                 </div>
                 </a>
 
@@ -98,7 +98,7 @@ class KelasDataTableService
                 $el = '
                 
                 <div class="text-center">
-                <button class="masukkan-siswa btn btn-dark btn-sm" data-id="'.$siswa->id.'" data-nama="'.$siswa->nama.'">Masukkan</button>
+                <button class="keluarkan-siswa btn btn-danger btn-sm" data-id="' . $siswa->id . '" data-nama="' . $siswa->nama . '">Keluarkan</button>
                 </div>
                 
                 ';
@@ -128,9 +128,9 @@ class KelasDataTableService
 
                 $el = '
                 
-                <a href="'.route('detail-data-siswa', $siswa->id).'">
+                <a href="' . route('detail-data-siswa', $siswa->id) . '">
                 <div class="avatar text-center">
-                    <img alt="avatar" src="'.route('get-foto', ['filename' => $siswa->avatar]).'" class="rounded bg-success" width="50px" height="50px" />
+                    <img alt="avatar" src="' . route('get-foto', ['filename' => $siswa->avatar]) . '" class="rounded bg-success" width="50px" height="50px" />
                 </div>
                 </a>
 
@@ -155,7 +155,7 @@ class KelasDataTableService
                 $el = '
                 
                 <div class="text-center">
-                <button class="masukkan-siswa btn btn-dark btn-sm" data-id="'.$siswa->id.'" data-nama="'.$siswa->nama.'">Masukkan</button>
+                <button class="masukkan-siswa btn btn-dark btn-sm" data-id="' . $siswa->id . '" data-nama="' . $siswa->nama . '">Masukkan</button>
                 </div>
                 
                 ';
