@@ -10,7 +10,7 @@
                 <input type="file" accept="image/*" id="avatar_upload" name="avatar_upload" hidden>
                 <div class="text-center">
                     <div class="avatar avatar-xl mb-4">
-                        <img alt="foto" id="foto" src="{{ route('get-foto', Auth::user()->avatar) }}" width="250px" height="250px" class="rounded bg-success" />
+                        <img alt="foto" id="foto" src="{{ route('get-foto', Auth::user()->avatar) }}" width="250px" height="250px" class="rounded bg-success gallery-item" />
                     </div>
                     <label for="avatar_upload" class="btn btn-outline-primary btn-sm">Ubah foto</label>
                 </div>
