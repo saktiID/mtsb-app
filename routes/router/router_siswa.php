@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\Siswa\Agenda\AssessmentSiswaController;
 use App\Http\Controllers\Siswa\Beranda\BerandaSiswaController;
+use App\Http\Controllers\Siswa\Kelas\KelasKamuController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('siswa')->group(function () {
     Route::get('/beranda', [BerandaSiswaController::class, 'index'])->name('beranda-siswa');
+
+    Route::get('/kelas-kamu', [KelasKamuController::class, 'index'])->name('kelas-kamu');
 
     Route::prefix('agenda')->group(function () {
         Route::get('/', function () {

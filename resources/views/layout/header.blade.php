@@ -38,6 +38,38 @@
 
     </style>
 
+    <style>
+        /* Style untuk lightbox dan gambar */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 999999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox img {
+            height: 320px;
+            width: 320px
+        }
+
+        /* Style untuk menutup lightbox */
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+    </style>
+
     {{-- pwa --}}
     @laravelPWA
     {{-- endpwa --}}

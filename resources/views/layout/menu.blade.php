@@ -80,6 +80,8 @@
 
 <x-menu-heading menuHeadingTitle="MENU" />
 
+<x-menu-item menuTitle="Kelas Kamu" menuIcon="columns" menuRoute="kelas-kamu" menuActive="kelas-kamu" />
+
 <x-menu-dropdown menuTitle="Agenda" menuIcon="paperclip" menuParent="agenda" menuActive="siswa/agenda/*">
 
     <x-sub-menu-dropdown menuTitle="Parent Assessment" menuRoute="parent-assessment" menuActive="siswa/agenda/parent-assessment" />

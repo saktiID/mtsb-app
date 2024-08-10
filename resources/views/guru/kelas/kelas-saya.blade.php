@@ -9,7 +9,7 @@
                 <div class="d-flex justify-content-center">
                     <div class="avatar avatar-xl ">
                         <div class="rounded alert alert-light-danger p-0 " style="height: 170px; width:170px">
-                            <img id="foto" src="{{ route('get-foto', ['filename' => Auth::user()->avatar]) }}" class="rounded" width="170px" height="170px">
+                            <img id="foto" src="{{ route('get-foto', ['filename' => Auth::user()->avatar]) }}" class="rounded gallery-item" width="170px" height="170px">
                         </div>
                     </div>
                 </div>

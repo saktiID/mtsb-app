@@ -70,6 +70,10 @@
                 {{-- end install app --}}
             </div>
 
+            <div class="lightbox" id="lightbox">
+                <span class="lightbox-close" id="lightbox-close">&times;</span>
+                <img id="lightbox-img" src="" alt="Lightbox Image" />
+            </div>
 
             @include('layout.footer')
         </div>
@@ -140,5 +144,38 @@
 
     </script>
     {{-- endpwa --}}
+
+    {{-- lightbox --}}
+    <script>
+        // Dapatkan elemen-elemen yang diperlukan
+        const galleryItems = document.querySelectorAll(".gallery-item");
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+        const lightboxClose = document.getElementById("lightbox-close");
+
+        // Tambahkan event listener untuk setiap item di galeri
+        galleryItems.forEach((item) => {
+            item.addEventListener("click", () => {
+                // Setel sumber gambar yang diklik ke lightbox
+                lightboxImg.src = item.src;
+                // Tampilkan lightbox
+                lightbox.style.display = "flex";
+            });
+        });
+
+        // Tambahkan event listener untuk menutup lightbox
+        lightboxClose.addEventListener("click", () => {
+            lightbox.style.display = "none";
+        });
+
+        // Tambahkan event listener untuk menutup lightbox ketika area di luar gambar diklik
+        lightbox.addEventListener("click", (e) => {
+            if (e.target === lightbox) {
+                lightbox.style.display = "none";
+            }
+        });
+
+    </script>
+    {{-- endlightbox --}}
 </body>
 </html>

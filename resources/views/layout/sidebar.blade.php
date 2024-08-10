@@ -4,9 +4,7 @@ a<div class="sidebar-wrapper sidebar-theme">
         <div class="profile-info">
             <figure class="user-cover-image"></figure>
             <div class="user-info">
-                <a href="{{ route('profile') }}">
-                    <img src="{{ route('get-foto', ['filename' => Auth::user()->avatar]) }}" alt="avatar">
-                </a>
+                <img src="{{ route('get-foto', ['filename' => Auth::user()->avatar]) }}" class="gallery-item" alt="avatar">
                 <h6 class="">{{ Auth::user()->nama }}</h6>
                 <p class="">{{ Auth::user()->role }}</p>
             </div>
