@@ -65,21 +65,15 @@ class KelasDataTableService
         $dataTable = DataTables::of($siswa)
 
             ->addColumn('avatar', function ($siswa) {
-                // $data['avatar'] = $siswa->user->avatar;
-                // $data['route'] = 'detail-data-siswa';
-                // $data['id'] = $siswa->user->id;
-
                 $el = '
                 
-                <a href="' . route('detail-data-siswa', $siswa->id) . '">
+                <a href="' . route('detail-data-siswa', $siswa->user->id) . '">
                 <div class="avatar text-center">
                     <img alt="avatar" src="' . route('get-foto', ['filename' => $siswa->avatar]) . '" class="rounded bg-success" width="50px" height="50px" />
                 </div>
                 </a>
 
                 ';
-
-                // return view('element.avatar', $data);
                 return $el;
             })
             ->addColumn('nama', function ($siswa) {
@@ -92,9 +86,6 @@ class KelasDataTableService
                 return $siswa->siswa->nisn;
             })
             ->addColumn('more', function ($siswa) {
-                // $data['id'] = $siswa->id;
-                // $data['nama'] = $siswa->user->nama;
-
                 $el = '
                 
                 <div class="text-center">
@@ -102,8 +93,6 @@ class KelasDataTableService
                 </div>
                 
                 ';
-
-                // return view('element.keluarkan-siswa', $data);
                 return $el;
             })
             ->rawColumns(['avatar', 'more'])
@@ -122,10 +111,6 @@ class KelasDataTableService
             ->get();
         $dataTable = DataTables::of($siswa)
             ->addColumn('avatar', function ($siswa) {
-                // $data['avatar'] = $siswa->avatar;
-                // $data['route'] = 'detail-data-siswa';
-                // $data['id'] = $siswa->id;
-
                 $el = '
                 
                 <a href="' . route('detail-data-siswa', $siswa->id) . '">
@@ -135,8 +120,6 @@ class KelasDataTableService
                 </a>
 
                 ';
-
-                // return view('element.avatar', $data);
                 return $el;
             })
             ->addColumn('nama', function ($siswa) {
@@ -149,9 +132,6 @@ class KelasDataTableService
                 return $siswa->siswa->nisn;
             })
             ->addColumn('more', function ($siswa) {
-                // $data['id'] = $siswa->id;
-                // $data['nama'] = $siswa->nama;
-
                 $el = '
                 
                 <div class="text-center">
@@ -159,8 +139,6 @@ class KelasDataTableService
                 </div>
                 
                 ';
-
-                // return view('element.masukkan-siswa', $data);
                 return $el;
             })
             ->rawColumns(['avatar', 'more'])
