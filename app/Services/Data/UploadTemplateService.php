@@ -19,7 +19,7 @@ class UploadTemplateService
         for ($row = 8; $row < count($activeWorksheet); $row++) {
             $data[] = [
                 'nama' => htmlspecialchars($activeWorksheet[$row][3]),
-                'username' => htmlspecialchars($activeWorksheet[$row][1]),
+                'username' => '@' . htmlspecialchars($activeWorksheet[$row][1]),
                 'gender' => htmlspecialchars($activeWorksheet[$row][4]),
                 'password' => '123456',
                 'nis' => htmlspecialchars($activeWorksheet[$row][1]),
