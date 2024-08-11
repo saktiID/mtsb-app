@@ -16,7 +16,7 @@
                     <div class="avatar avatar-xl ">
                         <div class="rounded alert alert-light-danger p-0 " style="height: 170px; width:170px">
                             @if($kelas->avatar != '-')
-                            <img id="foto" src="{{ route('get-foto', ['filename' => $kelas->avatar]) }}" class="rounded" width="170px" height="170px">
+                            <img id="foto" src="{{ route('get-foto', ['filename' => $kelas->avatar]) }}" class="rounded gallery-item" width="170px" height="170px">
                             @else
                             <img id="foto" src="{{ route('get-foto', ['filename' => '-']) }}" class="rounded" width="170px" height="170px">
                             @endif

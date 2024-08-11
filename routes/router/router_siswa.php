@@ -21,5 +21,6 @@ Route::prefix('siswa')->group(function () {
         Route::get('assessment-history', [AssessmentSiswaController::class, 'assessment_history'])->name('assessment-history.siswa');
         Route::get('get-assessment-history', [AssessmentSiswaController::class, 'get_history'])->name('get-assessment-history.siswa');
         Route::get('get-note-history', [AssessmentSiswaController::class, 'get_note'])->name('get-note-history.siswa');
+        Route::get('print-assessment-history', [AssessmentSiswaController::class, 'print_data'])->name('print-assessment-history.siswa');
     });
 });

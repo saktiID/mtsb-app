@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Data\DataSiswaController;
 use App\Http\Controllers\Guru\Agenda\AssessmentGuruController;
 use App\Http\Controllers\Guru\Beranda\BerandaGuruController;
 use App\Http\Controllers\Guru\Kelas\KelasSayaController;
@@ -9,6 +10,8 @@ Route::prefix('guru')->group(function () {
     Route::get('/beranda', [BerandaGuruController::class, 'index'])->name('beranda-guru');
 
     Route::get('kelas-saya', [KelasSayaController::class, 'index'])->name('kelas-saya');
+    Route::get('kelas-saya/{id}', [KelasSayaController::class, 'detail_siswa'])->name('detail-data-siswa.guru');
+    Route::post('update', [DataSiswaController::class, 'update_siswa'])->name('update-data-siswa');
     Route::get('siswakelassaya', [KelasSayaController::class, 'siswa_kelas'])->name('siswa-kelas-saya');
     Route::get('semuasiswaumum', [KelasSayaController::class, 'semua_siswa'])->name('semua-siswa-umum');
     Route::post('masukkan-siswa-saya', [KelasSayaController::class, 'masukkan_siswa'])->name('masukkan-siswa-saya');

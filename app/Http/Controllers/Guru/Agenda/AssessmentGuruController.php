@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Guru\Agenda;
 
 use App\Http\Controllers\Controller;
 use App\Models\Agenda\AssessmentAspect;
-use App\Models\Agenda\AssessmentRecord;
 use App\Models\Data\Kelas;
 use App\Models\Data\KelasSiswa;
 use App\Services\Agenda\AssessmentDataTableService as AssessmentData;
@@ -56,7 +55,7 @@ class AssessmentGuruController extends Controller
     {
         $check = $this->assessment->checkExist($request, 'Teacher');
         if (! $check) {
-            $query = $this->assessment->storeAssessment($request, 'Teacher');
+            $query = $this->assessment->storeAssessment($request, 'Teacher - '.Auth::user()->nama);
             if ($query) {
                 return response()->json(['success' => true, 'message' => 'Assessment berhasil disimpan']);
             } else {
@@ -111,26 +110,6 @@ class AssessmentGuruController extends Controller
 
     public function print_data(Request $request)
     {
-        $request = json_decode($request->a, true);
-
-        $assessmentData = AssessmentRecord::with('aspect')
-            ->where('siswa_user_id', $request[0]['siswa_user_id'])
-            ->where('periode_id', $request[0]['periode_id'])
-            ->where('bulan', $request[0]['bulan'])
-            ->where('minggu_ke', $request[0]['minggu_ke'])
-            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
-            ->where('is_note', false)
-            ->orderBy('aspect_id', 'asc')
-            ->get();
-
-        $result = [];
-        foreach ($assessmentData as $data) {
-            $result[] = [
-                'aspect' => $data->aspect->aspect,
-                'answer' => $data->answer,
-            ];
-        }
-
-        return response()->json($result);
+        return $this->assessment->printAssessment($request);
     }
 }

@@ -7,7 +7,7 @@
     <x-card-box cardTitle="Kelas Kamu">
         @if(!$kelas['hasKelas'])
         <div class="d-flex align-items-center flex-column">
-            <img src="{{ asset('assets/img/not-found.png') }}" width="400px" alt="not found">
+            <img src="{{ asset('assets/img/not-found.png') }}" width="70%" style="max-width: 400px" alt="not found">
             <h6 class="text-center">Yahh, Kamu belum dimasukkan kelas di periode ini 🥲 <br> Tenang! infokan aja ke walas kamu.</h6>
         </div>
 

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Siswa\Kelas;
 
-use App\Models\User;
+use App\Http\Controllers\Controller;
 use App\Models\Data\Kelas;
 use App\Models\Data\KelasSiswa;
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -27,6 +27,7 @@ class KelasKamuController extends Controller
             $result = [
                 'hasKelas' => false,
             ];
+
             return $result;
         } else {
             $result = [
@@ -38,7 +39,7 @@ class KelasKamuController extends Controller
                         ->orderBy('users.nama', 'asc')
                         ->get();
                 }),
-                'data' => Cache::remember('data' . $cariKelas[0]->kelas_id, 500, function () use ($cariKelas) {
+                'data' => Cache::remember('data'.$cariKelas[0]->kelas_id, 500, function () use ($cariKelas) {
                     $kelas = Kelas::where('id', $cariKelas[0]->kelas_id)->first();
                     $avatar = '-';
                     $nama_walas = '-';
@@ -56,8 +57,9 @@ class KelasKamuController extends Controller
                     $kelas->walas_id = $walas_id;
 
                     return $kelas;
-                })
+                }),
             ];
+
             return $result;
         }
     }

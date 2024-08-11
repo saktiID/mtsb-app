@@ -5,6 +5,7 @@ namespace App\Services\Data;
 use App\Models\Data\Kelas;
 use App\Models\Data\KelasSiswa;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class KelasDataTableService
@@ -65,9 +66,14 @@ class KelasDataTableService
         $dataTable = DataTables::of($siswa)
 
             ->addColumn('avatar', function ($siswa) {
+                $route = 'detail-data-siswa';
+                if (Auth::user()->role === 'Guru') {
+                    $route = $route.'.guru';
+                }
+
                 $el = '
                 
-                <a href="'.route('detail-data-siswa', $siswa->user->id).'">
+                <a href="'.route($route, $siswa->user->id).'">
                 <div class="avatar text-center">
                     <img alt="avatar" src="'.route('get-foto', ['filename' => $siswa->avatar]).'" class="rounded bg-success" width="50px" height="50px" />
                 </div>

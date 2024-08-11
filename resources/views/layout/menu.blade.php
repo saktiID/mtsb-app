@@ -60,7 +60,7 @@
 
 @if ($menuAgenda && $menuAgenda->walas_id == Auth::user()->id)
 
-<x-menu-item menuTitle="Kelas Saya" menuIcon="columns" menuRoute="kelas-saya" menuActive="kelas-saya" />
+<x-menu-item menuTitle="Kelas Saya" menuIcon="columns" menuRoute="kelas-saya" menuActive="kelas-saya" altActive="guru/kelas-saya/*" />
 
 <x-menu-dropdown menuTitle="Agenda" menuIcon="paperclip" menuParent="agenda" menuActive="guru/agenda/*">
     <x-sub-menu-dropdown menuTitle="Teacher Assessment" menuRoute="teacher-assessment" menuActive="guru/agenda/teacher-assessment" />
@@ -112,9 +112,18 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Batalkan</button>
-                <a href="{{ route('logout') }}" type="submit" class="btn btn-danger">Tetap keluar</a>
+                <a href="{{ route('logout') }}" type="submit" class="btn btn-danger loadingTriggerLogout">Tetap keluar</a>
             </div>
         </div>
     </div>
 </div>
+<script>
+    let loadingTriggerLogout = document.querySelector('.loadingTriggerLogout')
+    loadingTriggerLogout.addEventListener('click', function() {
+        const spinner = document.createElement('div')
+        spinner.classList = "spinner-border text-white align-self-center loader-sm"
+        loadingTriggerLogout.replaceChild(spinner, loadingTriggerLogout.childNodes[0])
+    })
+
+</script>
 @endsection

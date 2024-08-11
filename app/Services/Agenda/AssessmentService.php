@@ -73,4 +73,29 @@ class AssessmentService
 
         return $assessmentData;
     }
+
+    public function printAssessment($request)
+    {
+        $request = json_decode($request->a, true);
+
+        $assessmentData = AssessmentRecord::with('aspect')
+            ->where('siswa_user_id', $request[0]['siswa_user_id'])
+            ->where('periode_id', $request[0]['periode_id'])
+            ->where('bulan', $request[0]['bulan'])
+            ->where('minggu_ke', $request[0]['minggu_ke'])
+            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
+            ->where('is_note', false)
+            ->orderBy('aspect_id', 'asc')
+            ->get();
+
+        $result = [];
+        foreach ($assessmentData as $data) {
+            $result[] = [
+                'aspect' => $data->aspect->aspect,
+                'answer' => $data->answer,
+            ];
+        }
+
+        return response()->json($result);
+    }
 }

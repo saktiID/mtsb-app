@@ -102,7 +102,7 @@ class AssessmentSiswaController extends Controller
     {
         $check = $this->assessment->checkExist($request, 'Peer');
         if (! $check) {
-            $query = $this->assessment->storeAssessment($request, 'Peer '.Auth::user()->nama);
+            $query = $this->assessment->storeAssessment($request, 'Peer - '.Auth::user()->nama);
             if ($query) {
                 return response()->json(['success' => true, 'message' => 'Assessment berhasil disimpan']);
             } else {
@@ -119,8 +119,18 @@ class AssessmentSiswaController extends Controller
             ->orderBy('tahun_ajaran', 'asc')
             ->orderBy('semester', 'asc')
             ->get();
+        $data['periodeAktif'] = $this->periodeAktif;
+        $data['kelas'] = KelasSiswa::where('periode_id', $this->periodeAktif->id)
+            ->has('kelas')
+            ->with('kelas')
+            ->where('user_id', Auth::user()->id)->first();
 
         return view('siswa.agenda.assessment-history.history', $data);
+    }
+
+    public function print_data(Request $request)
+    {
+        return $this->assessment->printAssessment($request);
     }
 
     public function get_history(Request $request)
