@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Siswa\Agenda;
 
+use App\Events\AssessmentSentEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Agenda\AssessmentAspect;
 use App\Models\Data\KelasSiswa;
@@ -73,6 +74,7 @@ class AssessmentSiswaController extends Controller
         });
         $data['periodeAktif'] = $this->periodeAktif;
         $data['kelas'] = $kelas->kelas->jenjang_kelas.'-'.$kelas->kelas->bagian_kelas;
+        $data['walas_id'] = $kelas->kelas->walas_id;
         $data['aspects'] = Cache::remember('aspcet-peer', 300, function () {
             return AssessmentAspect::where('aspect_for', 'peer')
                 ->where('aspect_status', true)
@@ -104,6 +106,17 @@ class AssessmentSiswaController extends Controller
         if (! $check) {
             $query = $this->assessment->storeAssessment($request, 'Peer - '.Auth::user()->nama);
             if ($query) {
+                event(new AssessmentSentEvent(
+                    [
+                        'status' => true,
+                        'nama_siswa' => $request->nama_siswa,
+                        'msg' => 'sudah mendapatkan peer assessment',
+                        'bulan' => $request->bulan,
+                        'minggu_ke' => $request->minggu_ke,
+                    ],
+                    $request->walas_id,
+                ));
+
                 return response()->json(['success' => true, 'message' => 'Assessment berhasil disimpan']);
             } else {
                 return response()->json(['success' => false, 'message' => 'Assessment gagal disimpan']);

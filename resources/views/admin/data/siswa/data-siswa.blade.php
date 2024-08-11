@@ -410,7 +410,7 @@
         $('#username').val(event.target.value)
     })
 
-    var pusher = new Pusher('1aee118c79d81ebec5df', {
+    var pusher = new Pusher("{{ env('PUSHER_APP_KEY') }}", {
         cluster: 'ap1'
     });
 

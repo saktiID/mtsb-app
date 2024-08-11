@@ -67,6 +67,45 @@
     <x-sub-menu-dropdown menuTitle="Assessment History" menuRoute="assessment-history.guru" menuActive="guru/agenda/assessment-history" />
 </x-menu-dropdown>
 
+@section('script-layout')
+<script>
+    window.Pusher = Pusher;
+    window.Echo = new Echo({
+        broadcaster: 'pusher', //
+        key: "{{ env('PUSHER_APP_KEY') }}", //
+        cluster: 'ap1', //
+        forceTLS: true, //
+    });
+
+    Echo.channel('assessment.' + "{{ Auth::user()->id }}")
+        .listen('.App\\Events\\AssessmentSentEvent', function(e) {
+            notif(`${e.nama_siswa} ${e.msg} untuk bulan ${e.bulan} minggu ke ${e.minggu_ke}`, e.status)
+
+            if (Notification.permission == 'granted') {
+                showNotif()
+            } else if (Notification.permission !== 'denied') {
+                Notification.requestPermission().then(permission => {
+                    if (permission == 'granted') {
+                        showNotif()
+                    }
+                })
+            }
+
+            function showNotif() {
+                let notifBody = new Notification('Assessment Records', {
+                    body: `${e.nama_siswa} ${e.msg} untuk bulan ${e.bulan} minggu ke ${e.minggu_ke}`, //
+                    icon: "{{ asset('logo.png') }}"
+                })
+
+                notifBody.onclick = (e) => {
+                    window.location.href = "{{ route('assessment-history.guru') }}"
+                }
+            }
+        })
+
+</script>
+@endsection
+
 @endif
 
 @endif
