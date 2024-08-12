@@ -108,7 +108,7 @@ class AssessmentSiswaController extends Controller
             if ($query) {
                 event(new AssessmentSentEvent(
                     [
-                        'title' => 'Assessment Records',
+                        'title' => $request->nama_siswa.' - Assessment Records',
                         'body' => $request->nama_siswa.' sudah mendapatkan peer assessment pekan '.$request->minggu_ke.' '.$request->bulan,
                     ],
                     $request->walas_id,
