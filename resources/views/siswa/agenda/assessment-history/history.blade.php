@@ -192,7 +192,7 @@
                     PARAMS = []
                     // data
                     let p_nama = '{{ Auth::user()->nama }}'
-                    let p_kelas = '{{ $kelas->kelas->jenjang_kelas }}-{{ $kelas->kelas->bagian_kelas }}'
+                    let p_kelas = res[0].kelas
                     let p_periode = 'Semester {{ $periodeAktif->semester }} {{ $periodeAktif->tahun_ajaran }}'
                     let p_assessment_for = $('#assessment_for').val()
                     let p_bulan = $('#bulan').val()
@@ -229,8 +229,8 @@
                     const headers = [
                         ['Aspek', 'Answer']
                     ];
-                    const data = []
 
+                    const data = []
                     res.map(function(content) {
                         data.push([content.aspect, content.answer])
                     })

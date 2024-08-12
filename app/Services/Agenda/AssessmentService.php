@@ -2,9 +2,10 @@
 
 namespace App\Services\Agenda;
 
+use App\Models\Data\Kelas;
+use Illuminate\Support\Str;
 use App\Jobs\InsertAssessmentRecordJob;
 use App\Models\Agenda\AssessmentRecord;
-use Illuminate\Support\Str;
 
 class AssessmentService
 {
@@ -80,7 +81,7 @@ class AssessmentService
     {
         $request = json_decode($request->a, true);
 
-        $assessmentData = AssessmentRecord::with('aspect')
+        $assessmentData = AssessmentRecord::with(['aspect', 'kelas:id,bagian_kelas,jenjang_kelas'])
             ->where('siswa_user_id', $request[0]['siswa_user_id'])
             ->where('periode_id', $request[0]['periode_id'])
             ->where('bulan', $request[0]['bulan'])
@@ -95,6 +96,7 @@ class AssessmentService
             $result[] = [
                 'aspect' => $data->aspect->aspect,
                 'answer' => $data->answer,
+                'kelas' => $data->kelas->jenjang_kelas . '-' . $data->kelas->bagian_kelas,
             ];
         }
 
