@@ -55,7 +55,7 @@ class AssessmentGuruController extends Controller
     {
         $check = $this->assessment->checkExist($request, 'Teacher');
         if (! $check) {
-            $query = $this->assessment->storeAssessment($request, 'Teacher - ' . Auth::user()->nama);
+            $query = $this->assessment->storeAssessment($request, 'Teacher - '.Auth::user()->nama);
             if ($query) {
                 return response()->json(['success' => true, 'message' => 'Assessment berhasil disimpan']);
             } else {
@@ -80,7 +80,7 @@ class AssessmentGuruController extends Controller
             ->join('users', 'kelas_siswas.user_id', '=', 'users.id')
             ->orderBy('users.nama', 'asc')
             ->get();
-        $data['kelas'] = $kelas->jenjang_kelas . '-' . $kelas->bagian_kelas;
+        $data['kelas'] = $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
         $data['periodeAktif'] = $this->periodeAktif;
 
         return view('guru.agenda.assessment-history.history', $data);

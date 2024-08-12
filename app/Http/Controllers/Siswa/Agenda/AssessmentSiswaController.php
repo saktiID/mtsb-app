@@ -104,15 +104,12 @@ class AssessmentSiswaController extends Controller
     {
         $check = $this->assessment->checkExist($request, 'Peer');
         if (! $check) {
-            $query = $this->assessment->storeAssessment($request, 'Peer - ' . Auth::user()->nama);
+            $query = $this->assessment->storeAssessment($request, 'Peer - '.Auth::user()->nama);
             if ($query) {
                 event(new AssessmentSentEvent(
                     [
-                        'status' => true,
-                        'nama_siswa' => $request->nama_siswa,
-                        'msg' => 'sudah mendapatkan peer assessment',
-                        'bulan' => $request->bulan,
-                        'minggu_ke' => $request->minggu_ke,
+                        'title' => 'Assessment Records',
+                        'body' => $request->nama_siswa.' sudah mendapatkan peer assessment pekan '.$request->minggu_ke.' '.$request->bulan,
                     ],
                     $request->walas_id,
                 ));

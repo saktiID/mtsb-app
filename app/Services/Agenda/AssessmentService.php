@@ -2,10 +2,9 @@
 
 namespace App\Services\Agenda;
 
-use App\Models\Data\Kelas;
-use Illuminate\Support\Str;
 use App\Jobs\InsertAssessmentRecordJob;
 use App\Models\Agenda\AssessmentRecord;
+use Illuminate\Support\Str;
 
 class AssessmentService
 {
@@ -59,7 +58,7 @@ class AssessmentService
             ->where('siswa_user_id', $request->siswa_user_id)
             ->where('bulan', $request->bulan)
             ->where('minggu_ke', $request->minggu_ke)
-            ->where('evaluator', 'like', $evaluator . '%')
+            ->where('evaluator', 'like', $evaluator.'%')
             ->exists();
     }
 
@@ -70,7 +69,7 @@ class AssessmentService
             ->where('periode_id', $request[0]['periode_id'])
             ->where('bulan', $request[0]['bulan'])
             ->where('minggu_ke', $request[0]['minggu_ke'])
-            ->where('evaluator', 'like', $request[0]['evaluator'] . '%')
+            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
             ->where('is_note', true)
             ->first();
 
@@ -86,7 +85,7 @@ class AssessmentService
             ->where('periode_id', $request[0]['periode_id'])
             ->where('bulan', $request[0]['bulan'])
             ->where('minggu_ke', $request[0]['minggu_ke'])
-            ->where('evaluator', 'like', $request[0]['evaluator'] . '%')
+            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
             ->where('is_note', false)
             ->orderBy('aspect_id', 'asc')
             ->get();
@@ -96,7 +95,7 @@ class AssessmentService
             $result[] = [
                 'aspect' => $data->aspect->aspect,
                 'answer' => $data->answer,
-                'kelas' => $data->kelas->jenjang_kelas . '-' . $data->kelas->bagian_kelas,
+                'kelas' => $data->kelas->jenjang_kelas.'-'.$data->kelas->bagian_kelas,
             ];
         }
 

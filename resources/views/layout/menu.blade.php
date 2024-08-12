@@ -79,7 +79,7 @@
 
     Echo.channel('assessment.' + "{{ Auth::user()->id }}")
         .listen('.App\\Events\\AssessmentSentEvent', function(e) {
-            notif(`${e.nama_siswa} ${e.msg} untuk bulan ${e.bulan} minggu ke ${e.minggu_ke}`, e.status)
+            notif(e.body, true)
 
             if (Notification.permission == 'granted') {
                 showNotif()
@@ -92,14 +92,13 @@
             }
 
             function showNotif() {
-                let notifBody = new Notification('Assessment Records', {
-                    body: `${e.nama_siswa} ${e.msg} untuk bulan ${e.bulan} minggu ke ${e.minggu_ke}`, //
-                    icon: "{{ asset('logo.png') }}"
+                navigator.serviceWorker.ready.then((registration) => {
+                    registration.showNotification(e.title, {
+                        body: e.body, //
+                        icon: "{{ asset('logo.png') }}", //
+                        vibrate: [200, 100, 200], //
+                    })
                 })
-
-                notifBody.onclick = (e) => {
-                    window.location.href = "{{ route('assessment-history.guru') }}"
-                }
             }
         })
 

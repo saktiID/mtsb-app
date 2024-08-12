@@ -35,6 +35,7 @@ var filesToCache = [
     "/assets/js/custom.js",
     "/assets/js/scrollspyNav.js",
     "/assets/js/internet-status.js",
+    "/assets/img/not-found.png",
 ];
 
 // Cache on install
@@ -73,4 +74,25 @@ self.addEventListener("fetch", (event) => {
                 return caches.match("offline");
             })
     );
+});
+
+// Push Notification -- ini adalah push notif dari server menggunakan key public atau private
+// self.addEventListener("push", (event) => {
+//     //  {"title": "Assessment Records", "body": "Berhasil horee", "url": "/"}
+//     const data = event.data.json();
+//     console.log(event);
+
+//     event.waitUntil(
+//         self.registration.showNotification("Judul", {
+//             body: "tes",
+//             icon: "/logo.png",
+//             vibrate: [200, 100, 200],
+//         })
+//     );
+// });
+
+// Event click Notification
+self.addEventListener("notificationclick", (event) => {
+    event.notification.close();
+    event.waitUntil(clients.openWindow("/"));
 });
