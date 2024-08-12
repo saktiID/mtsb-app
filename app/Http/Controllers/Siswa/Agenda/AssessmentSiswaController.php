@@ -45,7 +45,7 @@ class AssessmentSiswaController extends Controller
             ->where('user_id', Auth::user()->id)->first();
 
         $data['periodeAktif'] = $this->periodeAktif;
-        $data['kelas'] = $kelas->kelas->jenjang_kelas.'-'.$kelas->kelas->bagian_kelas;
+        $data['kelas'] = $kelas;
         $data['aspects'] = Cache::remember('aspect-parent', 300, function () {
             return AssessmentAspect::where('aspect_for', 'parent')
                 ->where('aspect_status', true)
@@ -73,7 +73,7 @@ class AssessmentSiswaController extends Controller
                 ->get();
         });
         $data['periodeAktif'] = $this->periodeAktif;
-        $data['kelas'] = $kelas->kelas->jenjang_kelas.'-'.$kelas->kelas->bagian_kelas;
+        $data['kelas'] = $kelas;
         $data['walas_id'] = $kelas->kelas->walas_id;
         $data['aspects'] = Cache::remember('aspcet-peer', 300, function () {
             return AssessmentAspect::where('aspect_for', 'peer')
@@ -104,7 +104,7 @@ class AssessmentSiswaController extends Controller
     {
         $check = $this->assessment->checkExist($request, 'Peer');
         if (! $check) {
-            $query = $this->assessment->storeAssessment($request, 'Peer - '.Auth::user()->nama);
+            $query = $this->assessment->storeAssessment($request, 'Peer - ' . Auth::user()->nama);
             if ($query) {
                 event(new AssessmentSentEvent(
                     [

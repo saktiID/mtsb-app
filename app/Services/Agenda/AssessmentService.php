@@ -17,6 +17,7 @@ class AssessmentService
             if ($item['name'] != 'note') {
                 $data[] = [
                     'id' => Str::uuid(),
+                    'kelas_id' => $request->kelas_id,
                     'periode_id' => $request->periode_id,
                     'siswa_user_id' => $request->siswa_user_id,
                     'aspect_id' => $item['name'],
@@ -31,6 +32,7 @@ class AssessmentService
             } else {
                 $data[] = [
                     'id' => Str::uuid(),
+                    'kelas_id' => $request->kelas_id,
                     'periode_id' => $request->periode_id,
                     'siswa_user_id' => $request->siswa_user_id,
                     'aspect_id' => null,
@@ -56,7 +58,7 @@ class AssessmentService
             ->where('siswa_user_id', $request->siswa_user_id)
             ->where('bulan', $request->bulan)
             ->where('minggu_ke', $request->minggu_ke)
-            ->where('evaluator', 'like', $evaluator.'%')
+            ->where('evaluator', 'like', $evaluator . '%')
             ->exists();
     }
 
@@ -67,7 +69,7 @@ class AssessmentService
             ->where('periode_id', $request[0]['periode_id'])
             ->where('bulan', $request[0]['bulan'])
             ->where('minggu_ke', $request[0]['minggu_ke'])
-            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
+            ->where('evaluator', 'like', $request[0]['evaluator'] . '%')
             ->where('is_note', true)
             ->first();
 
@@ -83,7 +85,7 @@ class AssessmentService
             ->where('periode_id', $request[0]['periode_id'])
             ->where('bulan', $request[0]['bulan'])
             ->where('minggu_ke', $request[0]['minggu_ke'])
-            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
+            ->where('evaluator', 'like', $request[0]['evaluator'] . '%')
             ->where('is_note', false)
             ->orderBy('aspect_id', 'asc')
             ->get();

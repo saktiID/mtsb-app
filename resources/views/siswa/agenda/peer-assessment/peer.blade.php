@@ -18,7 +18,7 @@
                     <table class="table table-bordered">
                         <tr>
                             <th>Kelas</th>
-                            <td>{{ $kelas }}</td>
+                            <td>{{ $kelas->kelas->jenjang_kelas.'-'.$kelas->kelas->bagian_kelas }}</td>
                         </tr>
                         <tr>
                             <th width="20%">Nama</th>
@@ -194,6 +194,7 @@
             let data = $(this).serializeArray()
             let formData = new FormData()
             formData.append('_token', "{{ csrf_token() }}")
+            formData.append('kelas_id', "{{ $kelas->kelas->id }}")
             formData.append('periode_id', "{{ $periodeAktif->id }}")
             formData.append('siswa_user_id', siswa[0])
             formData.append('aspects', JSON.stringify(data))

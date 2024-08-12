@@ -2,6 +2,7 @@
 
 namespace App\Models\Agenda;
 
+use App\Models\Data\Kelas;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,6 +28,7 @@ class AssessmentRecord extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'kelas_id',
         'periode_id',
         'siswa_user_id',
         'aspect_id',
@@ -47,5 +49,10 @@ class AssessmentRecord extends Model
     public function aspect(): BelongsTo
     {
         return $this->belongsTo(AssessmentAspect::class, 'aspect_id', 'id');
+    }
+
+    public function kelas(): BelongsTo
+    {
+        return $this->belongsTo(Kelas::class, 'kelas_id', 'id');
     }
 }
