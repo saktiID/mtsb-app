@@ -77,6 +77,10 @@
         forceTLS: true, //
     });
 
+    Notification.requestPermission().then(function(permission) {
+        console.log('permiss', permission)
+    })
+
     Echo.channel('assessment.' + "{{ Auth::user()->id }}")
         .listen('.App\\Events\\AssessmentSentEvent', function(e) {
             notif(e.body, true)
