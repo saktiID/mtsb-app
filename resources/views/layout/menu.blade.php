@@ -110,7 +110,7 @@
                                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
                             }, //
                             body: JSON.stringify(subscription)
-                        }).then(console.log("Subscribe ok");)
+                        }).then(console.log("Subscribe ok"))
                     })
 
 
