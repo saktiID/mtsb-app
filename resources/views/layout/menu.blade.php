@@ -77,24 +77,24 @@
         forceTLS: true, //
     });
 
+    function urlBase64ToUint8Array(base64String) {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+        for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
+    }
+    const applicationServerKey = urlBase64ToUint8Array("BOFC-dhGA-SYl6aDw2ssPcv6k9qKhM3R30aLYVImA_B3lxiimx62sVfLDxCdhylsJtMrXQeNDkSsYh5dS3VP6y4")
+
     function izinNotif() {
         Notification.requestPermission().then((permission) => {
             if (permission !== 'granted' && permission !== 'denied') {
                 notif("Silahkan beri izin untuk menerima notifikasi", true)
             } else if (permission === 'granted') {
                 // notif("Anda berhasil mengaktifkan izin notifikasi", true)
-
-                function urlBase64ToUint8Array(base64String) {
-                    const padding = '='.repeat((4 - base64String.length % 4) % 4);
-                    const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
-                    const rawData = window.atob(base64);
-                    const outputArray = new Uint8Array(rawData.length);
-                    for (let i = 0; i < rawData.length; ++i) {
-                        outputArray[i] = rawData.charCodeAt(i);
-                    }
-                    return outputArray;
-                }
-                const applicationServerKey = urlBase64ToUint8Array("BOFC-dhGA-SYl6aDw2ssPcv6k9qKhM3R30aLYVImA_B3lxiimx62sVfLDxCdhylsJtMrXQeNDkSsYh5dS3VP6y4")
 
                 navigator.serviceWorker.ready.then((sw) => {
 
