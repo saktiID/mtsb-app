@@ -19,6 +19,28 @@
 
         <ul class="navbar-item flex-row navbar-dropdown ml-auto">
 
+            @if(Auth::user()->role == "Admin" || Auth::user()->role == "Guru")
+            <li class="nav-item dropdown notification-dropdown">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i data-feather="bell"></i><span class="badge badge-success"></span>
+                </a>
+                <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
+                    <div class="notification-scroll">
+                        <div class="dropdown-item">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="data-info d-flex">
+                                        <h6 class="">Terima notifikasi</h6>
+                                        <span class="btn btn-info btn-sm" onclick="mintaIzinNotif()">Aktifkan</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            @endif
+
             <li class="nav-item dropdown user-profile-dropdown  order-lg-0 order-1">
                 <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i data-feather="settings"></i>
