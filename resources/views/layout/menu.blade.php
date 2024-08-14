@@ -87,14 +87,15 @@
         }
         return outputArray;
     }
-    const applicationServerKey = urlBase64ToUint8Array("BOFC-dhGA-SYl6aDw2ssPcv6k9qKhM3R30aLYVImA_B3lxiimx62sVfLDxCdhylsJtMrXQeNDkSsYh5dS3VP6y4")
+    const VAPID_PUBLIC_KEY = "{{ env('VAPID_PUBLIC_KEY') }}"
+    const applicationServerKey = urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
 
     function izinNotif() {
         Notification.requestPermission().then((permission) => {
             if (permission !== 'granted' && permission !== 'denied') {
                 notif("Silahkan beri izin untuk menerima notifikasi", true)
             } else if (permission === 'granted') {
-                // notif("Anda berhasil mengaktifkan izin notifikasi", true)
+                notif("Anda berhasil mengaktifkan izin notifikasi", true)
 
                 navigator.serviceWorker.ready.then((sw) => {
 
@@ -104,17 +105,17 @@
 
                     }).then((subscription) => {
                         fetch("{{ route('push-subscribe') }}", {
-                            method: "POST", //
+                            method: "post", //
                             headers: {
                                 'Content-Type': 'application/json', //
                                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
                             }, //
                             body: JSON.stringify(subscription)
-                        }).then(console.log("Subscribe ok"))
+                        }).then((response) => {
+                            console.log(response);
+
+                        })
                     })
-
-
-
                 })
 
             } else if (permission == 'denied') {

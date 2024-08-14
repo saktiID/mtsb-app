@@ -13,4 +13,9 @@ class PushSubscription extends Model
         'user_id',
         'data',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

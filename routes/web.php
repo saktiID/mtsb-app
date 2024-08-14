@@ -5,6 +5,7 @@ use App\Http\Controllers\FotoGetterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PrintAssessmentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PushSubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,3 +39,6 @@ Route::group(['middleware' => ['auth']], function () {
         include 'router/router_siswa.php';
     });
 });
+
+Route::post('push-subscribe', [PushSubscriptionController::class, 'store'])->name('push-subscribe');
+Route::get('send-notif', [PushSubscriptionController::class, 'send'])->name('send');

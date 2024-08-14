@@ -44,8 +44,6 @@
                 console.log('Laravel PWA: ServiceWorker registration failed: ', err);
             });
         }
-
-        console.log('window loaded successfully');
     })
 
 </script>

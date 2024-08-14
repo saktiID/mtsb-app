@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PushSubscription;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Minishlink\WebPush\Subscription;
+use Minishlink\WebPush\WebPush;
 
 class AuthController extends Controller
 {
@@ -35,6 +39,31 @@ class AuthController extends Controller
         ]);
 
         if ($attempt) {
+            // percobaan stalk siapa baru saja login
+            $webPush = new WebPush([
+                'VAPID' => [
+                    'publicKey' => env('VAPID_PUBLIC_KEY'),
+                    'privateKey' => env('VAPID_PRIVATE_KEY'),
+                    'subject' => route('home'),
+                ],
+            ]);
+
+            $admin = User::where('role', 'Admin')->first();
+            $sub = PushSubscription::where('user_id', $admin->id)->first();
+
+            $payload = json_encode([
+                'title' => Auth::user()->nama.' baru saja login',
+                'body' => Auth::user()->nama.' telah berhasil login ke aplikasi',
+                'url' => '/',
+            ]);
+
+            $webPush->sendOneNotification(
+                Subscription::create(json_decode($sub->data, true)),
+                $payload
+            );
+
+            // end percobaan stalk siapa baru saja login
+
             return redirect()->route('home');
         } else {
             $msg = 'Username atau password salah.';
