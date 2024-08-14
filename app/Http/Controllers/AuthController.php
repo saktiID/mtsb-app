@@ -53,7 +53,7 @@ class AuthController extends Controller
 
             $payload = json_encode([
                 'title' => Auth::user()->nama.' baru saja login',
-                'body' => Auth::user()->nama.' telah berhasil login ke aplikasi',
+                'body' => Auth::user()->nama.' telah berhasil login ke aplikasi pada '.date('Y-m-d H:i:s'),
                 'url' => '/',
             ]);
 
