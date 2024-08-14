@@ -1,0 +1,35 @@
+Table of content:
+
+1. Penggunaan untuk admin:
+- Memasukkan data siswa
+- Mengatur data tiap siswa 
+- Memasukkan data wali kelas
+- Mengatur data tiap wali kelas
+- Menambahkan aspek penilaian
+- Melihat dan mencetak riwayat penilaian 
+- Menambahkan periode
+- Mengaktifkan periode 
+- Menambahkan kelas
+- Mengatur wali kelas tiap kelas
+- Optimasi aplikasi
+- Catatan dan tips 
+
+2. Penggunaan untuk wali kelas:
+- Mengatur profil
+- Memasukkan siswa ke dalam kelas
+- Mengeluarkan siswa dari kelas
+- Mengatur data siswa
+- Mengisi penilaian "teacher assessment"
+- Melihat dan mencetak riwayat penilaian
+- Catatan dan tips
+
+3. Penggunaan untuk wali siswa:
+- Mengisi penilaian "parent assessment"
+- Melihat dan mencetak riwayat penilaian siswa
+
+4. Penggunaan untuk siswa:
+- Mengatur profil 
+- Mengubah kata sandi bawaan 
+- Mengisi penilaian "peer assessment"
+- Melihat dan mencetak riwayat penilaian 
+- Catatan dan tips

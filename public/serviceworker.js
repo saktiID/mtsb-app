@@ -78,15 +78,18 @@ self.addEventListener("fetch", (event) => {
 
 // Push Notification -- ini adalah push notif dari server menggunakan key public atau private
 self.addEventListener("push", (event) => {
-    //  {"title": "Assessment Records", "body": "Berhasil horee"}
-    const data = event.data.json();
-    console.log(data);
+    //  {"title": "Assessment Records", "body": "Berhasil horee", "url": "/"}
+    const notification = event.data.json();
+    console.log(notification);
 
     event.waitUntil(
-        self.registration.showNotification(data.title, {
-            body: data.body,
+        self.registration.showNotification(notification.title, {
+            body: notification.body,
             icon: "/logo.png",
-            vibrate: [200, 100, 200],
+            vibrate: [200, 100, 200, 100, 400],
+            data: {
+                notifURL: notification.url,
+            },
         })
     );
 });
@@ -95,4 +98,5 @@ self.addEventListener("push", (event) => {
 self.addEventListener("notificationclick", (event) => {
     event.notification.close();
     event.waitUntil(clients.openWindow("/"));
+    // event.waitUntil(clients.openWindow(event.notification.data.notifURL));
 });
