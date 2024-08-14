@@ -31,7 +31,7 @@
                                 <div class="media-body">
                                     <div class="data-info d-flex">
                                         <h6 class="">Terima notifikasi</h6>
-                                        <span class="btn btn-info btn-sm" onclick="mintaIzinNotif()">Aktifkan</span>
+                                        <span class="btn btn-info btn-sm" onclick="izinNotif()">Aktifkan</span>
                                     </div>
                                 </div>
                             </div>
