@@ -79,7 +79,9 @@
 
     function izinNotif() {
         Notification.requestPermission().then(function(permission) {
-            if (permission == 'granted') {
+            if (permission !== 'granted' && permission !== 'denied') {
+                notif("Silahkan beri izin untuk menerima notifikasi", true)
+            } else if (permission == 'granted') {
                 notif("Anda berhasil mengaktifkan izin notifikasi", true)
             } else if (permission == 'denied') {
                 notif("Anda menolak izin notifikasi, silahkan atur setelan situs di browser Anda atau hapus riwayat penjelajahan", false)
