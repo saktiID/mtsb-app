@@ -96,9 +96,9 @@
                     registration.showNotification(e.title, {
                         body: e.body, //
                         icon: "{{ asset('logo.png') }}", //
-                        vibrate: [200, 100, 200], //
                     })
                 })
+                navigator.vibrate([200, 100, 200, 400])
             }
         })
 
