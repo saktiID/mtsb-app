@@ -77,10 +77,6 @@
         forceTLS: true, //
     });
 
-    Notification.requestPermission().then(function(permission) {
-        console.log('permiss', permission)
-    })
-
     function mintaIzinNotif() {
         Notification.requestPermission().then(function(permission) {
             console.log('permiss', permission)
