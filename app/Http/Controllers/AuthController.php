@@ -40,27 +40,29 @@ class AuthController extends Controller
 
         if ($attempt) {
             // percobaan stalk siapa baru saja login
-            $webPush = new WebPush([
-                'VAPID' => [
-                    'publicKey' => env('VAPID_PUBLIC_KEY'),
-                    'privateKey' => env('VAPID_PRIVATE_KEY'),
-                    'subject' => route('home'),
-                ],
-            ]);
+            if (Auth::user()->role == 'Guru') {
+                $webPush = new WebPush([
+                    'VAPID' => [
+                        'publicKey' => env('VAPID_PUBLIC_KEY'),
+                        'privateKey' => env('VAPID_PRIVATE_KEY'),
+                        'subject' => route('home'),
+                    ],
+                ]);
 
-            $admin = User::where('role', 'Admin')->first();
-            $sub = PushSubscription::where('user_id', $admin->id)->first();
+                $admin = User::where('role', 'Admin')->first();
+                $sub = PushSubscription::where('user_id', $admin->id)->first();
 
-            $payload = json_encode([
-                'title' => Auth::user()->nama.' baru saja login',
-                'body' => Auth::user()->nama.' telah berhasil login ke aplikasi pada '.date('Y-m-d H:i:s'),
-                'url' => '/',
-            ]);
+                $payload = json_encode([
+                    'title' => Auth::user()->nama.' baru saja login',
+                    'body' => Auth::user()->nama.' telah berhasil login ke aplikasi pada '.date('Y-m-d H:i:s'),
+                    'url' => '/',
+                ]);
 
-            $webPush->sendOneNotification(
-                Subscription::create(json_decode($sub->data, true)),
-                $payload
-            );
+                $webPush->sendOneNotification(
+                    Subscription::create(json_decode($sub->data, true)),
+                    $payload
+                );
+            }
 
             // end percobaan stalk siapa baru saja login
 
