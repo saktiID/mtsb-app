@@ -6,6 +6,7 @@ use App\Models\Data\Siswa;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class SiswaService
 {
@@ -72,7 +73,7 @@ class SiswaService
 
             if ($user && $user->id) {
                 $user->nama = $request->nama;
-                $user->username = '@'.$request->username;
+                $user->username = '@'.Str::of($request->username)->trim();
                 $user->gender = $request->gender;
                 if ($request->password != '') {
                     $user->password = Hash::make($request->password);

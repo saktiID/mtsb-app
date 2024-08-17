@@ -83,4 +83,6 @@ Route::prefix('admin')->group(function () {
     Route::post('hapus-view-cache', [OptimasiController::class, 'hapus_view_cache'])->name('hapus-view-cache');
     Route::post('hapus-data-cache', [OptimasiController::class, 'hapus_data_cache'])->name('hapus-data-cache');
     Route::post('hapus-data-session', [OptimasiController::class, 'hapus_data_session'])->name('hapus-data-session');
+    Route::post('config-cache', [OptimasiController::class, 'config_cache'])->name('config-cache');
+    Route::post('hapus-config-cache', [OptimasiController::class, 'hapus_config_cache'])->name('hapus-config-cache');
 });

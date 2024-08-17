@@ -58,9 +58,9 @@
                             <div class="mb-3">
                                 <label for="email">Email</label>
                                 @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Guru')
-                                <input type="text" value="{{ Auth::user()->guru->email }}" id="email" name="email" class="form-control">
+                                <input type="email" value="{{ Auth::user()->guru->email }}" id="email" name="email" class="form-control">
                                 @else
-                                <input type="text" value="{{ Auth::user()->siswa->email }}" id="email" name="email" class="form-control">
+                                <input type="email" value="{{ Auth::user()->siswa->email }}" id="email" name="email" class="form-control">
                                 @endif
                             </div>
                         </div>
@@ -68,10 +68,11 @@
                             <div class="mb-3">
                                 <label for="telp">No. Telp *</label>
                                 @if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Guru')
-                                <input type="text" value="{{ Auth::user()->guru->telp }}" name="telp" id="telp" class="form-control" required>
+                                <input type="tel" placeholder="6285xxxxx" value="{{ Auth::user()->guru->telp }}" name="telp" id="telp" class="form-control" required>
                                 @else
-                                <input type="text" value="{{ Auth::user()->siswa->telp }}" name="telp" id="telp" class="form-control" required>
+                                <input type="tel" placeholder="6285xxxxx" value="{{ Auth::user()->siswa->telp }}" name="telp" id="telp" class="form-control" required>
                                 @endif
+                                <span><i class="text-small text-warning">(*Contoh: 6285xxxxx)</i></span>
                             </div>
                         </div>
                     </div>

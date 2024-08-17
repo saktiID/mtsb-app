@@ -27,6 +27,19 @@
         </label>
         <br />
         <a href="" id="view-cache" class="btn btn-warning btn-sm loadingTrigger">Buat cache</a>
+        <hr>
+        <label class="mb-3">Bersihkan config cache: <br>
+            <small>Menghapus source cache config untuk memperbarui konfigurasi tersimpan</small>
+        </label>
+        <br />
+        <a href="" id="hapus-config-cache" class="btn btn-danger btn-sm loadingTrigger">Bersihkan</a>
+        <hr>
+        <label class="mb-3">Membuat cache untuk config: <br>
+            <small>Men-generate source cache untuk config agar load konfigurasi lebih cepat</small>
+        </label>
+        <br />
+        <a href="" id="config-cache" class="btn btn-warning btn-sm loadingTrigger">Buat cache</a>
+        <hr>
     </x-card-box>
 
 </div>
@@ -63,6 +76,20 @@
         let formData = new FormData()
         formData.append('_token', "{{ csrf_token() }}")
         prosesAjax(formData, "view-cache")
+    })
+
+    $('#config-cache').on('click', function(e) {
+        e.preventDefault()
+        let formData = new FormData()
+        formData.append('_token', "{{ csrf_token() }}")
+        prosesAjax(formData, "config-cache")
+    })
+
+    $('#hapus-config-cache').on('click', function(e) {
+        e.preventDefault()
+        let formData = new FormData()
+        formData.append('_token', "{{ csrf_token() }}")
+        prosesAjax(formData, "hapus-config-cache")
     })
 
     function prosesAjax(data, route) {

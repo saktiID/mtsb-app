@@ -14,7 +14,9 @@ class PushSubscriptionController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $check = PushSubscription::where('user_id', $user->id)->exists();
+        $check = PushSubscription::where('user_id', $user->id)
+            ->where('data', $request->getContent())
+            ->exists();
 
         if (! $check) {
             PushSubscription::create([
@@ -39,19 +41,29 @@ class PushSubscriptionController extends Controller
             ],
         ]);
 
-        $admin = User::where('role', 'Admin')->first();
-        $sub = PushSubscription::where('user_id', $admin->id)->first();
-
         $payload = json_encode([
             'title' => 'Test title',
             'body' => 'Body test',
             'url' => '/',
         ]);
 
-        $result = $webPush->sendOneNotification(
-            Subscription::create(json_decode($sub->data, true)),
-            $payload
-        );
+        $admins = User::where('role', 'Admin')->get();
+
+        if (count($admins) > 0) {
+            foreach ($admins as $admin) {
+                $subs = PushSubscription::where('user_id', $admin->id)->get();
+
+                $result = [];
+                if (count($subs) > 0) {
+                    foreach ($subs as $sub) {
+                        $result[] = $webPush->sendOneNotification(
+                            Subscription::create(json_decode($sub->data, true)),
+                            $payload
+                        );
+                    }
+                }
+            }
+        }
 
         dd($result);
     }

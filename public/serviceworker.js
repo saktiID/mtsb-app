@@ -86,7 +86,8 @@ self.addEventListener("push", (event) => {
         self.registration.showNotification(notification.title, {
             body: notification.body,
             icon: "/logo.png",
-            vibrate: [200, 100, 200, 100, 400],
+            vibrate: [500, 200, 500],
+            badge: "/logo",
             data: {
                 notifURL: notification.url,
             },

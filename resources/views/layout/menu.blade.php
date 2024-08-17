@@ -143,6 +143,7 @@
                     registration.showNotification(e.title, {
                         body: e.body, //
                         icon: "{{ asset('logo.png') }}", //
+                        badge: "{{ asset('logo.png') }}", //
                     })
                 })
                 navigator.vibrate([200, 100, 200, 100, 400])

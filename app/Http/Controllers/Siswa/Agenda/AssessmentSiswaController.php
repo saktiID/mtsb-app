@@ -91,7 +91,7 @@ class AssessmentSiswaController extends Controller
         if (! $check) {
             $query = $this->assessment->storeAssessment($request, 'Parent');
             if ($query) {
-                return response()->json(['success' => true, 'message' => 'Assessment berhasil disimpan']);
+                return response()->json(['success' => true, 'message' => 'Assessment telah masuk antrian untuk disimpan dalam database. Tunggu beberapa saat untuk melihat riwayat.']);
             } else {
                 return response()->json(['success' => false, 'message' => 'Assessment gagal disimpan']);
             }
@@ -114,7 +114,7 @@ class AssessmentSiswaController extends Controller
                     $request->walas_id,
                 ));
 
-                return response()->json(['success' => true, 'message' => 'Assessment berhasil disimpan']);
+                return response()->json(['success' => true, 'message' => 'Assessment telah masuk antrian untuk disimpan dalam database. Tunggu beberapa saat untuk melihat riwayat.']);
             } else {
                 return response()->json(['success' => false, 'message' => 'Assessment gagal disimpan']);
             }

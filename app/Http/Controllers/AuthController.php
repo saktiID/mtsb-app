@@ -49,21 +49,30 @@ class AuthController extends Controller
                     ],
                 ]);
 
-                $admin = User::where('role', 'Admin')->first();
-                $sub = PushSubscription::where('user_id', $admin->id)->first();
-
                 $payload = json_encode([
                     'title' => Auth::user()->nama.' baru saja login',
                     'body' => Auth::user()->nama.' telah berhasil login ke aplikasi pada '.date('Y-m-d H:i:s'),
                     'url' => '/',
                 ]);
 
-                $webPush->sendOneNotification(
-                    Subscription::create(json_decode($sub->data, true)),
-                    $payload
-                );
-            }
+                $admins = User::where('role', 'Admin')->get();
 
+                if (count($admins) > 0) {
+                    foreach ($admins as $admin) {
+                        $subs = PushSubscription::where('user_id', $admin->id)->get();
+
+                        $result = [];
+                        if (count($subs) > 0) {
+                            foreach ($subs as $sub) {
+                                $webPush->sendOneNotification(
+                                    Subscription::create(json_decode($sub->data, true)),
+                                    $payload
+                                );
+                            }
+                        }
+                    }
+                }
+            }
             // end percobaan stalk siapa baru saja login
 
             return redirect()->route('home');

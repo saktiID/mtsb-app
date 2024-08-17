@@ -90,7 +90,8 @@
                         <div class="col-lg-6 col-sm-12">
                             <div class="mb-3">
                                 <label for="telp">No. Telp *</label>
-                                <input type="text" value="{{ $user->siswa->telp }}" name="telp" id="telp" class="form-control" required>
+                                <input type="tel" placeholder="6285xxxxx" value="{{ $user->siswa->telp }}" name="telp" id="telp" class="form-control" required>
+                                <span><i class="text-small text-warning">(*Contoh: 6285xxxxx)</i></span>
                             </div>
                         </div>
 
