@@ -10,6 +10,14 @@ class AssessmentService
 {
     public function storeAssessment($request, $evaluator)
     {
+        $notif = [
+            'nama_siswa' => $request->nama_siswa,
+            'evaluator' => $evaluator,
+            'walas_id' => $request->walas_id,
+            'minggu_ke' => $request->minggu_ke,
+            'bulan' => $request->bulan,
+        ];
+
         $aspects = json_decode($request->aspects, true);
         $data = [];
 
@@ -47,7 +55,7 @@ class AssessmentService
             }
         }
 
-        InsertAssessmentRecordJob::dispatch($data);
+        InsertAssessmentRecordJob::dispatch($data, $notif);
 
         return true;
     }

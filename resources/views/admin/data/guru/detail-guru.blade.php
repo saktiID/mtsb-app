@@ -43,7 +43,7 @@
                         <div class="col-lg-6 col-sm-12">
                             <div class="mb-3">
                                 <label for="email">Email guru</label>
-                                <input type="text" value="{{ $user->guru->email }}" id="email" name="email" class="form-control" required>
+                                <input type="email" value="{{ $user->guru->email }}" id="email" name="email" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-12">
@@ -55,6 +55,7 @@
                                     </div>
                                     <input type="text" value="{{ str_replace('@', '', $user->username) }}" class="form-control" id="username" name="username" required>
                                 </div>
+                                <span><i class="text-small text-warning" id="indicator"></i></span>
                             </div>
                         </div>
                     </div>
@@ -307,6 +308,40 @@
     // click upload button
     $('#crop').parent().on('click', () => {
         upload()
+    })
+
+    // check validasi username
+    function validateUsername(username) {
+        const minLength = 5;
+        const maxLength = 25;
+        const usernamePattern = /^[a-zA-Z0-9_-]{3,25}$/;
+
+        let indicator = '';
+
+        if (username.length < minLength) {
+            console.log(`Username terlalu pendek. Minimal ${minLength} karakter.`);
+            indicator = `❌ Username terlalu pendek. Minimal ${minLength} karakter.`;
+            return indicator;
+        } else if (username.length > maxLength) {
+            console.log(`Username terlalu panjang. Maksimal ${maxLength} karakter.`);
+            indicator = `❌ Username terlalu panjang. Maksimal ${maxLength} karakter.`;
+            return indicator;
+        } else if (!usernamePattern.test(username)) {
+            console.log("Username tidak valid. Hanya boleh mengandung karakter alfanumerik, garis bawah (_), dan tanda minus (-).");
+            indicator = "❌ Username tidak valid. Hanya boleh mengandung karakter alfanumerik, garis bawah (_), dan tanda minus (-).";
+            return indicator;
+        } else {
+            console.log("Username valid");
+            indicator = "✔️ Username valid";
+            return indicator;
+        }
+    }
+
+    // event listener username
+    $('#username').on('input', function() {
+        let username = $(this).val()
+        let textIndicator = validateUsername(username)
+        $('#indicator').text(textIndicator)
     })
 
 </script>

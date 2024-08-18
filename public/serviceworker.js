@@ -87,7 +87,7 @@ self.addEventListener("push", (event) => {
             body: notification.body,
             icon: "/logo.png",
             vibrate: [500, 200, 500],
-            badge: "/logo",
+            badge: "/logo.png",
             data: {
                 notifURL: notification.url,
             },

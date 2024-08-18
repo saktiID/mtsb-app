@@ -57,6 +57,54 @@
         }
     }
 
+    function urlBase64ToUint8Array(base64String) {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+        for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
+    }
+
+    const VAPID_PUBLIC_KEY = "{{ env('VAPID_PUBLIC_KEY') }}"
+    const applicationServerKey = urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+
+    function izinNotif() {
+        Notification.requestPermission().then((permission) => {
+            if (permission !== 'granted' && permission !== 'denied') {
+                notif("Silahkan beri izin untuk menerima notifikasi", true)
+            } else if (permission === 'granted') {
+                notif("Anda berhasil mengaktifkan izin notifikasi", true)
+
+                navigator.serviceWorker.ready.then((sw) => {
+
+                    sw.pushManager.subscribe({
+                        userVisibleOnly: true, //
+                        applicationServerKey: applicationServerKey
+
+                    }).then((subscription) => {
+                        fetch("{{ route('push-subscribe') }}", {
+                            method: "post", //
+                            headers: {
+                                'Content-Type': 'application/json', //
+                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                            }, //
+                            body: JSON.stringify(subscription)
+                        }).then((response) => {
+                            console.log(response);
+
+                        })
+                    })
+                })
+
+            } else if (permission == 'denied') {
+                notif("Anda menolak izin notifikasi, silahkan atur setelan situs di browser Anda atau hapus riwayat penjelajahan", false)
+            }
+        })
+    }
+
 </script>
 
 @yield('script')

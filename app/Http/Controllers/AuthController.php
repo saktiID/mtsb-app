@@ -6,6 +6,7 @@ use App\Models\PushSubscription;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\WebPush;
 
@@ -34,7 +35,7 @@ class AuthController extends Controller
         ]);
 
         $attempt = Auth::attempt([
-            'username' => $request->username,
+            'username' => Str::of($request->username)->trim(),
             'password' => $request->password,
         ]);
 
@@ -61,7 +62,6 @@ class AuthController extends Controller
                     foreach ($admins as $admin) {
                         $subs = PushSubscription::where('user_id', $admin->id)->get();
 
-                        $result = [];
                         if (count($subs) > 0) {
                             foreach ($subs as $sub) {
                                 $webPush->sendOneNotification(

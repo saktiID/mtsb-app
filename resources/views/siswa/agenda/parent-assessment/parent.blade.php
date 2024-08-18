@@ -187,6 +187,7 @@
             formData.append('aspects', JSON.stringify(data))
             formData.append('bulan', $('#bulan').val())
             formData.append('minggu_ke', $('#minggu_ke').val())
+            formData.append('nama_siswa', "{{ Auth::user()->nama }}")
 
             $('#assessment').html(`Parent assessment: ${siswa[3]}`)
             $('#storeAssessmentModal').modal('show')

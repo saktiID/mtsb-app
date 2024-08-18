@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Siswa\Agenda;
 
-use App\Events\AssessmentSentEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Agenda\AssessmentAspect;
 use App\Models\Data\KelasSiswa;
@@ -106,14 +105,6 @@ class AssessmentSiswaController extends Controller
         if (! $check) {
             $query = $this->assessment->storeAssessment($request, 'Peer - '.Auth::user()->nama);
             if ($query) {
-                event(new AssessmentSentEvent(
-                    [
-                        'title' => $request->nama_siswa.' - Assessment Records',
-                        'body' => $request->nama_siswa.' sudah mendapatkan peer assessment pekan '.$request->minggu_ke.' '.$request->bulan,
-                    ],
-                    $request->walas_id,
-                ));
-
                 return response()->json(['success' => true, 'message' => 'Assessment telah masuk antrian untuk disimpan dalam database. Tunggu beberapa saat untuk melihat riwayat.']);
             } else {
                 return response()->json(['success' => false, 'message' => 'Assessment gagal disimpan']);

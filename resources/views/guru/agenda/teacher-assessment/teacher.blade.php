@@ -199,6 +199,7 @@
             formData.append('aspects', JSON.stringify(data))
             formData.append('bulan', $('#bulan').val())
             formData.append('minggu_ke', $('#minggu_ke').val())
+            formData.append('nama_siswa', siswa[3])
 
             $('#assessment').html(`Teacher assessment: ${siswa[3]}`)
             $('#storeAssessmentModal').modal('show')
