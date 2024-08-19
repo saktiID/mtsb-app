@@ -22,7 +22,7 @@ return new class extends Migration
             $table->uuid('aspect_id')->nullable();
             $table->foreign('aspect_id')->references('id')->on('assessment_aspects')->onDelete('cascade');
             $table->boolean('is_note')->default(false);
-            $table->string('answer');
+            $table->string('answer', 512);
             $table->string('bulan');
             $table->string('minggu_ke');
             $table->string('evaluator');
