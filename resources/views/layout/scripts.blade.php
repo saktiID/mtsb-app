@@ -105,6 +105,105 @@
         })
     }
 
+    // check validasi username
+    function validateUsername(username) {
+        const minLength = 5;
+        const maxLength = 25;
+        const usernamePattern = /^[a-zA-Z0-9_-]{3,25}$/;
+
+        let indicator = '';
+
+        if (username.length < minLength) {
+            console.log(`Username terlalu pendek. Minimal ${minLength} karakter.`);
+            indicator = `❌ Username terlalu pendek. Minimal ${minLength} karakter.`;
+            return indicator;
+        } else if (username.length > maxLength) {
+            console.log(`Username terlalu panjang. Maksimal ${maxLength} karakter.`);
+            indicator = `❌ Username terlalu panjang. Maksimal ${maxLength} karakter.`;
+            return indicator;
+        } else if (!usernamePattern.test(username)) {
+            console.log("Username tidak valid. Hanya boleh mengandung karakter alfanumerik, garis bawah (_), dan tanda minus (-).");
+            indicator = "❌ Username tidak valid. Hanya boleh mengandung karakter alfanumerik, garis bawah (_), dan tanda minus (-).";
+            return indicator;
+        } else {
+            console.log("Username valid");
+            indicator = "✔️ Username valid";
+            return indicator;
+        }
+    }
+
+    // event listener username
+    $('#username').on('input', function() {
+        let username = $(this).val()
+        let textIndicator = validateUsername(username)
+        $('#indicator').text(textIndicator)
+    })
+
+    // eye toggle
+    let eyeToggel = document.querySelector('.eye-toggle')
+    if (eyeToggel) {
+        eyeToggel.addEventListener('click', function(e) {
+            let password = document.getElementById('password')
+            let password_confirmation = document.getElementById('password-confirmation')
+
+            if (password.type === 'password') {
+                password.type = 'text'
+                if (password_confirmation) {
+                    password_confirmation.type = 'text'
+                }
+            } else {
+                password.type = 'password'
+                if (password_confirmation) {
+                    password_confirmation.type = 'text'
+                }
+            }
+        })
+    }
+
+    // password strength checker
+    function checkPasswordStrength(password) {
+        let strength = 0;
+
+        // Panjang minimal 8 karakter
+        if (password.length >= 5) strength++;
+
+        // Mengandung huruf kecil
+        if (/[a-z]/.test(password)) strength++;
+
+        // Mengandung huruf besar
+        if (/[A-Z]/.test(password)) strength++;
+
+        // Mengandung angka
+        if (/\d/.test(password)) strength++;
+
+        // Mengandung karakter khusus
+        if (/[\W_]/.test(password)) strength++;
+
+        // Menilai kekuatan password
+        switch (strength) {
+            case 0:
+            case 1:
+                return "Password sangat lemah";
+            case 2:
+                return "Password lemah";
+            case 3:
+                return "Password sedang";
+            case 4:
+                return "Password kuat";
+            case 5:
+                return "Password sangat kuat";
+            default:
+                return "Password tidak valid";
+        }
+    }
+
+    // event listener password
+    $('#password').on('input', function() {
+        let password = $(this).val()
+        let strength = checkPasswordStrength(password)
+        $('#password-strength').text(strength)
+    })
+
 </script>
 
 @yield('script')

@@ -42,7 +42,10 @@
             }, function(err) {
                 // registration failed :(
                 console.log('Laravel PWA: ServiceWorker registration failed: ', err);
+                notif("Gagal memasang aplikasi", false)
             });
+        } else {
+            notif("Browser tidak mendukung pemasangan aplikasi, gunakan browser lain seperti Google Chrome", false)
         }
     })
 

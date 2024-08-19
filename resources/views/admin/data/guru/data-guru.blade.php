@@ -68,11 +68,12 @@
                                     </div>
                                     <input type="text" class="form-control" id="username" name="username" required>
                                 </div>
+                                <span><i class="text-small text-warning" id="indicator"></i></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="telp">No. Telp *</label>
-                                <input type="text" value="" id="telp" name="telp" class="form-control" required>
+                                <input type="tel" value="" id="telp" name="telp" class="form-control" required>
                                 <small>Contoh: 6281234567890</small>
                             </div>
 
@@ -90,12 +91,16 @@
 
                             <div class="mb-3">
                                 <label for="email">Email *</label>
-                                <input type="text" value="" id="email" name="email" class="form-control" required>
+                                <input type="email" value="" id="email" name="email" class="form-control" required>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="password">Password *</label>
-                                <input type="password" value="" id="password" name="password" class="form-control" required>
+                            <div class="col px-0">
+                                <div class="mb-3 field-wrapper">
+                                    <label for="password">Password *</label>
+                                    <input type="password" value="" id="password" name="password" class="form-control" autocomplete="on" required>
+                                    <i data-feather="eye" class="eye-toggle"></i>
+                                    <span><i class="text-small text-info" id="password-strength"></i></span>
+                                </div>
                             </div>
                         </div>
                     </div>

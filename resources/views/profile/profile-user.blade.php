@@ -44,8 +44,8 @@
 
                         <div class="col-lg-6 col-sm-12">
                             <div class="mb-3">
-                                <label for="gender_asatidz">Gender *</label>
-                                <select id="gender_asatidz" name="gender" class="form-control selectpicker" required>
+                                <label for="gender">Gender *</label>
+                                <select id="gender" name="gender" class="form-control selectpicker" required>
                                     <option value="">-- Pilih Gender --</option>
                                     <option value="male" {{ (Auth::user()->gender == 'male' ? 'selected' : '') }}>Laki-laki</option>
                                     <option value="female" {{ (Auth::user()->gender == 'female' ? 'selected' : '') }}>Perempuan</option>
@@ -98,15 +98,17 @@
                     <div class="row">
                         <div class="col-lg-6 col-sm-12">
                             <div class="mb-3">
-                                <label for="password_asatidz">Password</label>
-                                <input type="password" value="" id="password_asatidz" name="password" class="form-control">
+                                <label for="password">Password</label>
+                                <input type="password" value="" id="password" name="password" class="form-control" autocomplete="on">
                                 <span><i class="text-small text-warning">(*Kosongkan jika tidak ingin merubah password)</i></span>
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-12">
-                            <div class="mb-3">
-                                <label for="konfirmasi_password_asatidz">Konfirmasi password</label>
-                                <input type="password" value="" id="konfirmasi_password_asatidz" name="password_confirmation" class="form-control">
+                            <div class="mb-3 field-wrapper">
+                                <label for="password-confirmation">Konfirmasi password</label>
+                                <input type="password" value="" id="password-confirmation" name="password_confirmation" class="form-control" autocomplete="on">
+                                <i data-feather="eye" class="eye-toggle"></i>
+                                <span><i class="text-small text-info" id="password-strength"></i></span>
                             </div>
                         </div>
                     </div>

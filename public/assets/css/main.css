@@ -3288,3 +3288,13 @@ table .badge-dark {
         overflow-y: auto;
     }
 }
+
+.field-wrapper svg.feather-eye {
+    position: absolute;
+    top: 42px;
+    right: 22px;
+    color: #888ea8;
+    fill: rgba(0, 23, 55, 0.08);
+    width: 17px;
+    cursor: pointer;
+}

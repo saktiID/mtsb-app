@@ -51,7 +51,7 @@
                                     {{-- <a href="#" class="forgot-pass-link">Lupa kata sandi?</a> --}}
                                 </div>
                                 <i data-feather="lock"></i>
-                                <input id="password" name="password" type="password" class="form-control" placeholder="Kata sandi">
+                                <input id="password" name="password" type="password" class="form-control" placeholder="Kata sandi" autocomplete="on">
                                 <i data-feather="eye" class="eye-toggle"></i>
                                 @error('password')
                                 <small class="text-danger font-weight-bold">* {{ $message }}</small>
