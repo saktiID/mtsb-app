@@ -2,6 +2,17 @@
 @section('title', 'Login')
 
 @section('content')
+<style>
+    /* Auth */
+    .form-container {
+        background-image: url('/assets/img/dirgahayu.jpg');
+        background-position: center;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+
+</style>
+
 <div class="form-container outer">
     <div class="form-form">
         <div class="form-form-wrap">
@@ -10,7 +21,7 @@
 
                     <div class="avatar avatar-xl">
                         <a href="">
-                            <img src="{{ asset('logo.png') }}" alt="logo" class="rounded-circle" height="90px" width="90px">
+                            <img src="{{ asset('logo-kemerdekaan.png') }}" alt="logo" class="rounded-circle" height="90px" width="90px">
                         </a>
                     </div>
 

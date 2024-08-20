@@ -60,7 +60,7 @@ class AuthController extends Controller
 
                 if (count($admins) > 0) {
                     foreach ($admins as $admin) {
-                        $subs = PushSubscription::where('user_id', $admin->id)->get();
+                        $subs = PushSubscription::where('user_id', $admin->id)->select('id')->get();
 
                         if (count($subs) > 0) {
                             foreach ($subs as $sub) {

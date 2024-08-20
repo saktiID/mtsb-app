@@ -104,7 +104,7 @@
                             <div class="mb-3">
                                 <label for="password">Password siswa</label>
                                 <input type="password" value="" id="password" name="password" class="form-control" autocomplete="on">
-                                <span><i class="text-small text-warning">(*Kosongkan jika tidak ingin merubah password)</i></span>
+                                <span><i class="text-small text-warning" id="password-strength">(*Kosongkan jika tidak ingin merubah password)</i></span>
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-12">
@@ -112,7 +112,6 @@
                                 <label for="password-confirmation">Konfirmasi password siswa</label>
                                 <input type="password" value="" id="password-confirmation" name="password_confirmation" class="form-control" autocomplete="on">
                                 <i data-feather="eye" class="eye-toggle"></i>
-                                <span><i class="text-small text-info" id="password-strength"></i></span>
                             </div>
                         </div>
                     </div>
