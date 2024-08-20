@@ -35,6 +35,7 @@
     let suc = document.getElementById('aux_success')
 
     Toast.enableTimers(TOAST_TIMERS.COUNTDOWN)
+    Toast.setTheme(TOAST_THEME.DARK)
 
     function notif(msg, status) {
         if (status) {

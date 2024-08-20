@@ -5,10 +5,17 @@
 <style>
     /* Auth */
     .form-container {
-        background-image: url('/assets/img/dirgahayu.jpg');
+        background-image: url('/assets/img/dirgahayu2.jpg');
         background-position: center;
         background-size: cover;
         background-attachment: fixed;
+    }
+
+    .form-content {
+        backdrop-filter: blur(15px) saturate(100%) !important;
+        -webkit-backdrop-filter: blur(10px) saturate(100%) !important;
+        background-color: rgba(255, 255, 255, 0.2) !important;
+        border: 1px solid rgba(209, 213, 219, 0.3) !important;
     }
 
 </style>
@@ -21,7 +28,7 @@
 
                     <div class="avatar avatar-xl">
                         <a href="">
-                            <img src="{{ asset('logo-kemerdekaan.png') }}" alt="logo" class="rounded-circle" height="90px" width="90px">
+                            <img src="{{ asset('logo.png') }}" alt="logo" class="rounded-circle" height="90px" width="90px">
                         </a>
                     </div>
 
@@ -50,7 +57,7 @@
                             <div id="username-field" class="field-wrapper input">
                                 <label for="username">USERNAME</label>
                                 <i data-feather="user"></i>
-                                <input id="username" name="username" type="text" class="form-control" placeholder="cth: username/nis" value="{{ old('username') }}">
+                                <input id="username" name="username" type="text" class="form-control" placeholder="cth: @username/nis" value="{{ old('username') }}">
                                 @error('username')
                                 <small class="text-danger font-weight-bold">* {{ $message }}</small>
                                 @enderror
