@@ -188,6 +188,7 @@
             formData.append('bulan', $('#bulan').val())
             formData.append('minggu_ke', $('#minggu_ke').val())
             formData.append('nama_siswa', "{{ Auth::user()->nama }}")
+            formData.append('walas_id', "{{ $kelas->kelas->walas_id }}")
 
             $('#assessment').html(`Parent assessment: ${siswa[3]}`)
             $('#storeAssessmentModal').modal('show')
