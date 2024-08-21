@@ -63,7 +63,7 @@
                                 @enderror
                             </div>
 
-                            <div id="password-field" class="field-wrapper input mb-2">
+                            <div id="password-field" class="field-wrapper input">
                                 <div class="d-flex justify-content-between">
                                     <label for="password">KATA SANDI</label>
                                     {{-- <a href="#" class="forgot-pass-link">Lupa kata sandi?</a> --}}
@@ -74,6 +74,12 @@
                                 @error('password')
                                 <small class="text-danger font-weight-bold">* {{ $message }}</small>
                                 @enderror
+                            </div>
+                            <div class="n-chk mb-3">
+                                <label class="new-control new-checkbox new-checkbox-rounded checkbox-primary">
+                                    <input type="checkbox" class="new-control-input" name="remember">
+                                    <span class="new-control-indicator"></span> <span class="text-dark">Ingat saya</span>
+                                </label>
                             </div>
                             <div class="d-sm-flex justify-content-between">
                                 <div class="field-wrapper">

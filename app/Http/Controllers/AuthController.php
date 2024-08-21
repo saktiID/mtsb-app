@@ -37,7 +37,7 @@ class AuthController extends Controller
         $attempt = Auth::attempt([
             'username' => Str::of($request->username)->trim(),
             'password' => $request->password,
-        ]);
+        ], $request->has('remember'));
 
         if ($attempt) {
             // percobaan stalk siapa baru saja login
@@ -75,7 +75,7 @@ class AuthController extends Controller
             }
             // end percobaan stalk siapa baru saja login
 
-            return redirect()->route('home');
+            return redirect()->intended('home');
         } else {
             $msg = 'Username atau password salah.';
 

@@ -30,7 +30,7 @@
     <link href="{{ asset('assets/css/authentication/form-2.css') }}" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/theme-checkbox-radio.css') }}">
     {{-- BEGIN PLUGIN --}}
     @yield('style')
     {{-- END BEGIN PLUGIN --}}
