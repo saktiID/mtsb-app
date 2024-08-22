@@ -4,6 +4,7 @@ namespace App\Services\Agenda;
 
 use App\Jobs\InsertAssessmentRecordJob;
 use App\Models\Agenda\AssessmentRecord;
+use App\Models\AssessmentProcess;
 use Illuminate\Support\Str;
 
 class AssessmentService
@@ -55,7 +56,19 @@ class AssessmentService
             }
         }
 
-        InsertAssessmentRecordJob::dispatch($data, $notif);
+        // memasukkan ke proses
+        $process = new AssessmentProcess();
+        $process->status = 'processing';
+        $process->kelas_id = $request->kelas_id;
+        $process->periode_id = $request->periode_id;
+        $process->siswa_user_id = $request->siswa_user_id;
+        $process->bulan = $request->bulan;
+        $process->minggu_ke = $request->minggu_ke;
+        $process->evaluator = $evaluator;
+        $process->save();
+
+        // memasukkan ke job
+        InsertAssessmentRecordJob::dispatch($data, $notif, $process);
 
         return true;
     }
@@ -63,6 +76,17 @@ class AssessmentService
     public function checkExist($request, $evaluator)
     {
         return AssessmentRecord::where('periode_id', $request->periode_id)
+            ->where('siswa_user_id', $request->siswa_user_id)
+            ->where('bulan', $request->bulan)
+            ->where('minggu_ke', $request->minggu_ke)
+            ->where('evaluator', 'like', $evaluator.'%')
+            ->exists();
+    }
+
+    public function checkProcess($request, $evaluator)
+    {
+        return AssessmentProcess::where('status', 'processing')
+            ->where('periode_id', $request->periode_id)
             ->where('siswa_user_id', $request->siswa_user_id)
             ->where('bulan', $request->bulan)
             ->where('minggu_ke', $request->minggu_ke)

@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\WebPush;
 
@@ -20,15 +21,25 @@ class InsertAssessmentRecordJob implements ShouldQueue
 
     private $notif;
 
+    private $process;
+
+    /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 3;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($data, $notif)
+    public function __construct($data, $notif, $process)
     {
         $this->data = $data;
         $this->notif = $notif;
+        $this->process = $process;
     }
 
     /**
@@ -41,6 +52,10 @@ class InsertAssessmentRecordJob implements ShouldQueue
         foreach (array_chunk($this->data, 20) as $dt) {
             AssessmentRecord::insert($dt);
         }
+
+        // update status processing
+        $this->process->status = 'complete';
+        $this->process->save();
 
         $webPush = new WebPush([
             'VAPID' => [
@@ -79,5 +94,21 @@ class InsertAssessmentRecordJob implements ShouldQueue
                 );
             }
         }
+    }
+
+    /**
+     * Handle failed job
+     *
+     * @return void
+     */
+    public function failed(\Exception $exception)
+    {
+        // Log the exception
+        Log::error('InsertAssessmentRecordJob failed: '.$exception->getMessage());
+
+        // Set processing to failed
+        $this->process->status = 'failed';
+        $this->process->exception = $exception->getMessage();
+        $this->process->save();
     }
 }

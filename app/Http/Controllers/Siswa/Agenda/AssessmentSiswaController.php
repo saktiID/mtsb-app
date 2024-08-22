@@ -86,8 +86,12 @@ class AssessmentSiswaController extends Controller
 
     public function parent_assessment_store(Request $request)
     {
-        $check = $this->assessment->checkExist($request, 'Parent');
-        if (! $check) {
+        $checkExist = $this->assessment->checkExist($request, 'Parent');
+        $checkProcess = $this->assessment->checkProcess($request, 'Parent');
+        if ($checkProcess) {
+            return response()->json(['success' => false, 'message' => 'Assessment sedang diproses. Silahkan tunggu beberapa saat.']);
+        }
+        if (! $checkExist) {
             $query = $this->assessment->storeAssessment($request, 'Parent');
             if ($query) {
                 return response()->json(['success' => true, 'message' => 'Assessment telah masuk antrian untuk disimpan dalam database. Tunggu beberapa saat untuk melihat riwayat.']);
@@ -101,8 +105,12 @@ class AssessmentSiswaController extends Controller
 
     public function peer_assessment_store(Request $request)
     {
-        $check = $this->assessment->checkExist($request, 'Peer');
-        if (! $check) {
+        $checkExist = $this->assessment->checkExist($request, 'Peer');
+        $checkProcess = $this->assessment->checkProcess($request, 'Peer');
+        if ($checkProcess) {
+            return response()->json(['success' => false, 'message' => 'Assessment sedang diproses. Silahkan tunggu beberapa saat.']);
+        }
+        if (! $checkExist) {
             $query = $this->assessment->storeAssessment($request, 'Peer - '.Auth::user()->nama);
             if ($query) {
                 return response()->json(['success' => true, 'message' => 'Assessment telah masuk antrian untuk disimpan dalam database. Tunggu beberapa saat untuk melihat riwayat.']);

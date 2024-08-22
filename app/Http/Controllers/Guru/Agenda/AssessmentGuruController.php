@@ -53,8 +53,12 @@ class AssessmentGuruController extends Controller
 
     public function assessment_store(Request $request)
     {
-        $check = $this->assessment->checkExist($request, 'Teacher');
-        if (! $check) {
+        $checkExist = $this->assessment->checkExist($request, 'Teacher');
+        $checkProcess = $this->assessment->checkProcess($request, 'Teacher');
+        if ($checkProcess) {
+            return response()->json(['success' => false, 'message' => 'Assessment sedang diproses. Silahkan tunggu beberapa saat.']);
+        }
+        if (! $checkExist) {
             $query = $this->assessment->storeAssessment($request, 'Teacher - '.Auth::user()->nama);
             if ($query) {
                 return response()->json(['success' => true, 'message' => 'Assessment telah masuk antrian untuk disimpan dalam database. Tunggu beberapa saat untuk melihat riwayat.']);
