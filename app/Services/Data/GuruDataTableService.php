@@ -10,7 +10,6 @@ class GuruDataTableService
     public function getGuruDataTable()
     {
         $user = User::has('guru')
-            ->has('guru')
             ->with('guru:user_id,email,telp')
             ->get();
         $dataTable = DataTables::of($user)

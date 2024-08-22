@@ -90,6 +90,25 @@ class AssessmentGuruController extends Controller
         return view('guru.agenda.assessment-history.history', $data);
     }
 
+    public function assessment_recap()
+    {
+        // parameters
+        $data['periodeAktif'] = $this->periodeAktif;
+        $data['kelas'] = Kelas::where('periode_id', $this->periodeAktif->id)
+            ->where('walas_id', Auth::user()->id)->first();
+
+        return view('guru.agenda.assessment-recap.recap', $data);
+    }
+
+    public function get_recap(Request $request)
+    {
+        if ($request->ajax()) {
+            $requestAjax = json_decode($request->a, true);
+
+            return $this->assessmentData->getProcessData($requestAjax);
+        }
+    }
+
     public function get_history(Request $request)
     {
         if ($request->ajax()) {

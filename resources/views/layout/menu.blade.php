@@ -65,6 +65,7 @@
 <x-menu-dropdown menuTitle="Agenda" menuIcon="paperclip" menuParent="agenda" menuActive="guru/agenda/*">
     <x-sub-menu-dropdown menuTitle="Teacher Assessment" menuRoute="teacher-assessment" menuActive="guru/agenda/teacher-assessment" />
     <x-sub-menu-dropdown menuTitle="Assessment History" menuRoute="assessment-history.guru" menuActive="guru/agenda/assessment-history" />
+    <x-sub-menu-dropdown menuTitle="Assessment Recap" menuRoute="assessment-recap.guru" menuActive="guru/agenda/assessment-recap" />
 </x-menu-dropdown>
 
 @section('script-layout')

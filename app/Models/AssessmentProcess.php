@@ -43,7 +43,7 @@ class AssessmentProcess extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'siswa_user_id', 'id');
     }
 
     public function periode()
