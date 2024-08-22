@@ -30,6 +30,7 @@ class AssessmentProcess extends Model
         'bulan',
         'minggu_ke',
         'evaluator',
+        'exception',
     ];
 
     protected static function boot()
