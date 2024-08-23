@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\PushSubscription;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Minishlink\WebPush\Subscription;
@@ -31,7 +30,7 @@ class PushSubscriptionController extends Controller
     /**
      * PERCOBAAN KIRIM NOTIF
      */
-    public function send()
+    public function send(Request $request)
     {
         $webPush = new WebPush([
             'VAPID' => [
@@ -42,29 +41,35 @@ class PushSubscriptionController extends Controller
         ]);
 
         $payload = json_encode([
-            'title' => 'Test title',
-            'body' => 'Body test',
+            'title' => 'Judul Notification Test',
+            'body' => 'Isi notification test',
             'url' => '/',
         ]);
 
-        $admins = User::where('role', 'Admin')->get();
+        if (isset($request->user_id)) {
+            $user_id = $request->user_id;
+        } else {
+            dd(['User ID is required']);
 
-        if (count($admins) > 0) {
-            foreach ($admins as $admin) {
-                $subs = PushSubscription::where('user_id', $admin->id)->get();
-
-                $result = [];
-                if (count($subs) > 0) {
-                    foreach ($subs as $sub) {
-                        $result[] = $webPush->sendOneNotification(
-                            Subscription::create(json_decode($sub->data, true)),
-                            $payload
-                        );
-                    }
-                }
-            }
+            return false;
         }
 
-        dd($result);
+        $subs = PushSubscription::where('user_id', $user_id)->get();
+
+        if (count($subs) > 0) {
+            foreach ($subs as $sub) {
+                $result[] = $webPush->sendOneNotification(
+                    Subscription::create(json_decode($sub->data, true)),
+                    $payload
+                );
+            }
+            dd($result);
+
+            return;
+        } else {
+            dd(['User ID not found']);
+
+            return false;
+        }
     }
 }
