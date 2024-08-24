@@ -134,8 +134,6 @@
         </div>
     </x-card-box>
 
-
-
 </div>
 @endsection
 
@@ -259,8 +257,13 @@
                     });
 
                     // Menambahkan note
+                    let pageWidth = doc.internal.pageSize.getWidth()
+                    let maxWidth = pageWidth - xPosition - xPosition
                     doc.setFontSize(10)
-                    doc.text(`Note: ${p_note}`, xPosition, doc.autoTable.previous.finalY + 10);
+                    doc.text('Note:', xPosition, doc.autoTable.previous.finalY + 10);
+                    doc.text(`${p_note}`, xPosition, doc.autoTable.previous.finalY + 15, {
+                        maxWidth: maxWidth
+                    })
 
                     // Membuat URL blob untuk PDF
                     const blob = doc.output('blob');
