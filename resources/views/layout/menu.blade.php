@@ -43,6 +43,7 @@
 
     <x-sub-menu-dropdown menuTitle="Assessment Aspect" menuRoute="assessment-aspect" menuActive="admin/agenda/assessment-aspect" />
     <x-sub-menu-dropdown menuTitle="Assessment History" menuRoute="assessment-history.admin" menuActive="admin/agenda/assessment-history" />
+    <x-sub-menu-dropdown menuTitle="Assessment Recap" menuRoute="assessment-recap.admin" menuActive="admin/agenda/assessment-recap" />
 
 </x-menu-dropdown>
 

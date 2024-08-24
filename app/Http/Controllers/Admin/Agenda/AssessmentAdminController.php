@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Agenda;
 
 use App\Http\Controllers\Controller;
+use App\Models\Data\Kelas;
 use App\Models\Data\Periode;
 use App\Models\Data\Siswa;
 use App\Services\Agenda\AspectDataTableService as AspectData;
@@ -27,6 +28,7 @@ class AssessmentAdminController extends Controller
         Assessment $assessment,
         AssessmentData $assessmentData
     ) {
+        parent::__construct();
         $this->aspect = $aspect;
         $this->aspectData = $aspectData;
         $this->assessment = $assessment;
@@ -83,6 +85,18 @@ class AssessmentAdminController extends Controller
         // dd($data['siswas'][0]->user);
 
         return view('admin.agenda.assessment-history.history', $data);
+    }
+
+    public function assessment_recap()
+    {
+        // parameters
+        $data['kelas_all'] = Kelas::all();
+        $data['periodes'] = Periode::select(['id', 'tahun_ajaran', 'semester'])
+            ->orderBy('tahun_ajaran', 'asc')
+            ->orderBy('semester', 'asc')
+            ->get();
+
+        return view('admin.agenda.assessment-recap.recap', $data);
     }
 
     public function get_history(Request $request)

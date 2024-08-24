@@ -27,7 +27,7 @@
 
             <div class="col-lg-8 col-sm-12">
 
-                <div class="alert alert-light-warning">
+                <div class="alert alert-light-info">
                     <span>Detail guru</span>
                 </div>
                 <form method="POST" id="data_guru" class="mb-4" data-form="data_guru">
@@ -38,6 +38,14 @@
                     <div class="mb-3">
                         <label for="nama">Nama guru *</label>
                         <input type="text" value="{{ $user->nama }}" id="nama" name="nama" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="role">Role pendidik *</label>
+                        <select id="role" name="role" class="form-control selectpicker" required>
+                            <option value="" disabled>-- Pilih Role --</option>
+                            <option value="Admin" {{ ($user->role == 'Admin' ? 'selected' : '') }}>Admin</option>
+                            <option value="Guru" {{ ($user->role == 'Guru' ? 'selected' : '') }}>Guru</option>
+                        </select>
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-sm-12">
