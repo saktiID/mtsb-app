@@ -90,7 +90,9 @@ class AssessmentAdminController extends Controller
     public function assessment_recap()
     {
         // parameters
-        $data['kelas_all'] = Kelas::all();
+        $data['kelas_all'] = Kelas::orderBy('jenjang_kelas', 'asc')
+            ->orderBy('bagian_kelas', 'asc')
+            ->get();
         $data['periodes'] = Periode::select(['id', 'tahun_ajaran', 'semester'])
             ->orderBy('tahun_ajaran', 'asc')
             ->orderBy('semester', 'asc')
