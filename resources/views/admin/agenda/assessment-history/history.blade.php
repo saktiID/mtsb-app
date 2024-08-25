@@ -49,18 +49,18 @@
                             <td>
                                 <select id="bulan" name="bulan" class="form-control">
                                     <option value="" selected disabled>-- Pilih bulan --</option>
-                                    <option>Januari</option>
-                                    <option>Februari</option>
-                                    <option>Maret</option>
-                                    <option>April</option>
-                                    <option>Mei</option>
-                                    <option>Juni</option>
-                                    <option>Juli</option>
-                                    <option>Agustus</option>
-                                    <option>September</option>
-                                    <option>Oktober</option>
-                                    <option>November</option>
-                                    <option>Desember</option>
+                                    <option value="Januari">Januari</option>
+                                    <option value="Februari">Februari</option>
+                                    <option value="Maret">Maret</option>
+                                    <option value="April">April</option>
+                                    <option value="Mei">Mei</option>
+                                    <option value="Juni">Juni</option>
+                                    <option value="Juli">Juli</option>
+                                    <option value="Agustus">Agustus</option>
+                                    <option value="September">September</option>
+                                    <option value="Oktober">Oktober</option>
+                                    <option value="November">November</option>
+                                    <option value="Desember">Desember</option>
                                 </select>
                             </td>
                         </tr>
@@ -82,7 +82,7 @@
                                 <select id="assessment_for" name="assessment_for" class="form-control">
                                     <option value="" selected disabled>-- Pilih assessment --</option>
                                     <option value="Teacher">Teacher Assessment</option>
-                                    <option value="Parent">Parrent Assessment</option>
+                                    <option value="Parent">Parent Assessment</option>
                                     <option value="Peer">Peer Assessment</option>
                                 </select>
                             </td>
