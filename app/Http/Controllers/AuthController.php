@@ -51,8 +51,8 @@ class AuthController extends Controller
                 ]);
 
                 $payload = json_encode([
-                    'title' => Auth::user()->nama.' baru saja login',
-                    'body' => Auth::user()->nama.' telah berhasil login ke aplikasi pada '.date('Y-m-d H:i:s'),
+                    'title' => Auth::user()->nama . ' baru saja login',
+                    'body' => Auth::user()->nama . ' telah berhasil login ke aplikasi pada ' . date('Y-m-d H:i:s'),
                     'url' => '/',
                 ]);
 
@@ -82,7 +82,7 @@ class AuthController extends Controller
                     'api_key' => env('WA_API_KEY'),
                     'sender' => env('WA_SENDER'),
                     'number' => $telp->guru->telp,
-                    'message' => '*'.Auth::user()->nama.'* telah berhasil login ke aplikasi pada '.date('Y-m-d H:i:s'),
+                    'message' => '*' . Auth::user()->nama . '* telah berhasil login ke aplikasi pada ' . date('Y-m-d H:i:s'),
                 ];
 
                 // Encode array ke dalam format JSON
@@ -96,12 +96,12 @@ class AuthController extends Controller
                 curl_setopt($ch, CURLOPT_POST, true);  // Set metode request sebagai POST
                 curl_setopt($ch, CURLOPT_HTTPHEADER, [
                     'Content-Type: application/json',  // Mengatur header Content-Type sebagai JSON
-                    'Content-Length: '.strlen($jsonData),  // Mengatur panjang konten berdasarkan data JSON yang dikirim
+                    'Content-Length: ' . strlen($jsonData),  // Mengatur panjang konten berdasarkan data JSON yang dikirim
                 ]);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);  // Data JSON yang akan dikirim
 
                 // Eksekusi request dan ambil respon
-                curl_exec($ch);
+                // curl_exec($ch);
 
                 // Tutup sesi cURL
                 curl_close($ch);
