@@ -72,6 +72,39 @@ class AuthController extends Controller
                         }
                     }
                 }
+
+                // kirim notif wa ke user bahwa telah login
+                $telp = User::with('guru:user_id,telp')
+                    ->where('id', Auth::user()->id)->first();
+
+                $endPointWA = env('WA_END_POINT');
+                $data = [
+                    'api_key' => env('WA_API_KEY'),
+                    'sender' => env('WA_SENDER'),
+                    'number' => $telp->guru->telp,
+                    'message' => '*'.Auth::user()->nama.'* telah berhasil login ke aplikasi pada '.date('Y-m-d H:i:s'),
+                ];
+
+                // Encode array ke dalam format JSON
+                $jsonData = json_encode($data);
+
+                // Inisialisasi cURL
+                $ch = curl_init($endPointWA);
+
+                // Set opsi untuk cURL
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);  // Untuk mendapatkan respon sebagai string
+                curl_setopt($ch, CURLOPT_POST, true);  // Set metode request sebagai POST
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/json',  // Mengatur header Content-Type sebagai JSON
+                    'Content-Length: '.strlen($jsonData),  // Mengatur panjang konten berdasarkan data JSON yang dikirim
+                ]);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);  // Data JSON yang akan dikirim
+
+                // Eksekusi request dan ambil respon
+                curl_exec($ch);
+
+                // Tutup sesi cURL
+                curl_close($ch);
             }
             // end percobaan stalk siapa baru saja login
 
