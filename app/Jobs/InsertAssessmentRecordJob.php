@@ -124,7 +124,7 @@ class InsertAssessmentRecordJob implements ShouldQueue
         curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);  // Data JSON yang akan dikirim
 
         // Eksekusi request dan ambil respon
-        curl_exec($ch);
+        // curl_exec($ch);
 
         // Tutup sesi cURL
         curl_close($ch);
