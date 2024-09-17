@@ -22,6 +22,10 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('attempt_login');
+
+    Route::get('/recovery', function () {
+        return view('auth.recovery');
+    })->name('recovery');
 });
 
 Route::group(['middleware' => ['auth']], function () {

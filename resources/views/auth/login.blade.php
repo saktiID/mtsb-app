@@ -5,7 +5,7 @@
 <style>
     /* Auth */
     .form-container {
-        background-image: url('/assets/img/dirgahayu2.jpg');
+        background-image: url('/assets/img/bg-maulid.webp');
         background-position: center;
         background-size: cover;
         background-attachment: fixed;
@@ -28,7 +28,7 @@
 
                     <div class="avatar avatar-xl">
                         <a href="">
-                            <img src="{{ asset('logo.png') }}" alt="logo" class="rounded-circle" height="90px" width="90px">
+                            <img src="{{ asset('logo.png?v=' . now()) }}" alt="logo" class="rounded-circle" height="90px" width="90px">
                         </a>
                     </div>
 
@@ -66,7 +66,7 @@
                             <div id="password-field" class="field-wrapper input">
                                 <div class="d-flex justify-content-between">
                                     <label for="password">KATA SANDI</label>
-                                    {{-- <a href="#" class="forgot-pass-link">Lupa kata sandi?</a> --}}
+                                    {{-- <a href="{{ route('recovery') }}" class="forgot-pass-link text-primary">Lupa kata sandi?</a> --}}
                                 </div>
                                 <i data-feather="lock"></i>
                                 <input id="password" name="password" type="password" class="form-control" placeholder="Kata sandi" autocomplete="on">
