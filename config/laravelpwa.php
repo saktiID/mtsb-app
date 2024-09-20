@@ -6,43 +6,43 @@ return [
         'name' => env('APP_NAME', 'My PWA App'),
         'short_name' => 'MTsB',
         'start_url' => '/',
-        'background_color' => '#EB2C26',
+        'background_color' => '#97cde0',
         'theme_color' => '#000000',
         'display_override' => ['fullscreen'],
         'display' => 'standalone',
         'orientation' => 'any',
-        'status_bar' => '#EB2C26',
+        'status_bar' => '#97cde0',
         'icons' => [
             '72x72' => [
-                'path' => '/images/icons/kemerdekaan/icon-72x72.png',
+                'path' => '/images/icons/default/icon-72x72.png',
                 'purpose' => 'any',
             ],
             '96x96' => [
-                'path' => '/images/icons/kemerdekaan/icon-96x96.png',
+                'path' => '/images/icons/default/icon-96x96.png',
                 'purpose' => 'any',
             ],
             '128x128' => [
-                'path' => '/images/icons/kemerdekaan/icon-128x128.png',
+                'path' => '/images/icons/default/icon-128x128.png',
                 'purpose' => 'any',
             ],
             '144x144' => [
-                'path' => '/images/icons/kemerdekaan/icon-144x144.png',
+                'path' => '/images/icons/default/icon-144x144.png',
                 'purpose' => 'any',
             ],
             '152x152' => [
-                'path' => '/images/icons/kemerdekaan/icon-152x152.png',
+                'path' => '/images/icons/default/icon-152x152.png',
                 'purpose' => 'any',
             ],
             '192x192' => [
-                'path' => '/images/icons/kemerdekaan/icon-192x192.png',
+                'path' => '/images/icons/default/icon-192x192.png',
                 'purpose' => 'any',
             ],
             '384x384' => [
-                'path' => '/images/icons/kemerdekaan/icon-384x384.png',
+                'path' => '/images/icons/default/icon-384x384.png',
                 'purpose' => 'any',
             ],
             '512x512' => [
-                'path' => '/images/icons/kemerdekaan/icon-512x512.png',
+                'path' => '/images/icons/default/icon-512x512.png',
                 'purpose' => 'any',
             ],
         ],
@@ -64,7 +64,7 @@ return [
                 'description' => 'Shortcut MTsB Application',
                 'url' => '/home',
                 'icons' => [
-                    'src' => '/images/icons/kemerdekaan/icon-96x96.png',
+                    'src' => '/images/icons/default/icon-96x96.png',
                     'sizes' => '96x96',
                     'purpose' => 'any',
                 ],
@@ -73,14 +73,14 @@ return [
         'custom' => [
             'screenshots' => [
                 [
-                    'src' => '/images/icons/kemerdekaan/icon-512x512.png',
+                    'src' => '/images/icons/default/icon-512x512.png',
                     'sizes' => '512x512',
                     'type' => 'image/png',
                     'form_factor' => 'wide',
                     'label' => 'MTsB Application',
                 ],
                 [
-                    'src' => '/images/icons/kemerdekaan/icon-384x384.png',
+                    'src' => '/images/icons/default/icon-384x384.png',
                     'sizes' => '384x384',
                     'type' => 'image/png',
                     'form_factor' => 'narrow',
@@ -94,7 +94,7 @@ return [
                     'url' => '/home',
                     'icons' => [
                         [
-                            'src' => '/images/icons/kemerdekaan/icon-96x96.png',
+                            'src' => '/images/icons/default/icon-96x96.png',
                             'type' => 'image/png',
                             'sizes' => '96x96',
                             'purpose' => 'any',

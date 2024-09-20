@@ -77,8 +77,8 @@ class InsertAssessmentRecordJob implements ShouldQueue
         }
 
         $payload = json_encode([
-            'title' => $this->notif['nama_siswa'] . ' - Assessment Records',
-            'body' => $this->notif['nama_siswa'] . ' sudah mendapatkan ' . $type . ' Assessment pekan ' . $this->notif['minggu_ke'] . ' bulan ' . $this->notif['bulan'] . ' dengan evaluator ' . $this->notif['evaluator'],
+            'title' => $this->notif['nama_siswa'].' - Assessment Records',
+            'body' => $this->notif['nama_siswa'].' sudah mendapatkan '.$type.' Assessment pekan '.$this->notif['minggu_ke'].' bulan '.$this->notif['bulan'].' dengan evaluator '.$this->notif['evaluator'],
             'url' => '/',
         ]);
 
@@ -108,7 +108,7 @@ class InsertAssessmentRecordJob implements ShouldQueue
     public function failed(\Exception $exception)
     {
         // Log the exception
-        Log::error('InsertAssessmentRecordJob failed: ' . $exception->getMessage());
+        Log::error('InsertAssessmentRecordJob failed: '.$exception->getMessage());
 
         // Set processing to failed
         $this->process->status = 'failed';
