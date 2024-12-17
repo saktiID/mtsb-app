@@ -5,7 +5,7 @@
 <style>
     /* Auth */
     .form-container {
-        background-image: url('/assets/img/bg-maulid.webp');
+        background-image: url('/assets/img/bg-mesh.png');
         background-position: center;
         background-size: cover;
         background-attachment: fixed;
