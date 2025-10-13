@@ -2,11 +2,12 @@
 
 namespace App\Models\Agenda;
 
+use App\Models\User;
 use App\Models\Data\Kelas;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class AssessmentRecord extends Model
 {
@@ -55,4 +56,10 @@ class AssessmentRecord extends Model
     {
         return $this->belongsTo(Kelas::class, 'kelas_id', 'id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'siswa_user_id');
+    }
+
 }
