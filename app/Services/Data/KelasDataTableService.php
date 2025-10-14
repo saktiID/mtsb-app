@@ -28,13 +28,15 @@ class KelasDataTableService
                     $walas = User::find($kelas->walas_id);
                     if ($walas) {
                         $avatar = $walas->avatar;
+                        $nama_walas = $walas->nama;
                     }
                 }
                 $data['avatar'] = $avatar;
                 $data['route'] = 'detail-kelas';
                 $data['id'] = $kelas->id;
+                $data['nama_walas'] = $nama_walas;
 
-                return view('element.avatar', $data);
+                return view('element.avatar-walas', $data);
             })
             ->addColumn('kelas', function ($kelas) {
                 return $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
