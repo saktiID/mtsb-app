@@ -253,7 +253,7 @@
                 ',top=0,left=0');
             printWindow.document.write('<html><head><title>&nbsp;</title>');
             printWindow.document.write(
-                '<style>@media print {@page {margin: 0;} body {margin: 0;padding: 20px; }table {border-collapse: collapse;width: 100%;}th, td {border: 1px solid black;padding: 8px;}}</style>'
+                '<style>@media print {@page {size: A4;margin: 0;} body {margin: 0;padding: 20px; }table {border-collapse: collapse;width: 100%;}th, td {border: 1px solid black;padding: 4px;}}</style>'
             );
             printWindow.document.write('</head><body>');
             printWindow.document.write(printContents);
