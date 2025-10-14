@@ -2,12 +2,12 @@
 
 namespace App\Models\Agenda;
 
-use App\Models\User;
 use App\Models\Data\Kelas;
-use Illuminate\Support\Str;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class AssessmentRecord extends Model
 {
@@ -61,5 +61,4 @@ class AssessmentRecord extends Model
     {
         return $this->belongsTo(User::class, 'siswa_user_id');
     }
-
 }

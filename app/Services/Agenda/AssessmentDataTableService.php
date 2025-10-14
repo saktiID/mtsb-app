@@ -2,11 +2,11 @@
 
 namespace App\Services\Agenda;
 
-use App\Models\Data\KelasSiswa;
-use App\Models\AssessmentProcess;
-use Illuminate\Support\Facades\DB;
 use App\Models\Agenda\AssessmentAspect;
 use App\Models\Agenda\AssessmentRecord;
+use App\Models\AssessmentProcess;
+use App\Models\Data\KelasSiswa;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class AssessmentDataTableService
@@ -14,15 +14,15 @@ class AssessmentDataTableService
     public function getAllData($request)
     {
         // ambil aspek
-        $aspects = AssessmentAspect::select(["id", "aspect", "aspect_for"])
+        $aspects = AssessmentAspect::select(['id', 'aspect', 'aspect_for'])
             ->orderBy('id', 'asc')
             ->where('aspect_status', 1)
             ->where('aspect_for', 'like', $request[0]['evaluator'].'%')
             ->get();
-        
+
         // ambil siswa berdasarkan kelas
-        $siswa_list = KelasSiswa::with("user")
-            ->where("kelas_id", $request[0]['kelas_id'])
+        $siswa_list = KelasSiswa::with('user')
+            ->where('kelas_id', $request[0]['kelas_id'])
                 ->orderBy(DB::raw('(SELECT nama FROM users WHERE users.id = kelas_siswas.user_id)'), 'asc')
             ->get();
 
@@ -36,14 +36,13 @@ class AssessmentDataTableService
             ->with(['user', 'aspect'])
             ->get();
 
-
         // membuat tabel
         $table = [];
 
         foreach ($siswa_list as $index => $siswa) {
             $row = [
                 'no' => $index + 1,
-                'nama_siswa' => $siswa->user->nama, 
+                'nama_siswa' => $siswa->user->nama,
             ];
 
             foreach ($aspects as $aspect) {
@@ -53,7 +52,7 @@ class AssessmentDataTableService
 
                 $row['aspect_answer'][] = [
                     'aspect_id' => $aspect->id,
-                    'answer' => $record ? $record->answer : '-'
+                    'answer' => $record ? $record->answer : '-',
                 ];
             }
 

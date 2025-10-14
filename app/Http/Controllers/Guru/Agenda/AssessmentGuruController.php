@@ -141,7 +141,7 @@ class AssessmentGuruController extends Controller
             $data = [
                 'status' => 'success',
                 'message' => 'Request AJAX terdeteksi!',
-                'req' => json_decode($request->a, true)[0]
+                'req' => json_decode($request->a, true)[0],
             ];
 
             $requestAjax = json_decode($request->a, true);
@@ -149,7 +149,6 @@ class AssessmentGuruController extends Controller
             $getAllData = $this->assessmentData->getAllData($requestAjax);
 
             return response()->json($getAllData);
-
         }
     }
 
