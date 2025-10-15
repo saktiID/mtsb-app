@@ -24,6 +24,7 @@ class KelasDataTableService
             })
             ->addColumn('walas', function ($kelas) {
                 $avatar = '-';
+                $nama_walas = '-';
                 if ($kelas->walas_id != '') {
                     $walas = User::find($kelas->walas_id);
                     if ($walas) {
