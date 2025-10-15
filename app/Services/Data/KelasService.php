@@ -64,9 +64,9 @@ class KelasService
         return $query;
     }
 
-    public function getKelasByWalasId($walas_id)
+    public function getKelasByWalasId($walas_id, $periodeAktif)
     {
-        return Kelas::where('walas_id', $walas_id)->first();
+        return Kelas::where('walas_id', $walas_id)->where('periode_id', $periodeAktif->id)->first();
     }
 
     public function getGuru()

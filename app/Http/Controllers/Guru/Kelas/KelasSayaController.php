@@ -27,7 +27,7 @@ class KelasSayaController extends Controller
 
     public function index()
     {
-        $data['kelas'] = $this->kelas->getKelasByWalasId(Auth::user()->id);
+        $data['kelas'] = $this->kelas->getKelasByWalasId(Auth::user()->id, $this->periodeAktif);
         $data['periodeAktif'] = $this->periodeAktif;
 
         return view('guru.kelas.kelas-saya', $data);
