@@ -10,7 +10,7 @@ class SiswaDataTableService
     public function getSiswaDataTable()
     {
         $user = User::where('is_active', true)
-            ->select('id', 'nama', 'avatar')
+            ->select('id', 'nama', 'avatar', 'username')
             ->has('siswa')
             ->with('siswa:user_id,nis,nisn')
             ->orderBy('nama', 'asc')
@@ -76,8 +76,8 @@ class SiswaDataTableService
             ->addColumn('nis', function ($user) {
                 return $user->siswa->nis;
             })
-            ->addColumn('nisn', function ($user) {
-                return $user->siswa->nisn;
+            ->addColumn('username', function ($user) {
+                return $user->username;
             })
             ->addColumn('more', function ($user) {
                 // $data['nama'] = $user->nama;

@@ -59,7 +59,7 @@
                             <th>Foto</th>
                             <th data-priority="1">Nama</th>
                             <th>NIS</th>
-                            <th>NISN</th>
+                            <th>Username</th>
                             <th data-priority="2"><i data-feather="more-horizontal"></i></th>
                         </tr>
                     </thead>
@@ -99,7 +99,7 @@
                                             <th>Foto</th>
                                             <th data-priority="1">Nama</th>
                                             <th>NIS</th>
-                                            <th>NISN</th>
+                                            <th>Username</th>
                                             <th data-priority="2"><i data-feather="more-horizontal"></i></th>
                                         </tr>
                                     </thead>
@@ -210,7 +210,7 @@
                         data: 'nis', //
                     }, //
                     {
-                        data: 'nisn', //
+                        data: 'username', //
                     }, //
                     {
                         data: 'more', //
