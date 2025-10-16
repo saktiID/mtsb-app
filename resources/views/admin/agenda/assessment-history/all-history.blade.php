@@ -34,6 +34,7 @@
                                         <option value="Teacher">Teacher Assessment</option>
                                         <option value="Parent">Parent Assessment</option>
                                         <option value="Peer">Peer Assessment</option>
+                                        <option value="Self">Self Assessment</option>
                                     </select>
                                 </td>
                             </tr>
