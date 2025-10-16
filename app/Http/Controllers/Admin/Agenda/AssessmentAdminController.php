@@ -91,6 +91,8 @@ class AssessmentAdminController extends Controller
     {
         $data['kelas'] = Kelas::select('*')
             ->where('periode_id', $this->periodeAktif->id)
+            ->orderBy('jenjang_kelas')
+            ->orderBy('bagian_kelas')
             ->get();
         $data['periodeAktif'] = $this->periodeAktif;
 
