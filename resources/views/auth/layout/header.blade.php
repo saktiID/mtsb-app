@@ -4,21 +4,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
 
     <!-- Primary Meta Tags -->
-    <title>MTs Bilingual APP — Aplikasi sarana belajar</title>
-    <meta name="title" content="MTs Bilingual — Aplikasi sarana belajar" />
-    <meta name="description" content="Dengan aplikasi ini siswa dapat melihat daftar nilai yang dicapai selama pembelajaran di MTs Bilingual Muslimat NU Pucang Sidoarjo." />
+    <title>MTs Bilingual APP — Aplikasi assessment digital MTs Bilingual</title>
+    <meta name="title" content="MTs Bilingual — Aplikasi assessment digital MTs Bilingual" />
+    <meta name="description"
+        content="Dengan aplikasi ini siswa dapat melihat daftar nilai yang dicapai selama pembelajaran di MTs Bilingual Muslimat NU Pucang Sidoarjo." />
     <meta name="keywords" content="mtsb, app mtsb, mtsb-app, app-mtsb">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="MTs Bilingual — Aplikasi sarana belajar" />
-    <meta property="og:description" content="Dengan aplikasi ini siswa dapat melihat daftar nilai yang dicapai selama pembelajaran di MTs Bilingual Muslimat NU Pucang Sidoarjo." />
+    <meta property="og:title" content="MTs Bilingual — Aplikasi assessment digital MTs Bilingual" />
+    <meta property="og:description"
+        content="Dengan aplikasi ini siswa dapat melihat daftar nilai yang dicapai selama pembelajaran di MTs Bilingual Muslimat NU Pucang Sidoarjo." />
     <meta property="og:image" content="{{ asset('meta.jpeg') }}" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="MTs Bilingual — Aplikasi sarana belajar" />
-    <meta property="twitter:description" content="Dengan aplikasi ini siswa dapat melihat daftar nilai yang dicapai selama pembelajaran di MTs Bilingual Muslimat NU Pucang Sidoarjo." />
+    <meta property="twitter:title" content="MTs Bilingual — Aplikasi assessment digital MTs Bilingual" />
+    <meta property="twitter:description"
+        content="Dengan aplikasi ini siswa dapat melihat daftar nilai yang dicapai selama pembelajaran di MTs Bilingual Muslimat NU Pucang Sidoarjo." />
     <meta property="twitter:image" content="{{ asset('meta.jpeg') }}" />
 
     {{-- <title>@yield('title', 'MTsB App') | MTsB App</title> --}}
