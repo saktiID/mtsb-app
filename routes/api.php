@@ -1,7 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\API\DataAPIController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,12 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::post('wa-hook', function (Request $request) {
-    DB::table('api_wa')->insert([
-        'message' => $request->json('message'),
-    ]);
-});
+Route::get('data-kelas', [DataAPIController::class, 'getKelas']);
+Route::get('data-siswa', [DataAPIController::class, 'getSiswa']);
+Route::get('data-guru', [DataAPIController::class, 'getGuru']);
