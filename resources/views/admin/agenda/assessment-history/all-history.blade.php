@@ -10,7 +10,17 @@
                         <table class="table table-bordered">
                             <tr>
                                 <th>Kelas</th>
-                                <td>{{ $kelas }}</td>
+                                <td>
+                                    <select name="kelas_id" id="kelas_id" class="form-control" required>
+                                        <option value="">-- Pilih kelas --</option>
+                                        @foreach ($kelas as $k)
+                                            <option
+                                                value="{{ $k->id }}/{{ $k->jenjang_kelas }}-{{ $k->bagian_kelas }}">
+                                                {{ $k->jenjang_kelas }}-{{ $k->bagian_kelas }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Periode</th>
@@ -24,7 +34,6 @@
                                         <option value="Teacher">Teacher Assessment</option>
                                         <option value="Parent">Parent Assessment</option>
                                         <option value="Peer">Peer Assessment</option>
-                                        <option value="Self">Self Assessment</option>
                                     </select>
                                 </td>
                             </tr>
@@ -77,7 +86,7 @@
                 <table class="mb-3 table table-bordered" style="width: 100%">
                     <tr>
                         <td class="text-bold">Kelas</td>
-                        <td>{{ $kelas }}</td>
+                        <td id="nama-kelas-wrapper"></td>
                     </tr>
                     <tr>
                         <td class="text-bold">Periode</td>
@@ -145,14 +154,18 @@
 
         $('form').on('submit', function(e) {
             e.preventDefault()
+
+            let kelas_input = $('#kelas_id').val().split('/')
+
             PARAMS.push({
-                'kelas_id': "{{ $kelas_id }}", //
+                'kelas_id': kelas_input[0], //
                 'periode_id': "{{ $periodeAktif->id }}", //
                 'bulan': document.getElementById('bulan').value, //
                 'minggu_ke': document.getElementById('minggu_ke').value, //
                 'evaluator': document.getElementById('assessment_for').value, //
             })
 
+            $('#nama-kelas-wrapper').text(kelas_input[1])
             $('#assessment-type-wrapper').text(`${document.getElementById('assessment_for').value} Assessment`)
             $('#bulan-wrapper').text(document.getElementById('bulan').value)
             $('#minggu-ke-wrapper').text(document.getElementById('minggu_ke').value)

@@ -2,7 +2,7 @@
 
 let intId = document.getElementById("internetStatus");
 let sucText = "🎉 Kembali terkoneksi ke internet!";
-let failText = "😵 Tidak ada koneksi internet!";
+let failText = "😵 Koneksi internet terputus!";
 let sucCol = "#00b894";
 let failCol = "#ea4c62";
 

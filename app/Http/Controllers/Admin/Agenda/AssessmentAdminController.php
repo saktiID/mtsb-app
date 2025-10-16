@@ -74,17 +74,27 @@ class AssessmentAdminController extends Controller
         }
     }
 
+    // public function assessment_history()
+    // {
+    //     $data['siswas'] = Siswa::with('user')->has('user')->get();
+    //     $data['periodes'] = Periode::select(['id', 'tahun_ajaran', 'semester'])
+    //         ->orderBy('tahun_ajaran', 'asc')
+    //         ->orderBy('semester', 'asc')
+    //         ->get();
+
+    //     // dd($data['siswas'][0]->user);
+
+    //     return view('admin.agenda.assessment-history.history', $data);
+    // }
+
     public function assessment_history()
     {
-        $data['siswas'] = Siswa::with('user')->has('user')->get();
-        $data['periodes'] = Periode::select(['id', 'tahun_ajaran', 'semester'])
-            ->orderBy('tahun_ajaran', 'asc')
-            ->orderBy('semester', 'asc')
+        $data['kelas'] = Kelas::select('*')
+            ->where('periode_id', $this->periodeAktif->id)
             ->get();
+        $data['periodeAktif'] = $this->periodeAktif;
 
-        // dd($data['siswas'][0]->user);
-
-        return view('admin.agenda.assessment-history.history', $data);
+        return view('admin.agenda.assessment-history.all-history', $data);
     }
 
     public function assessment_recap()
@@ -101,14 +111,23 @@ class AssessmentAdminController extends Controller
         return view('admin.agenda.assessment-recap.recap', $data);
     }
 
-    public function get_history(Request $request)
+    public function get_recap(Request $request)
     {
         if ($request->ajax()) {
             $requestAjax = json_decode($request->a, true);
 
-            return $this->assessmentData->getDataTable($requestAjax);
+            return $this->assessmentData->getProcessData($requestAjax);
         }
     }
+
+    // public function get_history(Request $request)
+    // {
+    //     if ($request->ajax()) {
+    //         $requestAjax = json_decode($request->a, true);
+
+    //         return $this->assessmentData->getDataTable($requestAjax);
+    //     }
+    // }
 
     public function get_note(Request $request)
     {

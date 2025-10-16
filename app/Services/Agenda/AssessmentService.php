@@ -5,10 +5,67 @@ namespace App\Services\Agenda;
 use App\Jobs\InsertAssessmentRecordJob;
 use App\Models\Agenda\AssessmentRecord;
 use App\Models\AssessmentProcess;
+use App\Models\Data\KelasSiswa;
+use App\Models\PeerRandomLock;
+use App\Models\User;
 use Illuminate\Support\Str;
 
 class AssessmentService
 {
+    public function peer_random($request)
+    {
+        // Cek apakah sudah ada record untuk siswa ini
+        $record = PeerRandomLock::where('periode_id', $request->periode_id)
+            ->where('kelas_id', $request->kelas_id)
+            ->where('siswa_user_id', $request->siswa_user_id)
+            ->where('bulan', $request->bulan)
+            ->where('minggu_ke', $request->minggu_ke)
+            ->first(); // gunakan first() bukan get()
+
+        if ($record) {
+            // Ambil user berdasarkan teman_user_id yang sudah tersimpan
+            return User::find($record->teman_user_id);
+        }
+
+        // Ambil semua user_id teman sekelas (kecuali siswa itu sendiri)
+        $semuaTeman = KelasSiswa::where('periode_id', $request->periode_id)
+            ->where('kelas_id', $request->kelas_id)
+            ->where('user_id', '!=', $request->siswa_user_id)
+            ->pluck('user_id');
+
+        // Ambil semua teman yang sudah pernah terpilih oleh siswa ini
+        $temanTerpilih = PeerRandomLock::where('periode_id', $request->periode_id)
+            ->where('kelas_id', $request->kelas_id)
+            // ->where('siswa_user_id', $request->siswa_user_id) // penting: filter berdasarkan siswa
+            ->where('bulan', $request->bulan)
+            ->where('minggu_ke', $request->minggu_ke)
+            ->pluck('teman_user_id');
+
+        // Filter teman yang belum terpilih
+        $temanBelumTerpilih = $semuaTeman->diff($temanTerpilih)->values();
+
+        // Jika tidak ada teman tersisa, kembalikan null atau error
+        if ($temanBelumTerpilih->isEmpty()) {
+            return null; // atau bisa return response()->json(['error' => 'Tidak ada teman tersedia']);
+        }
+
+        // Pilih satu teman secara acak
+        $temanTerpilihBaru = $temanBelumTerpilih->random();
+
+        // Simpan ke tabel peer_random_lock
+        PeerRandomLock::create([
+            'periode_id' => $request->periode_id,
+            'kelas_id' => $request->kelas_id,
+            'siswa_user_id' => $request->siswa_user_id,
+            'teman_user_id' => $temanTerpilihBaru,
+            'bulan' => $request->bulan,
+            'minggu_ke' => $request->minggu_ke,
+        ]);
+
+        // Kembalikan data user dari teman yang terpilih
+        return User::find($temanTerpilihBaru);
+    }
+
     public function storeAssessment($request, $evaluator)
     {
         $notif = [

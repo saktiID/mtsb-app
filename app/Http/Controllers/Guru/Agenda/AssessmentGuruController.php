@@ -137,13 +137,6 @@ class AssessmentGuruController extends Controller
     public function get_history(Request $request)
     {
         if ($request->ajax()) {
-            // Logika untuk menangani AJAX
-            $data = [
-                'status' => 'success',
-                'message' => 'Request AJAX terdeteksi!',
-                'req' => json_decode($request->a, true)[0],
-            ];
-
             $requestAjax = json_decode($request->a, true);
 
             $getAllData = $this->assessmentData->getAllData($requestAjax);
