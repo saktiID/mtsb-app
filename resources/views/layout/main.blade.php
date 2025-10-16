@@ -42,7 +42,7 @@
                 <!-- CONTENT AREA -->
 
                 {{-- install app --}}
-                <style>
+                {{-- <style>
                     #installPWAWrapper {
                         z-index: 99;
                         position: fixed;
@@ -66,7 +66,7 @@
                         <strong>Install</strong> <span class="mr-2"> aplikasi yuk!</span>
                         <button id="installPWA" class="btn btn-primary btn-sm"></button>
                     </div>
-                </div>
+                </div> --}}
                 {{-- end install app --}}
             </div>
 
@@ -141,7 +141,6 @@
             updateInstallButton()
             window.matchMedia('(display-mode: standalone)').addEventListener('change', updateInstallButton)
         }
-
     </script>
     {{-- endpwa --}}
 
@@ -174,8 +173,8 @@
                 lightbox.style.display = "none";
             }
         });
-
     </script>
     {{-- endlightbox --}}
 </body>
+
 </html>

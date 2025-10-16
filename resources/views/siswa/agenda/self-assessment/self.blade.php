@@ -1,22 +1,11 @@
 @extends('layout.main')
-@section('title', 'Parrent Assessment')
+@section('title', 'Self Assessment')
 @section('content')
     <div class="row pt-4">
-
-        <x-card-box cardTitle="Parent Assessment">
+        <x-card-box cardTitle="Self Assessment">
             <div class="form-row">
-                {{-- <div class="col-lg-4 col-sm-12 mb-4">
-                <div class="text-center">
-                    <div class="avatar avatar-xl mb-4">
-                        <img alt="foto" id="foto" src="{{ route('get-foto', Auth::user()->avatar) }}" width="250px" height="250px" class="rounded bg-success" />
-                    </div>
-                </div>
-            </div> --}}
 
                 <div class="col-lg-7 col-sm-12">
-                    <input type="text" id="siswa"
-                        value="{{ Auth::user()->id }}/{{ Auth::user()->avatar }}/{{ Auth::user()->siswa->nis }}/{{ Auth::user()->nama }}"
-                        hidden>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <tr>
@@ -28,23 +17,18 @@
                                 <td>{{ Auth::user()->nama }}</td>
                             </tr>
                             <tr>
-                                <th>NIS</th>
-                                <td>{{ Auth::user()->siswa->nis }}</td>
-                            </tr>
-                            <tr>
                                 <th>Periode</th>
                                 <td>Semester: {{ $periodeAktif->semester }} {{ $periodeAktif->tahun_ajaran }}</td>
-
                             </tr>
                             <tr>
                                 <th>Assessment type</th>
-                                <td>Parent</td>
+                                <td>Self Assessment</td>
                             </tr>
                             <tr>
                                 <th>Bulan</th>
                                 <td>
-                                    <select id="bulan" name="bulan" class="form-control">
-                                        <option value="" disabled selected>-- Pilih bulan --</option>
+                                    <select id="bulan" name="bulan" class="form-control" required>
+                                        <option value="" selected disabled>-- Pilih bulan --</option>
                                         <option value="Januari">Januari</option>
                                         <option value="Februari">Februari</option>
                                         <option value="Maret">Maret</option>
@@ -63,8 +47,8 @@
                             <tr>
                                 <th>Minggu ke</th>
                                 <td>
-                                    <select id="minggu_ke" name="minggu_ke" class="form-control">
-                                        <option value="" disabled selected>-- Pilih minggu --</option>
+                                    <select id="minggu_ke" name="minggu_ke" class="form-control" required>
+                                        <option value="" selected disabled>-- Pilih minggu --</option>
                                         <option>1</option>
                                         <option>2</option>
                                         <option>3</option>
@@ -126,10 +110,7 @@
                     </div>
                 </div>
             </form>
-
         </x-card-box>
-
-
 
     </div>
 @endsection
@@ -148,7 +129,7 @@
                 <div class="modal-body">
                     <p>Akan mengirimkan data:</p>
                     <hr>
-                    <p id="assessment"></p>
+                    <p id="assessment">Self Assessment - {{ Auth::user()->nama }}</p>
                     <hr>
                     <strong>Assessment yang terkirim tidak dapat dihapus atau diubah. <br />Konfirmasi kirim
                         assessment?</strong>
@@ -170,63 +151,35 @@
 
 @section('script')
     <script>
-        let siswa = $('#siswa').val().split('/')
+        let formData = new FormData()
         let kirimBtn = document.getElementById('kirim')
         let loadingTrigger = document.querySelectorAll('.loadingTrigger')
-        const DATA = {}
 
-        $('#aspects_form').on('submit', function(e) {
+        $('form#aspects_form').on('submit', (e) => {
             e.preventDefault()
-
-            // cek form
-            let bulan = document.getElementById('bulan')
-            let mingguKe = document.getElementById('minggu_ke')
-
-            if (!siswa[0] || bulan.value == '' || mingguKe.value == '') {
-                notif('Lengkapi data form', false)
-            } else {
-                let data = $(this).serializeArray()
-                let formData = new FormData()
-                formData.append('_token', "{{ csrf_token() }}")
-                formData.append('kelas_id', "{{ $kelas->kelas->id }}")
-                formData.append('periode_id', "{{ $periodeAktif->id }}")
-                formData.append('siswa_user_id', siswa[0])
-                formData.append('aspects', JSON.stringify(data))
-                formData.append('bulan', $('#bulan').val())
-                formData.append('minggu_ke', $('#minggu_ke').val())
-                formData.append('nama_siswa', "{{ Auth::user()->nama }}")
-                formData.append('walas_id', "{{ $kelas->kelas->walas_id }}")
-
-                $('#assessment').html(`Parent assessment: ${siswa[3]}`)
-                $('#storeAssessmentModal').modal('show')
-                DATA.data = formData
-                DATA.route = "{{ route('parent-assessment-store') }}"
+            if (!$('#bulan').val() || !$('#minggu_ke').val()) {
+                notif('Bulan dan minggu-ke tidak boleh kosong', false)
+                return false
             }
-        })
 
-        function prosesAjax(data, route) {
-            $.ajax({
-                url: route, //
-                method: 'POST', //
-                data: data, //
-                dataType: 'json', //
-                processData: false, //
-                contentType: false, //
-                success: function(res) {
-                    onfinish()
-                    if (res.success) {
-                        notif(res.message, true)
-                    } else {
-                        notif(res.message, false)
-                    }
-                }, //
-                error: function(err) {
-                    onfinish()
-                    console.log(err.responseText)
-                    notif(err.responseText, false)
-                }
-            });
-        }
+            let data = $('form#aspects_form').serializeArray()
+
+            console.log(data);
+
+
+            formData.append('_token', "{{ csrf_token() }}")
+            formData.append('kelas_id', "{{ $kelas->kelas->id }}")
+            formData.append('periode_id', "{{ $periodeAktif->id }}")
+            formData.append('siswa_user_id', "{{ Auth::user()->id }}")
+            formData.append('aspects', JSON.stringify(data))
+            formData.append('bulan', $('#bulan').val())
+            formData.append('minggu_ke', $('#minggu_ke').val())
+            formData.append('nama_siswa', "{{ Auth::user()->nama }}")
+            formData.append('walas_id', "{{ $walas_id }}")
+
+            $('#storeAssessmentModal').modal('show')
+
+        })
 
         function onfinish() {
             let span = document.createElement('span')
@@ -238,6 +191,7 @@
             })
             $('#storeAssessmentModal').modal('hide')
             $('#aspects_form').get(0).reset()
+
         }
 
         loadingTrigger.forEach(function(loading) {
@@ -260,8 +214,29 @@
             })
         })
 
-        kirimBtn.addEventListener('click', function() {
-            prosesAjax(DATA.data, DATA.route)
+        kirimBtn.addEventListener('click', () => {
+
+            $.ajax({
+                url: "{{ route('self-assessment-store') }}", //
+                method: 'POST', //
+                data: formData, //
+                dataType: 'json', //
+                processData: false, //
+                contentType: false, //
+                success: function(res) {
+                    onfinish()
+                    if (res.success) {
+                        notif(res.message, true)
+                    } else {
+                        notif(res.message, false)
+                    }
+                }, //
+                error: function(err) {
+                    onfinish()
+                    console.log(err.responseText)
+                    notif(err.responseText, false)
+                }
+            })
         })
     </script>
 

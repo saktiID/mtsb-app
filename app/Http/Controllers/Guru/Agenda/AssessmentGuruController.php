@@ -70,6 +70,26 @@ class AssessmentGuruController extends Controller
         }
     }
 
+    // public function assessment_history()
+    // {
+    //     // parameters
+    //     $periode_id = $this->periodeAktif->id;
+    //     $walas_id = Auth::user()->id;
+    //     $kelas = Kelas::where('periode_id', $periode_id)
+    //         ->where('walas_id', $walas_id)->first();
+
+    //     // data untuk dikirim ke view
+    //     $data['siswaDalamKelas'] = KelasSiswa::with(['user', 'siswa'])
+    //         ->where('kelas_id', $kelas->id)
+    //         ->join('users', 'kelas_siswas.user_id', '=', 'users.id')
+    //         ->orderBy('users.nama', 'asc')
+    //         ->get();
+    //     $data['kelas'] = $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
+    //     $data['periodeAktif'] = $this->periodeAktif;
+
+    //     return view('guru.agenda.assessment-history.history', $data);
+    // }
+
     public function assessment_history()
     {
         // parameters
@@ -79,15 +99,11 @@ class AssessmentGuruController extends Controller
             ->where('walas_id', $walas_id)->first();
 
         // data untuk dikirim ke view
-        $data['siswaDalamKelas'] = KelasSiswa::with(['user', 'siswa'])
-            ->where('kelas_id', $kelas->id)
-            ->join('users', 'kelas_siswas.user_id', '=', 'users.id')
-            ->orderBy('users.nama', 'asc')
-            ->get();
         $data['kelas'] = $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
+        $data['kelas_id'] = $kelas->id;
         $data['periodeAktif'] = $this->periodeAktif;
 
-        return view('guru.agenda.assessment-history.history', $data);
+        return view('guru.agenda.assessment-history.all-history', $data);
     }
 
     public function assessment_recap()
@@ -109,12 +125,23 @@ class AssessmentGuruController extends Controller
         }
     }
 
+    // public function get_history(Request $request)
+    // {
+    //     if ($request->ajax()) {
+    //         $requestAjax = json_decode($request->a, true);
+
+    //         return $this->assessmentData->getDataTable($requestAjax);
+    //     }
+    // }
+
     public function get_history(Request $request)
     {
         if ($request->ajax()) {
             $requestAjax = json_decode($request->a, true);
 
-            return $this->assessmentData->getDataTable($requestAjax);
+            $getAllData = $this->assessmentData->getAllData($requestAjax);
+
+            return response()->json($getAllData);
         }
     }
 

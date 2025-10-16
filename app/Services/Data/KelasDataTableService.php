@@ -24,17 +24,20 @@ class KelasDataTableService
             })
             ->addColumn('walas', function ($kelas) {
                 $avatar = '-';
+                $nama_walas = '-';
                 if ($kelas->walas_id != '') {
                     $walas = User::find($kelas->walas_id);
                     if ($walas) {
                         $avatar = $walas->avatar;
+                        $nama_walas = $walas->nama;
                     }
                 }
                 $data['avatar'] = $avatar;
                 $data['route'] = 'detail-kelas';
                 $data['id'] = $kelas->id;
+                $data['nama_walas'] = $nama_walas;
 
-                return view('element.avatar', $data);
+                return view('element.avatar-walas', $data);
             })
             ->addColumn('kelas', function ($kelas) {
                 return $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
@@ -57,7 +60,7 @@ class KelasDataTableService
         $siswa = KelasSiswa::where([
             ['periode_id', $periode_id],
             ['kelas_id', $kelas_id],
-        ])->with(['user:id,avatar,nama', 'kelas', 'siswa:user_id,nis,nisn'])
+        ])->with(['user:id,avatar,nama,username', 'kelas', 'siswa:user_id,nis,nisn'])
             ->join('users', 'kelas_siswas.user_id', '=', 'users.id')
             ->orderBy('users.nama', 'asc')
             ->select(['*', 'kelas_siswas.id as id'])
@@ -89,8 +92,8 @@ class KelasDataTableService
             ->addColumn('nis', function ($siswa) {
                 return $siswa->siswa->nis;
             })
-            ->addColumn('nisn', function ($siswa) {
-                return $siswa->siswa->nisn;
+            ->addColumn('username', function ($siswa) {
+                return $siswa->user->username;
             })
             ->addColumn('more', function ($siswa) {
                 $el = '
@@ -112,7 +115,7 @@ class KelasDataTableService
     public function getSemuaSiswa()
     {
         $siswa = User::where('is_active', true)
-            ->select('id', 'nama', 'avatar')
+            ->select('id', 'nama', 'avatar', 'username')
             ->has('siswa')
             ->with('siswa:user_id,nis,nisn')
             ->orderBy('nama', 'asc')
@@ -137,8 +140,8 @@ class KelasDataTableService
             ->addColumn('nis', function ($siswa) {
                 return $siswa->siswa->nis;
             })
-            ->addColumn('nisn', function ($siswa) {
-                return $siswa->siswa->nisn;
+            ->addColumn('username', function ($siswa) {
+                return $siswa->username;
             })
             ->addColumn('more', function ($siswa) {
                 $el = '

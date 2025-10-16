@@ -6,12 +6,12 @@ return [
         'name' => env('APP_NAME', 'My PWA App'),
         'short_name' => 'MTsB',
         'start_url' => '/',
-        'background_color' => '#97cde0',
+        'background_color' => '#5d5d5dff',
         'theme_color' => '#000000',
         'display_override' => ['fullscreen'],
         'display' => 'standalone',
         'orientation' => 'any',
-        'status_bar' => '#97cde0',
+        'status_bar' => '#5d5d5dff',
         'icons' => [
             '72x72' => [
                 'path' => '/images/icons/default/icon-72x72.png',
@@ -102,7 +102,7 @@ return [
                     ],
                 ],
             ],
-            'description' => 'Aplikasi untuk sarana belajar di MTsB',
+            'description' => 'Aplikasi assessment digital MTs Bilingual',
             'orientation' => 'portrait',
         ],
     ],

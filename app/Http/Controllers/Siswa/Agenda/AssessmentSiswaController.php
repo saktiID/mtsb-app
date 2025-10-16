@@ -34,6 +34,35 @@ class AssessmentSiswaController extends Controller
         }
     }
 
+    public function self_assessment()
+    {
+        $this->_checkKelas();
+
+        $periode_id = $this->periodeAktif->id;
+        $kelas = KelasSiswa::with('kelas')
+            ->where('periode_id', $periode_id)
+            ->where('user_id', Auth::user()->id)->first();
+
+        $data['siswaDalamKelas'] = Cache::remember($kelas->kelas->id, 1200, function () use ($kelas) {
+            return KelasSiswa::with(['user:id,avatar,nama', 'siswa:user_id,nis'])
+                ->where('kelas_id', $kelas->kelas->id)
+                ->join('users', 'kelas_siswas.user_id', '=', 'users.id')
+                ->orderBy('users.nama', 'asc')
+                ->get();
+        });
+        $data['periodeAktif'] = $this->periodeAktif;
+        $data['kelas'] = $kelas;
+        $data['walas_id'] = $kelas->kelas->walas_id;
+        $data['aspects'] = Cache::remember('aspcet-peer', 300, function () {
+            return AssessmentAspect::where('aspect_for', 'self')
+                ->where('aspect_status', true)
+                ->orderBy('id', 'asc')
+                ->get();
+        });
+
+        return view('siswa.agenda.self-assessment.self', $data);
+    }
+
     public function parent_assessment()
     {
         $this->_checkKelas();
@@ -81,7 +110,26 @@ class AssessmentSiswaController extends Controller
                 ->get();
         });
 
-        return view('siswa.agenda.peer-assessment.peer', $data);
+        return view('siswa.agenda.peer-assessment.peer-random', $data);
+    }
+
+    public function self_assessment_store(Request $request)
+    {
+        $checkExist = $this->assessment->checkExist($request, 'Self');
+        $checkProcess = $this->assessment->checkProcess($request, 'Self');
+        if ($checkProcess) {
+            return response()->json(['success' => false, 'message' => 'Assessment sedang diproses. Silahkan tunggu beberapa saat.']);
+        }
+        if (! $checkExist) {
+            $query = $this->assessment->storeAssessment($request, 'Self - '.Auth::user()->nama);
+            if ($query) {
+                return response()->json(['success' => true, 'message' => 'Assessment telah masuk antrian untuk disimpan dalam database. Tunggu beberapa saat untuk melihat riwayat.']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Assessment gagal disimpan']);
+            }
+        } else {
+            return response()->json(['success' => false, 'message' => 'Assessment sudah ada']);
+        }
     }
 
     public function parent_assessment_store(Request $request)
@@ -100,6 +148,15 @@ class AssessmentSiswaController extends Controller
             }
         } else {
             return response()->json(['success' => false, 'message' => 'Assessment sudah ada']);
+        }
+    }
+
+    public function peer_assessment_random(Request $request)
+    {
+        if ($request->ajax()) {
+            $res = $this->assessment->peer_random($request);
+
+            return response()->json($res);
         }
     }
 

@@ -14,10 +14,13 @@ Route::prefix('siswa')->group(function () {
         Route::get('/', function () {
             return redirect()->route('beranda-siswa');
         });
+        Route::get('self-assessment', [AssessmentSiswaController::class, 'self_assessment'])->name('self-assessment');
+        Route::post('self-assessment-store', [AssessmentSiswaController::class, 'self_assessment_store'])->name('self-assessment-store');
         Route::get('parent-assessment', [AssessmentSiswaController::class, 'parent_assessment'])->name('parent-assessment');
         Route::post('parent-assessment-store', [AssessmentSiswaController::class, 'parent_assessment_store'])->name('parent-assessment-store');
         Route::get('peer-assessment', [AssessmentSiswaController::class, 'peer_assessment'])->name('peer-assessment');
         Route::post('peer-assessment-store', [AssessmentSiswaController::class, 'peer_assessment_store'])->name('peer-assessment-store');
+        Route::post('peer-assessment-random', [AssessmentSiswaController::class, 'peer_assessment_random'])->name('peer-assessment-random');
         Route::get('assessment-history', [AssessmentSiswaController::class, 'assessment_history'])->name('assessment-history.siswa');
         Route::get('get-assessment-history', [AssessmentSiswaController::class, 'get_history'])->name('get-assessment-history.siswa');
         Route::get('get-note-history', [AssessmentSiswaController::class, 'get_note'])->name('get-note-history.siswa');
