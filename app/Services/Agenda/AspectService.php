@@ -12,10 +12,10 @@ class AspectService
      */
     public function tambahAspect($request)
     {
-        if($request->aspect_for == "peer") {
+        if ($request->aspect_for == 'peer') {
             $aspect_self = new AssessmentAspect;
             $aspect_self->aspect = $request->aspect;
-            $aspect_self->aspect_for = "self";
+            $aspect_self->aspect_for = 'self';
             $aspect_self->save();
         }
 
