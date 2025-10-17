@@ -64,7 +64,10 @@
                         </table>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="mb-3 btn btn-secondary">Telusuri</button>
+                        <button type="submit" class="mb-3 btn btn-secondary" id="btn-telusuri">
+                           <span id="spinner-wrapper" class="d-none spinner-border text-white align-self-center loader-sm"></span>
+                           <span id="text-search" class="d-block">Telusuri</span>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -145,6 +148,11 @@
 
         $('form').on('submit', function(e) {
             e.preventDefault()
+
+            $('#btn-telusuri').attr('disabled', true)
+            $('#spinner-wrapper').removeClass('d-none').addClass('d-block')
+            $('#text-search').removeClass('d-block').addClass('d-none')
+
             PARAMS.push({
                 'kelas_id': "{{ $kelas_id }}", //
                 'periode_id': "{{ $periodeAktif->id }}", //
@@ -174,6 +182,10 @@
                     }, 800);
 
                     PARAMS = []
+
+                    $('#btn-telusuri').attr('disabled', false)
+                    $('#spinner-wrapper').removeClass('d-block').addClass('d-none')
+                    $('#text-search').removeClass('d-none').addClass('d-block')
                 },
                 error: function(xhr) {
                     console.error("Terjadi kesalahan:", xhr.responseText);
