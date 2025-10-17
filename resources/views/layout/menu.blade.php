@@ -164,8 +164,11 @@
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-dismiss="modal"><i
                             class="flaticon-cancel-12"></i>Batalkan</button>
-                    <a href="{{ route('logout') }}" type="submit" class="btn btn-danger loadingTriggerLogout">Tetap
-                        keluar</a>
+                    <form id="form-logout" action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" id="btn-logout" class="btn btn-danger loadingTriggerLogout">Tetap
+                            keluar</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -176,6 +179,11 @@
             const spinner = document.createElement('div')
             spinner.classList = "spinner-border text-white align-self-center loader-sm"
             loadingTriggerLogout.replaceChild(spinner, loadingTriggerLogout.childNodes[0])
+        })
+
+        document.getElementById('form-logout').addEventListener('submit', () => {
+            console.log('logout');
+            $('#btn-logout').attr('disabled', true)
         })
     </script>
 @endsection

@@ -52,7 +52,7 @@
                         </div>
                         {{-- end install app --}}
 
-                        <form class="text-left" action="{{ route('attempt_login') }}" method="POST">
+                        <form id="form-login" class="text-left" action="{{ route('attempt_login') }}" method="POST">
                             <div class="form">
                                 @csrf
                                 <div id="username-field" class="field-wrapper input">
@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="d-sm-flex justify-content-between">
                                     <div class="field-wrapper">
-                                        <button type="submit" class="btn btn-primary loadingTrigger"
+                                        <button type="submit" class="btn btn-primary loadingTrigger" id="btn-login"
                                             value="">Masuk</button>
                                     </div>
                                 </div>
@@ -135,6 +135,10 @@
             } else {
                 password.type = 'password'
             }
+        })
+
+        $('form#form-login').on('submit', () => {
+            $('#btn-login').attr('disabled', true)
         })
     </script>
 
