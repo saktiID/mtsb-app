@@ -2,13 +2,14 @@
 
 namespace App\Services\Agenda;
 
-use App\Jobs\InsertAssessmentRecordJob;
-use App\Models\Agenda\AssessmentRecord;
-use App\Models\AssessmentProcess;
-use App\Models\Data\KelasSiswa;
-use App\Models\PeerRandomLock;
 use App\Models\User;
 use Illuminate\Support\Str;
+use App\Models\PeerRandomLock;
+use App\Models\Data\KelasSiswa;
+use App\Models\AssessmentProcess;
+use Illuminate\Support\Facades\Auth;
+use App\Jobs\InsertAssessmentRecordJob;
+use App\Models\Agenda\AssessmentRecord;
 
 class AssessmentService
 {
@@ -85,7 +86,7 @@ class AssessmentService
                     'id' => Str::uuid(),
                     'kelas_id' => $request->kelas_id,
                     'periode_id' => $request->periode_id,
-                    'siswa_user_id' => ($evaluator == 'Peer') ? $request->teman_user_id : $request->siswa_user_id,
+                    'siswa_user_id' => ($evaluator == 'Peer - '.Auth::user()->nama) ? $request->teman_user_id : $request->siswa_user_id,
                     'aspect_id' => $item['name'],
                     'is_note' => false,
                     'answer' => $item['value'],
@@ -100,7 +101,7 @@ class AssessmentService
                     'id' => Str::uuid(),
                     'kelas_id' => $request->kelas_id,
                     'periode_id' => $request->periode_id,
-                    'siswa_user_id' => ($evaluator == 'Peer') ? $request->teman_user_id : $request->siswa_user_id,
+                    'siswa_user_id' => ($evaluator == 'Peer - '.Auth::user()->nama) ? $request->teman_user_id : $request->siswa_user_id,
                     'aspect_id' => null,
                     'is_note' => true,
                     'answer' => $item['value'],
@@ -118,7 +119,7 @@ class AssessmentService
         $process->status = 'processing';
         $process->kelas_id = $request->kelas_id;
         $process->periode_id = $request->periode_id;
-        $process->siswa_user_id = ($evaluator == 'Peer') ? $request->teman_user_id : $request->siswa_user_id;
+        $process->siswa_user_id = ($evaluator == 'Peer - '.Auth::user()->nama) ? $request->teman_user_id : $request->siswa_user_id;
         $process->bulan = $request->bulan;
         $process->minggu_ke = $request->minggu_ke;
         $process->evaluator = $evaluator;
@@ -133,7 +134,7 @@ class AssessmentService
     public function checkExist($request, $evaluator)
     {
         return AssessmentRecord::where('periode_id', $request->periode_id)
-            ->where('siswa_user_id', $request->siswa_user_id)
+            ->where('siswa_user_id', ($evaluator == 'Peer') ? $request->teman_user_id : $request->siswa_user_id)
             ->where('bulan', $request->bulan)
             ->where('minggu_ke', $request->minggu_ke)
             ->where('evaluator', 'like', $evaluator.'%')
@@ -144,7 +145,7 @@ class AssessmentService
     {
         return AssessmentProcess::where('status', 'processing')
             ->where('periode_id', $request->periode_id)
-            ->where('siswa_user_id', $request->siswa_user_id)
+            ->where('siswa_user_id', ($evaluator == 'Peer') ? $request->teman_user_id : $request->siswa_user_id)
             ->where('bulan', $request->bulan)
             ->where('minggu_ke', $request->minggu_ke)
             ->where('evaluator', 'like', $evaluator.'%')

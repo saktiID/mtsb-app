@@ -17,7 +17,7 @@ class AssessmentDataTableService
         $aspects = AssessmentAspect::select(['id', 'aspect', 'aspect_for'])
             ->orderBy('id', 'asc')
             ->where('aspect_status', 1)
-            ->where('aspect_for', 'like', $request[0]['evaluator'].'%')
+            ->where('aspect_for', 'like', '%'.$request[0]['evaluator'].'%')
             ->get();
 
         // ambil siswa berdasarkan kelas
@@ -32,7 +32,7 @@ class AssessmentDataTableService
             ->where('periode_id', $request[0]['periode_id'])
             ->where('bulan', $request[0]['bulan'])
             ->where('minggu_ke', $request[0]['minggu_ke'])
-            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
+            ->where('evaluator', 'like', '%'.$request[0]['evaluator'].'%')
             ->with(['user', 'aspect'])
             ->get();
 

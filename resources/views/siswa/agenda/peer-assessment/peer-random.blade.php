@@ -212,8 +212,6 @@
                     formData.append('teman_user_id', response
                         .id) // user id dari teman!!
 
-
-
                     setTimeout(() => {
                         clearInterval(intervalRandom)
                         $('#loading-random').removeClass('d-flex').addClass('d-none');
@@ -274,6 +272,7 @@
                     contentType: false, //
                     success: function(res) {
                         onfinish()
+                        console.log(res);
                         if (res.success) {
                             notif(res.message, true)
                             setTimeout(() => {
