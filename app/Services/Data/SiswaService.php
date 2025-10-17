@@ -73,7 +73,7 @@ class SiswaService
 
             if ($user && $user->id) {
                 $user->nama = $request->nama;
-                $user->username = '@'.Str::of($request->username)->trim();
+                $user->username = '@'.str_replace(' ', '', Str::of($request->username)->trim());
                 $user->gender = $request->gender;
                 if ($request->password != '') {
                     $user->password = Hash::make($request->password);

@@ -37,8 +37,8 @@ class GuruDataTableService
             ->addColumn('email', function ($user) {
                 return $user->guru->email;
             })
-            ->addColumn('telp', function ($user) {
-                return $user->guru->telp;
+            ->addColumn('username', function ($user) {
+                return $user->username;
             })
             ->addColumn('more', function ($user) {
                 $data['nama'] = $user->nama;
