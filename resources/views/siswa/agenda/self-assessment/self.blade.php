@@ -164,9 +164,6 @@
 
             let data = $('form#aspects_form').serializeArray()
 
-            console.log(data);
-
-
             formData.append('_token', "{{ csrf_token() }}")
             formData.append('kelas_id', "{{ $kelas->kelas->id }}")
             formData.append('periode_id', "{{ $periodeAktif->id }}")

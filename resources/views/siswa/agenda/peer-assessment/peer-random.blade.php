@@ -209,6 +209,10 @@
 
                     // append form
                     formData.append('nama_siswa', response.nama)
+                    formData.append('teman_user_id', response
+                        .id) // user id dari teman!!
+
+
 
                     setTimeout(() => {
                         clearInterval(intervalRandom)
@@ -222,8 +226,6 @@
                     $('#aspects_form').on('submit', function(e) {
                         e.preventDefault()
 
-                        // append form
-                        formData.append('nama_siswa', response.nama)
                         formData.append('aspects', JSON.stringify($(this).serializeArray()))
 
                         $('#assessment').html(`Peer assessment: ${response.nama}`)
