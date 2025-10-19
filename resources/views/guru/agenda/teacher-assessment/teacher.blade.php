@@ -121,7 +121,8 @@
 
                 <div class="mb-3">
                     <label for="note">Note:</label>
-                    <textarea class="form-control" id="note" name="note" rows="3"></textarea>
+                    <textarea class="form-control" id="note" name="note" rows="3" maxlength="500"></textarea>
+                    <small id="note-count" class="form-text">0 / 500</small>
                 </div>
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="mb-3 btn btn-primary">Kirim</button>
@@ -171,6 +172,15 @@
     let kirimBtn = document.getElementById('kirim')
     let loadingTrigger = document.querySelectorAll('.loadingTrigger')
     const DATA = {}
+
+    const note = document.getElementById('note');
+    const noteCount = document.getElementById('note-count');
+
+    note.addEventListener('input', function () {
+        const length = note.value.length;
+        noteCount.textContent = `${length} / 500`;
+    });
+
 
     $('#siswa_kelas').on('change', function() {
         siswa = $('#siswa_kelas').val().split('/')

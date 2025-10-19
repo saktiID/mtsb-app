@@ -48,7 +48,7 @@ class AssessmentAdminController extends Controller
     {
         $query = $this->aspect->tambahAspect($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Assessment Aspect for '.$request->aspect_for.' berhasil ditambahkan']);
+            return response()->json(['success' => true, 'message' => 'Assessment Aspect for ' . $request->aspect_for . ' berhasil ditambahkan']);
         } else {
             return response()->json(['success' => false, 'message' => 'Assessment Aspect gagal ditambahkan']);
         }
@@ -101,14 +101,12 @@ class AssessmentAdminController extends Controller
 
     public function assessment_recap()
     {
-        // parameters
-        $data['kelas_all'] = Kelas::orderBy('jenjang_kelas', 'asc')
-            ->orderBy('bagian_kelas', 'asc')
+        $data['kelas'] = Kelas::select('*')
+            ->where('periode_id', $this->periodeAktif->id)
+            ->orderBy('jenjang_kelas')
+            ->orderBy('bagian_kelas')
             ->get();
-        $data['periodes'] = Periode::select(['id', 'tahun_ajaran', 'semester'])
-            ->orderBy('tahun_ajaran', 'asc')
-            ->orderBy('semester', 'asc')
-            ->get();
+        $data['periodeAktif'] = $this->periodeAktif;
 
         return view('admin.agenda.assessment-recap.recap', $data);
     }

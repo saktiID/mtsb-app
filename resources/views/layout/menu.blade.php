@@ -48,7 +48,7 @@
             menuActive="admin/agenda/assessment-aspect" />
         <x-sub-menu-dropdown menuTitle="Assessment History" menuRoute="assessment-history.admin"
             menuActive="admin/agenda/assessment-history" />
-        <x-sub-menu-dropdown menuTitle="Monitoring Assessmentp" menuRoute="assessment-recap.admin"
+        <x-sub-menu-dropdown menuTitle="Monitoring Assessment" menuRoute="assessment-recap.admin"
             menuActive="admin/agenda/assessment-recap" />
 
     </x-menu-dropdown>
@@ -75,6 +75,8 @@
                 menuActive="guru/agenda/assessment-history" />
             <x-sub-menu-dropdown menuTitle="Monitoring Assessment" menuRoute="assessment-recap.guru"
                 menuActive="guru/agenda/assessment-recap" />
+            <x-sub-menu-dropdown menuTitle="Check Peer Assessment" menuRoute="check-peer.guru"
+                menuActive="guru/agenda/check-peer" />
         </x-menu-dropdown>
 
         @section('script-layout')

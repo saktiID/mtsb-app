@@ -13,9 +13,9 @@
                                 <td>
                                     <select name="kelas_id" id="kelas_id" class="form-control" required>
                                         <option value="" disabled selected>-- Pilih kelas --</option>
-                                        @foreach ($kelas_all as $kelas)
-                                            <option value="{{ $kelas->id }}">
-                                                {{ $kelas->jenjang_kelas . '-' . $kelas->bagian_kelas }}</option>
+                                        @foreach ($kelas as $kls)
+                                            <option value="{{ $kls->id }}">
+                                                {{ $kls->jenjang_kelas . '-' . $kls->bagian_kelas }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -23,13 +23,7 @@
                             <tr>
                                 <th>Periode</th>
                                 <td>
-                                    <select name="periode_id" id="periode_id" class="form-control" required>
-                                        <option value="" disabled selected>-- Pilih periode --</option>
-                                        @foreach ($periodes as $periode)
-                                            <option value="{{ $periode->id }}">
-                                                {{ $periode->tahun_ajaran . ' | ' . $periode->semester }}</option>
-                                        @endforeach
-                                    </select>
+                                    Semester: {{ $periodeAktif->semester }} {{ $periodeAktif->tahun_ajaran }}
                                 </td>
                             </tr>
                             <tr>
@@ -40,6 +34,7 @@
                                         <option value="Teacher">Teacher Assessment</option>
                                         <option value="Parent">Parent Assessment</option>
                                         <option value="Peer">Peer Assessment</option>
+                                        <option value="Self">Self Assessment</option>
                                     </select>
                                 </td>
                             </tr>
@@ -138,10 +133,6 @@
             parameters.kelas_id = $(this).val()
         })
 
-        $('#periode_id').on('change', function() {
-            parameters.periode_id = $(this).val()
-        })
-
         $('#assessment_for').on('change', function() {
             parameters.evaluator = $(this).val()
         })
@@ -158,7 +149,7 @@
             e.preventDefault()
             sendParameters.push({
                 'kelas_id': parameters.kelas_id, //
-                'periode_id': parameters.periode_id, //
+                'periode_id': "{{ $periodeAktif->id }}", //
                 'evaluator': parameters.evaluator, //
                 'bulan': parameters.bulan, //
                 'minggu_ke': parameters.minggu_ke

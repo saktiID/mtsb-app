@@ -25,6 +25,7 @@ Route::prefix('guru')->group(function () {
         Route::post('teacher-assessment-store', [AssessmentGuruController::class, 'assessment_store'])->name('teacher-assessment-store');
         Route::get('assessment-history', [AssessmentGuruController::class, 'assessment_history'])->name('assessment-history.guru');
         Route::get('assessment-recap', [AssessmentGuruController::class, 'assessment_recap'])->name('assessment-recap.guru');
+        Route::get('check-peer', [AssessmentGuruController::class, 'check_peer'])->name('check-peer.guru');
         Route::get('get-teacher-assessment-history', [AssessmentGuruController::class, 'get_history'])->name('get-assessment-history.guru');
         Route::get('get-teacher-assessment-recap', [AssessmentGuruController::class, 'get_recap'])->name('get-assessment-recap.guru');
         Route::get('get-teacher-note-history', [AssessmentGuruController::class, 'get_note'])->name('get-note-history.guru');

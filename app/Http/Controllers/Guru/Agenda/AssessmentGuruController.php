@@ -59,7 +59,7 @@ class AssessmentGuruController extends Controller
             return response()->json(['success' => false, 'message' => 'Assessment sedang diproses. Silahkan tunggu beberapa saat.']);
         }
         if (! $checkExist) {
-            $query = $this->assessment->storeAssessment($request, 'Teacher - '.Auth::user()->nama);
+            $query = $this->assessment->storeAssessment($request, 'Teacher - ' . Auth::user()->nama);
             if ($query) {
                 return response()->json(['success' => true, 'message' => 'Assessment telah masuk antrian untuk disimpan dalam database. Tunggu beberapa saat untuk melihat riwayat.']);
             } else {
@@ -99,7 +99,7 @@ class AssessmentGuruController extends Controller
             ->where('walas_id', $walas_id)->first();
 
         // data untuk dikirim ke view
-        $data['kelas'] = $kelas->jenjang_kelas.'-'.$kelas->bagian_kelas;
+        $data['kelas'] = $kelas->jenjang_kelas . '-' . $kelas->bagian_kelas;
         $data['kelas_id'] = $kelas->id;
         $data['periodeAktif'] = $this->periodeAktif;
 
@@ -144,6 +144,25 @@ class AssessmentGuruController extends Controller
             return response()->json($getAllData);
         }
     }
+
+    public function check_peer(Request $request)
+    {
+        // check ajax
+        if ($request->ajax()) {
+            $requestAjax = json_decode($request->a, true);
+            $records = $this->assessment->check_peer_record($requestAjax[0]);
+            return response()->json($records);
+        }
+
+
+        // data
+        $data['periodeAktif'] = $this->periodeAktif;
+        $data['kelas'] = Kelas::where('periode_id', $this->periodeAktif->id)
+            ->where('walas_id', Auth::user()->id)->first();
+
+        return view('guru.agenda.check-peer.check', $data);
+    }
+
 
     public function get_note(Request $request)
     {
