@@ -6,12 +6,12 @@ return [
         'name' => env('APP_NAME', 'My PWA App'),
         'short_name' => 'MTsB',
         'start_url' => '/',
-        'background_color' => '#5d5d5dff',
+        'background_color' => '#445EDE',
         'theme_color' => '#000000',
         'display_override' => ['fullscreen'],
         'display' => 'standalone',
         'orientation' => 'any',
-        'status_bar' => '#5d5d5dff',
+        'status_bar' => '#445EDE',
         'icons' => [
             '72x72' => [
                 'path' => '/images/icons/default/icon-72x72.png',
