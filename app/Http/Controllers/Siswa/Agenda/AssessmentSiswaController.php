@@ -30,7 +30,7 @@ class AssessmentSiswaController extends Controller
         $kelasSiswa = KelasSiswa::where('periode_id', $this->periodeAktif->id)
             ->where('user_id', Auth::user()->id)->exists();
         if (! $kelasSiswa) {
-            abort(404);
+            abort(302);
         }
     }
 
