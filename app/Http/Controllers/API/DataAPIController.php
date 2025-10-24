@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\User;
-use App\Models\Data\Kelas;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Data\Kelas;
+use App\Models\User;
 
 class DataAPIController extends Controller
 {
@@ -13,6 +12,7 @@ class DataAPIController extends Controller
     {
         $kelas = Kelas::where('periode_id', $this->periodeAktif->id)
             ->orderBy('jenjang_kelas', 'ASC')->orderBy('bagian_kelas', 'ASC')->get();
+
         return response()->json($kelas);
     }
 
@@ -24,12 +24,14 @@ class DataAPIController extends Controller
             ->with('siswa:user_id,nis,nisn')
             ->orderBy('nama', 'asc')
             ->get();
+
         return response()->json($siswa);
     }
 
     public function getGuru()
     {
         $guru = User::where('role', 'Guru')->orderBy('nama', 'ASC')->get();
+
         return response()->json($guru);
     }
 }

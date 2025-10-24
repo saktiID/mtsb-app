@@ -2,14 +2,14 @@
 
 namespace App\Services\Agenda;
 
-use App\Models\User;
-use Illuminate\Support\Str;
-use App\Models\PeerRandomLock;
-use App\Models\Data\KelasSiswa;
-use App\Models\AssessmentProcess;
-use Illuminate\Support\Facades\Auth;
 use App\Jobs\InsertAssessmentRecordJob;
 use App\Models\Agenda\AssessmentRecord;
+use App\Models\AssessmentProcess;
+use App\Models\Data\KelasSiswa;
+use App\Models\PeerRandomLock;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class AssessmentService
 {
@@ -87,23 +87,20 @@ class AssessmentService
         $table = [];
 
         foreach ($siswa_kelas as $siswa) {
-
             // Cek apakah user_id dari kelas_siswa ada di antara siswa_user_id dari PeerRandomLock
             $match = $records->firstWhere('siswa_user_id', $siswa->user_id);
 
             if ($match) {
-
                 $table[] = [
                     'evaluator' => $siswa->user->nama,
                     'assessed' => $match->teman->nama,
-                    'status' => $match->assessment_process ? $match->assessment_process->status : 'No process'
+                    'status' => $match->assessment_process ? $match->assessment_process->status : 'No process',
                 ];
             } else {
-
                 $table[] = [
                     'evaluator' => $siswa->user->nama,
                     'assessed' => '-',
-                    'status' => 'no process'
+                    'status' => 'no process',
                 ];
             }
         }
@@ -130,7 +127,7 @@ class AssessmentService
                     'id' => Str::uuid(),
                     'kelas_id' => $request->kelas_id,
                     'periode_id' => $request->periode_id,
-                    'siswa_user_id' => ($evaluator == 'Peer - ' . Auth::user()->nama) ? $request->teman_user_id : $request->siswa_user_id,
+                    'siswa_user_id' => ($evaluator == 'Peer - '.Auth::user()->nama) ? $request->teman_user_id : $request->siswa_user_id,
                     'aspect_id' => $item['name'],
                     'is_note' => false,
                     'answer' => $item['value'],
@@ -145,7 +142,7 @@ class AssessmentService
                     'id' => Str::uuid(),
                     'kelas_id' => $request->kelas_id,
                     'periode_id' => $request->periode_id,
-                    'siswa_user_id' => ($evaluator == 'Peer - ' . Auth::user()->nama) ? $request->teman_user_id : $request->siswa_user_id,
+                    'siswa_user_id' => ($evaluator == 'Peer - '.Auth::user()->nama) ? $request->teman_user_id : $request->siswa_user_id,
                     'aspect_id' => null,
                     'is_note' => true,
                     'answer' => $item['value'],
@@ -163,7 +160,7 @@ class AssessmentService
         $process->status = 'processing';
         $process->kelas_id = $request->kelas_id;
         $process->periode_id = $request->periode_id;
-        $process->siswa_user_id = ($evaluator == 'Peer - ' . Auth::user()->nama) ? $request->teman_user_id : $request->siswa_user_id;
+        $process->siswa_user_id = ($evaluator == 'Peer - '.Auth::user()->nama) ? $request->teman_user_id : $request->siswa_user_id;
         $process->bulan = $request->bulan;
         $process->minggu_ke = $request->minggu_ke;
         $process->evaluator = $evaluator;
@@ -181,7 +178,7 @@ class AssessmentService
             ->where('siswa_user_id', ($evaluator == 'Peer') ? $request->teman_user_id : $request->siswa_user_id)
             ->where('bulan', $request->bulan)
             ->where('minggu_ke', $request->minggu_ke)
-            ->where('evaluator', 'like', $evaluator . '%')
+            ->where('evaluator', 'like', $evaluator.'%')
             ->exists();
     }
 
@@ -192,7 +189,7 @@ class AssessmentService
             ->where('siswa_user_id', ($evaluator == 'Peer') ? $request->teman_user_id : $request->siswa_user_id)
             ->where('bulan', $request->bulan)
             ->where('minggu_ke', $request->minggu_ke)
-            ->where('evaluator', 'like', $evaluator . '%')
+            ->where('evaluator', 'like', $evaluator.'%')
             ->exists();
     }
 
@@ -203,7 +200,7 @@ class AssessmentService
             ->where('periode_id', $request[0]['periode_id'])
             ->where('bulan', $request[0]['bulan'])
             ->where('minggu_ke', $request[0]['minggu_ke'])
-            ->where('evaluator', 'like', $request[0]['evaluator'] . '%')
+            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
             ->where('is_note', true)
             ->first();
 
@@ -219,7 +216,7 @@ class AssessmentService
             ->where('periode_id', $request[0]['periode_id'])
             ->where('bulan', $request[0]['bulan'])
             ->where('minggu_ke', $request[0]['minggu_ke'])
-            ->where('evaluator', 'like', $request[0]['evaluator'] . '%')
+            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
             ->where('is_note', false)
             ->orderBy('aspect_id', 'asc')
             ->get();
@@ -229,7 +226,7 @@ class AssessmentService
             $result[] = [
                 'aspect' => $data->aspect->aspect,
                 'answer' => $data->answer,
-                'kelas' => $data->kelas->jenjang_kelas . '-' . $data->kelas->bagian_kelas,
+                'kelas' => $data->kelas->jenjang_kelas.'-'.$data->kelas->bagian_kelas,
             ];
         }
 

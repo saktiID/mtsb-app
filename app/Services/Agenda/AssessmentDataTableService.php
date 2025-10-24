@@ -2,11 +2,11 @@
 
 namespace App\Services\Agenda;
 
-use App\Models\Data\KelasSiswa;
-use App\Models\AssessmentProcess;
-use Illuminate\Support\Facades\DB;
 use App\Models\Agenda\AssessmentAspect;
 use App\Models\Agenda\AssessmentRecord;
+use App\Models\AssessmentProcess;
+use App\Models\Data\KelasSiswa;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class AssessmentDataTableService
@@ -76,7 +76,7 @@ class AssessmentDataTableService
         $aspects = AssessmentAspect::select(['id', 'aspect', 'aspect_for'])
             ->orderBy('id', 'asc')
             ->where('aspect_status', 1)
-            ->where('aspect_for', 'like', $request[0]['evaluator'] . '%')
+            ->where('aspect_for', 'like', $request[0]['evaluator'].'%')
             ->get();
 
         // ambil siswa berdasarkan kelas
@@ -91,7 +91,7 @@ class AssessmentDataTableService
             ->where('periode_id', $request[0]['periode_id'])
             ->where('bulan', $request[0]['bulan'])
             ->where('minggu_ke', $request[0]['minggu_ke'])
-            ->where('evaluator', 'like', $request[0]['evaluator'] . '%')
+            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
             ->with(['user', 'aspect'])
             ->get();
 
@@ -131,7 +131,7 @@ class AssessmentDataTableService
             ->where('periode_id', $request[0]['periode_id'])
             ->where('bulan', $request[0]['bulan'])
             ->where('minggu_ke', $request[0]['minggu_ke'])
-            ->where('evaluator', 'like', $request[0]['evaluator'] . '%')
+            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
             ->where('is_note', false)
             ->orderBy('aspect_id', 'asc')
             ->get();
@@ -141,7 +141,7 @@ class AssessmentDataTableService
                 return $assessmentData->aspect->aspect;
             })
             ->addColumn('answer', function ($assessmentData) {
-                $el = '<span class="badge outline-badge-dark">' . $assessmentData->answer . '</span>';
+                $el = '<span class="badge outline-badge-dark">'.$assessmentData->answer.'</span>';
 
                 return $el;
             })
@@ -159,7 +159,7 @@ class AssessmentDataTableService
             ->where('periode_id', $request[0]['periode_id'])
             ->where('bulan', $request[0]['bulan'])
             ->where('minggu_ke', $request[0]['minggu_ke'])
-            ->where('evaluator', 'like', $request[0]['evaluator'] . '%')
+            ->where('evaluator', 'like', $request[0]['evaluator'].'%')
             ->get();
 
         $dataTable = DataTables::of($processData)

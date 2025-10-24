@@ -48,7 +48,7 @@ class AssessmentAdminController extends Controller
     {
         $query = $this->aspect->tambahAspect($request);
         if ($query) {
-            return response()->json(['success' => true, 'message' => 'Assessment Aspect for ' . $request->aspect_for . ' berhasil ditambahkan']);
+            return response()->json(['success' => true, 'message' => 'Assessment Aspect for '.$request->aspect_for.' berhasil ditambahkan']);
         } else {
             return response()->json(['success' => false, 'message' => 'Assessment Aspect gagal ditambahkan']);
         }

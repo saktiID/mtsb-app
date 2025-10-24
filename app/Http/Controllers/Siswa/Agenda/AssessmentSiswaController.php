@@ -121,7 +121,7 @@ class AssessmentSiswaController extends Controller
             return response()->json(['success' => false, 'message' => 'Assessment sedang diproses. Silahkan tunggu beberapa saat.']);
         }
         if (! $checkExist) {
-            $query = $this->assessment->storeAssessment($request, 'Self - ' . Auth::user()->nama);
+            $query = $this->assessment->storeAssessment($request, 'Self - '.Auth::user()->nama);
             if ($query) {
                 return response()->json(['success' => true, 'message' => 'Assessment telah masuk antrian untuk disimpan dalam database. Tunggu beberapa saat untuk melihat riwayat.']);
             } else {
@@ -170,7 +170,7 @@ class AssessmentSiswaController extends Controller
             return response()->json(['success' => false, 'message' => 'Assessment sedang diproses. Silahkan tunggu beberapa saat.']);
         }
         if (! $checkExist) {
-            $query = $this->assessment->storeAssessment($request, 'Peer - ' . Auth::user()->nama);
+            $query = $this->assessment->storeAssessment($request, 'Peer - '.Auth::user()->nama);
             if ($query) {
                 return response()->json(['success' => true, 'message' => 'Assessment telah masuk antrian untuk disimpan dalam database. Tunggu beberapa saat untuk melihat riwayat.']);
             } else {
