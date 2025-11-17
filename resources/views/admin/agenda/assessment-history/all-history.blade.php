@@ -67,6 +67,7 @@
                                         <option>2</option>
                                         <option>3</option>
                                         <option>4</option>
+                                        <option>5</option>
                                     </select>
                                 </td>
                             </tr>
@@ -75,8 +76,9 @@
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="mb-3 btn btn-secondary" id="btn-telusuri">
-                           <span id="spinner-wrapper" class="d-none spinner-border text-white align-self-center loader-sm"></span>
-                           <span id="text-search" class="d-block">Telusuri</span>
+                            <span id="spinner-wrapper"
+                                class="d-none spinner-border text-white align-self-center loader-sm"></span>
+                            <span id="text-search" class="d-block">Telusuri</span>
                         </button>
                     </div>
                 </div>
