@@ -8,6 +8,7 @@ use App\Services\Data\KelasService as Kelas;
 use App\Services\Data\SiswaService as Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class KelasSayaController extends Controller
 {
@@ -97,5 +98,42 @@ class KelasSayaController extends Controller
                 'nama' => $request->nama,
             ]);
         }
+    }
+
+    public function download_template()
+    {
+        return response()->download(public_path('storage/template-input-siswa-ke-kelas.xlsx'));
+    }
+
+    public function upload_file(Request $request)
+    {
+        if ($request->hasFile('excelFile')) {
+            $filename = $_FILES['excelFile']['name'];
+            $filetmp = $_FILES['excelFile']['tmp_name'];
+            $filetype = pathinfo($filename)['extension'];
+            $extAllowed = ['xls', 'xlsx'];
+        } else {
+            return response()->json(['success' => false, 'message' => 'File tidak ditemukan!']);
+        }
+
+        $reader = IOFactory::createReaderForFile($filetmp);
+        $spreadsheet = $reader->load($filetmp);
+        $sheetName = $spreadsheet->getSheetNames()[0];
+
+        if ($sheetName != 'data') {
+            return response()->json(['success' => false, 'message' => 'Format file salah, unduh template lagi!']);
+        }
+
+        if (! in_array($filetype, $extAllowed)) {
+            return response()->json(['success' => false, 'message' => 'Format file tidak diizinkan!']);
+        }
+
+        $log = $this->kelas->masukkanSiswaExcel($filetmp, $request->periode_id, $request->kelas_id);
+
+        if (count($log) > 0) {
+            return response()->json(['success' => false, 'message' => $log]);
+        }
+
+        return response()->json(['success' => true, 'message' => 'Data berhasil diupload!']);
     }
 }

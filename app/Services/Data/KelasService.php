@@ -4,8 +4,10 @@ namespace App\Services\Data;
 
 use App\Models\Data\Kelas;
 use App\Models\Data\KelasSiswa;
+use App\Models\Data\Siswa;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class KelasService
 {
@@ -119,5 +121,45 @@ class KelasService
         } else {
             return false;
         }
+    }
+
+    public function masukkanSiswaExcel($filetmp, $periode_id, $kelas_id)
+    {
+        $reader = IOFactory::createReaderForFile($filetmp);
+        $spreadsheet = $reader->load($filetmp);
+        $activeWorksheet = $spreadsheet->getActiveSheet()->toArray();
+
+        $activeWorksheet = $spreadsheet->getActiveSheet()->toArray();
+
+        $log = [];
+
+        for ($i = 11; $i < 50; $i++) {
+            if ($activeWorksheet[$i][1] != '') {
+                $siswa = Siswa::select('user_id')->where('nis', htmlspecialchars($activeWorksheet[$i][1]))->first();
+                if ($siswa) {
+                    $cek = $this->cekSiswa($periode_id, $siswa->user_id);
+                    if (! $cek) {
+                        $siswa_masuk = new \stdClass();
+                        $siswa_masuk->id = $siswa->user_id;
+                        $siswa_masuk->periode_id = $periode_id;
+                        $siswa_masuk->kelas_id = $kelas_id;
+
+                        $this->masukkanSiswa($siswa_masuk);
+                    } else {
+                        $log[] = [
+                            'nama' => $activeWorksheet[$i][2],
+                            'ket' => 'Siswa sudah memiliki kelas',
+                        ];
+                    }
+                } else {
+                    $log[] = [
+                        'nama' => $activeWorksheet[$i][2],
+                        'ket' => 'Siswa tidak terdaftar',
+                    ];
+                }
+            }
+        }
+
+        return $log;
     }
 }

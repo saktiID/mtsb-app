@@ -16,6 +16,8 @@ Route::prefix('guru')->group(function () {
     Route::get('semuasiswaumum', [KelasSayaController::class, 'semua_siswa'])->name('semua-siswa-umum');
     Route::post('masukkan-siswa-saya', [KelasSayaController::class, 'masukkan_siswa'])->name('masukkan-siswa-saya');
     Route::post('keluarkan-siswa-saya', [KelasSayaController::class, 'keluarkan_siswa'])->name('keluarkan-siswa-saya');
+    Route::get('download-template', [KelasSayaController::class, 'download_template'])->name('download-template-siswa-kelas');
+    Route::post('upload-template', [KelasSayaController::class, 'upload_file'])->name('upload-template-siswa-kelas');
 
     Route::prefix('agenda')->group(function () {
         Route::get('/', function () {

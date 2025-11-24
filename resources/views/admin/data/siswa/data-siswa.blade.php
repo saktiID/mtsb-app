@@ -193,7 +193,6 @@
                         <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar"
                             style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-danger" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Tutup</button>
