@@ -51,6 +51,7 @@
                                         <option>2</option>
                                         <option>3</option>
                                         <option>4</option>
+                                        <option>5</option>
                                     </select>
                                 </td>
                             </tr>
@@ -59,8 +60,9 @@
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="mb-3 btn btn-secondary" id="btn-telusuri">
-                           <span id="spinner-wrapper" class="d-none spinner-border text-white align-self-center loader-sm"></span>
-                           <span id="text-search" class="d-block">Telusuri</span>
+                            <span id="spinner-wrapper"
+                                class="d-none spinner-border text-white align-self-center loader-sm"></span>
+                            <span id="text-search" class="d-block">Telusuri</span>
                         </button>
                     </div>
                 </div>
@@ -103,9 +105,8 @@
 
 @section('script')
     <script src="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.js') }}"></script>
-  
-    <script>
 
+    <script>
         $('#check-peer-form').on('submit', (e) => {
             e.preventDefault()
 
@@ -137,11 +138,11 @@
                     $('#btn-telusuri').attr('disabled', false)
                     $('#spinner-wrapper').removeClass('d-block').addClass('d-none')
                     $('#text-search').removeClass('d-none').addClass('d-block')
-                    
+
                 },
                 error: function(error) {
                     console.log(error.responseText);
-                    
+
                 }
             })
 
@@ -152,7 +153,7 @@
             $('#tbody-content').empty()
 
             // looping data
-            data.forEach( element => {
+            data.forEach(element => {
                 // buat element tr
                 let tr = document.createElement('tr')
 

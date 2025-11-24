@@ -67,6 +67,7 @@
                                         <option>2</option>
                                         <option>3</option>
                                         <option>4</option>
+                                        <option>5</option>
                                     </select>
                                 </td>
                             </tr>
@@ -75,8 +76,9 @@
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="mb-3 btn btn-secondary" id="btn-telusuri">
-                           <span id="spinner-wrapper" class="d-none spinner-border text-white align-self-center loader-sm"></span>
-                           <span id="text-search" class="d-block">Telusuri</span>
+                            <span id="spinner-wrapper"
+                                class="d-none spinner-border text-white align-self-center loader-sm"></span>
+                            <span id="text-search" class="d-block">Telusuri</span>
                         </button>
                     </div>
                 </div>
@@ -85,48 +87,50 @@
 
         <x-card-box cardTitle="Result">
 
-            <div id="print-area">
+            <table id="identitas" class="mb-3 table table-bordered" style="width: 100%">
+                <tr>
+                    <td class="text-bold">Kelas</td>
+                    <td id="nama-kelas-wrapper"></td>
+                </tr>
+                <tr>
+                    <td class="text-bold">Periode</td>
+                    <td>Semester: {{ $periodeAktif->semester }} {{ $periodeAktif->tahun_ajaran }}</td>
+                </tr>
+                <tr>
+                    <td class="text-bold">Assessment Type</td>
+                    <td id="assessment-type-wrapper"></td>
+                </tr>
+                <tr>
+                    <td class="text-bold">Bulan</td>
+                    <td id="bulan-wrapper"></td>
+                </tr>
+                <tr>
+                    <td class="text-bold">Minggu ke</td>
+                    <td id="minggu-ke-wrapper"></td>
+                </tr>
+            </table>
 
-                <table class="mb-3 table table-bordered" style="width: 100%">
-                    <tr>
-                        <td class="text-bold">Kelas</td>
-                        <td id="nama-kelas-wrapper"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-bold">Periode</td>
-                        <td>Semester: {{ $periodeAktif->semester }} {{ $periodeAktif->tahun_ajaran }}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-bold">Assessment Type</td>
-                        <td id="assessment-type-wrapper"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-bold">Bulan</td>
-                        <td id="bulan-wrapper"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-bold">Minggu ke</td>
-                        <td id="minggu-ke-wrapper"></td>
-                    </tr>
+            <div class="table-responsive" id="table-result">
+                <table id="history" class="table table-striped" style="width:100%">
+                    <thead>
+                        <tr id="tr-header"></tr>
+                    </thead>
+                    <tbody id="tbody-content">
+                        <tr>
+                            <td class="text-center">No result</td>
+                        </tr>
+                    </tbody>
                 </table>
+            </div>
 
+            <div id="aspects">
                 <p>Assessment Aspects:</p>
                 <ol id="aspects-wrapper">
                     <li>No result</li>
                 </ol>
-                <div class="table-responsive" id="table-result">
-                    <table class="table table-striped" style="width:100%">
-                        <thead>
-                            <tr id="tr-header"></tr>
-                        </thead>
-                        <tbody id="tbody-content">
-                            <tr>
-                                <td class="text-center">No result</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            </div>
 
+            <div id="notice">
                 <p>Notice:</p>
                 <ul>
                     <li>A: Always</li>
@@ -135,7 +139,8 @@
                 </ul>
             </div>
 
-            <button id="print-button" class="mb-3 btn btn-success">Print</button>
+            <div id="custom-toolbar"></div>
+
         </x-card-box>
 
     </div>
@@ -145,6 +150,7 @@
 @section('style')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/theme-checkbox-radio.css') }}">
     <link href="{{ asset('plugins/table/datatble-v2/datatable-v2-responsive.min.css') }}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/3.1.1/css/buttons.dataTables.css" rel="stylesheet">
 @endsection
 
 @section('script')
@@ -152,9 +158,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.16/jspdf.plugin.autotable.min.js"></script>
 
+    <script src="https://cdn.datatables.net/buttons/3.1.1/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.1.1/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.1.1/js/buttons.html5.min.js"></script>
+
     {{-- page logic --}}
     <script>
         let PARAMS = []
+        let originalTable = $('#history').html();
+        let kelas_input;
 
         $('form').on('submit', function(e) {
             e.preventDefault()
@@ -162,8 +176,13 @@
             $('#btn-telusuri').attr('disabled', true)
             $('#spinner-wrapper').removeClass('d-none').addClass('d-block')
             $('#text-search').removeClass('d-block').addClass('d-none')
+            $('#history').html(originalTable)
+            if ($.fn.DataTable.isDataTable('#history')) {
+                // Jika sudah terinisialisasi, hancurkan dulu instance-nya
+                $('#history').DataTable().destroy();
+            }
 
-            let kelas_input = $('#kelas_id').val().split('/')
+            kelas_input = $('#kelas_id').val().split('/')
 
             PARAMS.push({
                 'kelas_id': kelas_input[0], //
@@ -190,6 +209,129 @@
                     console.log("Data dari server:", response);
                     makeAspectsList(response.aspects);
                     makeTable(response.aspects, response.table);
+                    $('#history').DataTable().destroy()
+                    let result = $('#history').DataTable({
+                        buttons: [{
+                            extend: 'pdf',
+                            text: 'Download PDF',
+                            title: `Digital Assessment`,
+                            filename: `${document.getElementById('assessment_for').     value}_Assessment_${kelas_input[1]}_${document.getElementById('bulan').value}_minggu_${document.getElementById('minggu_ke').value}`,
+
+                            customize: function(doc) {
+                                // buat tabel identitas
+                                doc.content.splice(1, 0, {
+                                    table: {
+                                        widths: ['30%', '70%'],
+                                        body: [
+                                            [{
+                                                    text: 'Kelas',
+                                                    bold: true
+                                                },
+                                                {
+                                                    text: kelas_input[1]
+                                                }
+                                            ],
+                                            [{
+                                                    text: 'Periode',
+                                                    bold: true
+                                                },
+                                                {
+                                                    text: 'Semester: {{ $periodeAktif->semester }} {{ $periodeAktif->tahun_ajaran }}'
+                                                }
+                                            ],
+                                            [{
+                                                    text: 'Assessment Type',
+                                                    bold: true
+                                                },
+                                                {
+                                                    text: document
+                                                        .getElementById(
+                                                            'assessment-type-wrapper'
+                                                        ).innerText
+                                                }
+                                            ],
+                                            [{
+                                                    text: 'Bulan',
+                                                    bold: true
+                                                },
+                                                {
+                                                    text: document
+                                                        .getElementById(
+                                                            'bulan-wrapper'
+                                                        ).innerText
+                                                }
+                                            ],
+                                            [{
+                                                    text: 'Minggu ke',
+                                                    bold: true
+                                                },
+                                                {
+                                                    text: document
+                                                        .getElementById(
+                                                            'minggu-ke-wrapper'
+                                                        ).innerText
+                                                }
+                                            ]
+                                        ]
+                                    },
+                                    margin: [0, 0, 0, 20]
+                                });
+
+                                // Bagian Aspects 
+                                let aspectsElement = document.getElementById(
+                                    'aspects');
+                                let aspectItems = aspectsElement.querySelectorAll(
+                                    '#aspects-wrapper li');
+
+                                let aspectList = [];
+                                aspectItems.forEach(function(li) {
+                                    aspectList.push(li.innerText);
+                                });
+
+                                doc.content.push({
+                                    text: 'Assessment Aspects:',
+                                    bold: true,
+                                    margin: [0, 20, 0, 8]
+                                });
+
+                                doc.content.push({
+                                    ol: aspectList, // gunakan ordered list (ol) di PDFMake
+                                    margin: [20, 0, 0, 0],
+                                    fontSize: 10
+                                });
+
+
+                                // Ambil isi dari elemen HTML
+                                let noticeElement = document.getElementById(
+                                    'notice');
+                                let items = noticeElement.querySelectorAll('ul li');
+
+                                // Buat array bullet list
+                                let bulletList = [];
+                                items.forEach(function(li) {
+                                    bulletList.push(li.innerText);
+                                });
+
+                                // Tambahkan ke konten PDF di bagian bawah (setelah tabel)
+                                doc.content.push({
+                                    text: 'Notice:',
+                                    bold: true,
+                                    margin: [0, 20, 0, 8]
+                                });
+
+                                doc.content.push({
+                                    ul: bulletList, // PDFMake mendukung bullet list
+                                    margin: [20, 0, 0, 0],
+                                    fontSize: 10
+                                });
+
+                            }
+
+                        }]
+                    })
+
+                    result.buttons().container().appendTo('#custom-toolbar');
+
                     $('html, body').animate({
                         scrollTop: $('#table-result').offset().top
                     }, 800);
@@ -267,29 +409,6 @@
             })
 
         }
-    </script>
-
-    {{-- print logic --}}
-    <script>
-        document.getElementById('print-button').addEventListener('click', function() {
-            let printContents = document.getElementById('print-area').innerHTML;
-            let originalContents = document.body.innerHTML;
-
-            let printWindow = window.open('', '', 'width=' + screen.width + ',height=' + screen.height +
-                ',top=0,left=0');
-            printWindow.document.write('<html><head><title>&nbsp;</title>');
-            printWindow.document.write(
-                '<style>@media print {@page {size: A4;margin: 0;} body {margin: 0;padding: 20px; }table {border-collapse: collapse;width: 100%;}th, td {border: 1px solid black;padding: 4px;}}</style>'
-            );
-            printWindow.document.write('</head><body>');
-            printWindow.document.write(printContents);
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.focus();
-
-            printWindow.print();
-            printWindow.close();
-        });
     </script>
 
 @endsection
